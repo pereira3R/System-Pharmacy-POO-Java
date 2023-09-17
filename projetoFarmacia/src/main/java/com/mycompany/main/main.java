@@ -18,7 +18,9 @@ import java.util.ArrayList;
 public class main {
 
     public void start() {
+
         ArrayList<Produtos> produtosRede = new ArrayList<Produtos>();
+        int b;
     }
 
     public static void main(String[] args) {
