@@ -3,11 +3,11 @@ package com.mycompany.service;
 public class Farmacia {
 
     private String Name;
+    private String CNPJ;
     private String Endereco;
-    private String Telefone; 
+    private String Telefone;
     private String Site;
-    private String changeValue;
-    private String change;
+
     public String getName() {
         return Name;
     }
@@ -18,6 +18,14 @@ public class Farmacia {
 
     public String getEndereco() {
         return Endereco;
+    }
+
+    public void setCNPJ(String input) {
+        this.CNPJ = input;
+    }
+
+    public String getCNPJ() {
+        return this.CNPJ;
     }
 
     public void setEndereco(String Endereco) {
@@ -39,5 +47,5 @@ public class Farmacia {
     public void setSite(String Site) {
         this.Site = Site;
     }
-   
+
 }
