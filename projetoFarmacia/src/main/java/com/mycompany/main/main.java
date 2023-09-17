@@ -25,7 +25,7 @@ public class main {
 
         // Lista para incluir os funcionários da Farmácia
         ArrayList<Funcionario> farmaciaFuncionarios = new ArrayList<Funcionario>();
-        int Cont = 0;
+        int ContOpa = 0;
         JOptionPane.showMessageDialog(null,
                 "** Bem-Vindo a Rede Farmacêutica ANPOLO **\n\n Vamos fazer o seu cadastro já !!");
         JOptionPane.showMessageDialog(null,
