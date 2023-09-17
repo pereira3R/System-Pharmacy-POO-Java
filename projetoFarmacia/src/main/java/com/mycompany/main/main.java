@@ -1,19 +1,31 @@
 
 package com.mycompany.main;
 
-//Importando classes
+//Importando classes services
 import com.mycompany.service.Farmacia;
 import com.mycompany.service.Funcionario;
 import com.mycompany.service.Vendedor;
 import com.mycompany.service.Farmaceutico;
+
+//Importando classes products 
+import com.mycompany.products.Produtos;
+import com.mycompany.products.Remedio;
+import com.mycompany.products.NRemedio;
 
 import javax.swing.JOptionPane;
 import java.util.ArrayList;
 
 public class main {
 
+    public void start() {
+        ArrayList<Produtos> produtosRede = new ArrayList<Produtos>();
+    }
+
     public static void main(String[] args) {
+
+        // Lista para incluir os funcionários da Farmácia
         ArrayList<Funcionario> farmaciaFuncionarios = new ArrayList<Funcionario>();
+
         JOptionPane.showMessageDialog(null,
                 "** Bem-Vindo a Rede Farmacêutica ANPOLO **\n\n Vamos fazer o seu cadastro já !!");
         JOptionPane.showMessageDialog(null,
