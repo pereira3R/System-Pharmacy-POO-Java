@@ -1,46 +1,65 @@
 package com.mycompany.service;
 
-public class Funcionario extends Farmacia{
-    
-    double salarioBase = 1000;
-    private String Name;
-    private int CPF;
-    private String tipoFuncionario; 
-    private double salario = salarioBase; 
-    private boolean certificado;
-    
-    public void setName(String input){
-        this.Name = input;
+public class Funcionario extends Farmacia {
+
+    private String Nome;
+    private String CPF;
+    private String tipoFuncionario;
+    private double salario;
+    private int certificado = 0;
+
+    public Funcionario(String NomeFarmacia, String CNPJ, String Endereco, String Telefone, String Site,
+            double SalarioBase,
+            String Nome, String CPF, String tipoFuncionario, int certificado) {
+        super(NomeFarmacia, CNPJ, Endereco, Telefone, Site, SalarioBase);
+        this.Nome = Nome;
+        this.CPF = CPF;
+        this.tipoFuncionario = tipoFuncionario;
+        this.certificado = certificado;
     }
-    public String getName(){
-        return this.Name;
+
+    public void setNome(String input) {
+        this.Nome = input;
     }
-    public void setCPF(int input){
+
+    public String getNome() {
+        return this.Nome;
+    }
+
+    public void setCPF(String input) {
         this.CPF = input;
     }
-    public int getCPF(){
+
+    public String getCPF() {
         return this.CPF;
     }
-    public void setTipoFuncionario(String input){
+
+    public void setTipoFuncionario(String input) {
         this.tipoFuncionario = input;
     }
-    public String getTipoFuncionario(){
+
+    public String getTipoFuncionario() {
         return this.tipoFuncionario;
     }
-    public void setSalario(double input){
+
+    public void setSalario(double input) {
         this.salario = input;
     }
-    public double getSalario(){
+
+    public double getSalario() {
         return this.salario;
     }
-    public void setCertificado(boolean input){
-        this.certificado  = input;
+
+    public void setCertificado(int input) {
+        this.certificado = input;
     }
-    public boolean getCertificado(){
+
+    public int getCertificado() {
         return this.certificado;
     }
-    public void calcularSalario(double input){
+
+    public void calcularSalario(double input) {
         this.setSalario(this.getSalario() + input);
     }
-    
+
 }

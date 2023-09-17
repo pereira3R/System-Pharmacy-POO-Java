@@ -7,6 +7,16 @@ public class Farmacia {
     private String Endereco;
     private String Telefone;
     private String Site;
+    private double SalarioBase;
+
+    public Farmacia(String Name, String CNPJ, String Endereco, String Telefone, String Site, double SalarioBase) {
+        this.Name = Name;
+        this.CNPJ = CNPJ;
+        this.Endereco = Endereco;
+        this.Telefone = Telefone;
+        this.Site = Site;
+        this.SalarioBase = SalarioBase;
+    }
 
     public String getName() {
         return Name;
@@ -46,6 +56,14 @@ public class Farmacia {
 
     public void setSite(String Site) {
         this.Site = Site;
+    }
+
+    public void setSalarioBase(double input) {
+        this.SalarioBase = input;
+    }
+
+    public double getSalarioBase() {
+        return this.SalarioBase;
     }
 
 }

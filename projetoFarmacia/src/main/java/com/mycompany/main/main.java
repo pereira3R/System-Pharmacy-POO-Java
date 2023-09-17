@@ -21,21 +21,12 @@ public class main {
 
         // Coletando informações sobre a Farmacia
 
-        String name = JOptionPane.showInputDialog("Passe o Nome: ");
+        String NomeFarmacia = JOptionPane.showInputDialog("Passe o Nome: ");
         String CNPJ = JOptionPane.showInputDialog("Passe o CNPJ\nSeguindo o padrão: XX. XXX. XXX/0001-XX\n\n");
         String Telefone = JOptionPane.showInputDialog("Passe o Telefone: \nSeguindo o padrão: (DD) XXXX-YYYY\n\n");
-        String Endereço = JOptionPane.showInputDialog("Passe o Endereço: ");
+        String Endereco = JOptionPane.showInputDialog("Passe o Endereço: ");
         String Site = JOptionPane.showInputDialog("Passe o Site: ");
-
-        // Tipo farmacia instanciado como funcionario
-        Farmacia farmaciaCliente = new Funcionario();
-
-        // Introduzindo Dados da Farmacia
-        farmaciaCliente.setName(name);
-        farmaciaCliente.setCNPJ(CNPJ);
-        farmaciaCliente.setTelefone(Telefone);
-        farmaciaCliente.setEndereco(Endereço);
-        farmaciaCliente.setSite(Site);
+        double SalarioBase = Double.parseDouble((JOptionPane.showInputDialog("Passe o Salário Base: ")));
 
         JOptionPane.showMessageDialog(null, "** ANPOLO **\n\nDesejamos saber mais sobre a sua empresa !!\n");
         JOptionPane.showMessageDialog(null,
@@ -62,11 +53,41 @@ public class main {
                     Object selectedFuncionario = JOptionPane.showInputDialog(null,
                             "Escolha uma opção", "Opção", JOptionPane.INFORMATION_MESSAGE, null, tipoFuncionario,
                             tipoFuncionario[0]);
-
                     if (selectedFuncionario.equals("Farmacêutico")) {
+                        JOptionPane.showMessageDialog(null,
+                                "** Precisamos dos dados **\n\n[1] Nome\n[2] CPF\n[3] Tipo de Funcionario\n[4] Certificado\n[5] Salário\n");
+                        String Nome = JOptionPane.showInputDialog("Digite o nome: ");
+                        String CPF = JOptionPane.showInputDialog("Digite o CPF: ");
+                        int certificacao = JOptionPane.showConfirmDialog(null, "Possui certificado ?", "Confirmação",
+                                JOptionPane.YES_NO_OPTION);
+
+                        if (certificacao == JOptionPane.YES_OPTION) {
+                            continue;
+                        } else if (certificacao == JOptionPane.NO_OPTION) {
+                            JOptionPane.showMessageDialog(null,
+                                    "Farmacêutico tem que possuir certificação !!\n\nEmpresa Desaprovada");
+                            break;
+                        }
+
+                        int vendas = Integer
+                                .parseInt(JOptionPane.showInputDialog(null, "Digite o número de vendas: "));
+
+                        // Instanciando Func. do tipo Farmecêutico
+                        Funcionario addFuncionario = new Farmaceutico(NomeFarmacia, CNPJ, Endereco, Telefone, Site,
+                                SalarioBase, Nome, CPF, "Farmacêutico", certificacao);
 
                     } else if (selectedFuncionario.equals("Vendedor")) {
 
+                        JOptionPane.showMessageDialog(null,
+                                "** Precisamos dos dados **\n\n[1] Nome\n[2] CPF\n[3] Tipo de Funcionario\n[4] Salario\n");
+                        String Nome = JOptionPane.showInputDialog("Digite o nome: ");
+                        String CPF = JOptionPane.showInputDialog("Digite o CPF: ");
+                        int certificacao = 0;
+                        int vendas = Integer
+                                .parseInt(JOptionPane.showInputDialog(null, "Digite o número de vendas: "));
+
+                        Funcionario addFuncionario = new Vendedor(NomeFarmacia, CNPJ, Endereco, Telefone, Site,
+                                SalarioBase, Nome, CPF, "Vendedor", certificacao);
                     }
                 }
             } else if (selectedValue.equals("Adicionar Produto mais vendido")) {
