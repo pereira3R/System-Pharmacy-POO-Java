@@ -68,10 +68,25 @@ public class main {
                 todosProdutos.add(addProduto);
                 addProduto = new NRemedio("Desodorante Rexona Men Antibacterial Aerossol Antitranspirante 150ml", 16.49, "Outros", "Rexona","Rexona", "Higiene");
                 todosProdutos.add(addProduto);
-
-
-
-
+                addProduto = new Remedio("Dipirona", 5.99, "Remédio", "EMS S/A", false, "Comprimidos", 10, "EMS S/A", "Analgésicos");
+                todosProdutos.add(addProduto);
+                addProduto = new Remedio("Neosoro", 6.29, "Remédio", "Neo Química", false, "Solução Gotas", 30, "Neo Química", "Descongestionantes");
+                todosProdutos.add(addProduto);
+                addProduto = new Remedio("Rivotril", 27.01, "Remédio", "Roche", true, "Comprimidos", 30, "Roche", "Ansiolíticos");
+                todosProdutos.add(addProduto);
+                addProduto = new Remedio("Torsilax", 17.69, "Remédio", "Neo Química", false, "Comprimidos", 30, "Neo Química", "Analgésicos");
+                todosProdutos.add(addProduto);
+                addProduto = new Remedio("Isotretinoína", 82.75, "Remédio", "Eurofarma", true, "Cápsulas", 30, "Eurofarma", "Antiacne");
+                todosProdutos.add(addProduto); 
+                addProduto = new Remedio("Ivermectina", 18.69, "Remédio", "Germad", false, "Comprimidos", 4, "EMS S/A", "Antiparasitários");
+                todosProdutos.add(addProduto); 
+                addProduto = new Remedio("Sal de Fruta", 4.48, "Remédio", "GSK", false, "Em pó", 10, "GSK-Matriz", "Antiácidos");
+                todosProdutos.add(addProduto); 
+                addProduto = new Remedio("Ciclo 21", 6.38, "Remédio", "União Química", false, "Comprimidos", 21, "União Química", "Anticoncepcionais");
+                todosProdutos.add(addProduto); 
+                addProduto = new Remedio("Ácido Mefenâmico", 7.61, "Remédio", "Medley", false, "Comprimidos", 12, "Medley", "Anti-inflamatórios");
+                todosProdutos.add(addProduto); 
+                addProduto = new Remedio("Resfenol", 11.35, "Remédio", "Kleyhertz", false, "Cápsulas", 10, "Kleyhertz", "Antigripais");
         }
 
         public static Remedio buscandoRemedio(ArrayList<Remedio> remedios, String nomeRemedio) {
