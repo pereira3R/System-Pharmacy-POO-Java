@@ -9,9 +9,10 @@ public class Remedio extends Produtos {
     private int Quantidade;
     private String FarmaceuticaRemedio;
     private String MarcaRemedio;
+    private String secaoRemedio;
 
     public Remedio(String Nome, double Preco, String Tipo, String Marca, boolean ReceitaRemedio,
-            String TipoRemedio, int Quantidade, String FarmaceuticaRemedio) {
+            String TipoRemedio, int Quantidade, String FarmaceuticaRemedio, String secaoRemedio) {
         super(Nome, Preco, Tipo, Marca);
         this.nomeRemedio = Nome;
         this.ReceitaRemedio = ReceitaRemedio;
@@ -19,6 +20,7 @@ public class Remedio extends Produtos {
         this.Quantidade = Quantidade;
         this.FarmaceuticaRemedio = FarmaceuticaRemedio;
         this.MarcaRemedio = Marca;
+        this.secaoRemedio = secaoRemedio;
     }
 
     public String getNomeRemedio() {
@@ -67,6 +69,14 @@ public class Remedio extends Produtos {
 
     public void setMarcaRemedio(String MarcaRemedio) {
         this.MarcaRemedio = MarcaRemedio;
+    }
+
+    public void setSecaoRemedio(String secaoRemedio) {
+        this.secaoRemedio = secaoRemedio;
+    }
+
+    public String getSecaoString() {
+        return this.secaoRemedio;
     }
 
     @Override
