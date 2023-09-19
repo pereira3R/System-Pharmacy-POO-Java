@@ -29,7 +29,7 @@ public class Remedio extends Produtos {
         this.nomeRemedio = nomeRemedio;
     }
 
-    public boolean isReceitaRemedio() {
+    public boolean getReceitaRemedio() {
         return this.ReceitaRemedio;
     }
 
