@@ -2,6 +2,12 @@ package com.mycompany.products;
 
 public class NRemedio extends Produtos {
 
+    private String nomeProduto;
+    private double PrecoProduto;
+    private String FabricanteProduto;
+    private String SecaoProduto;
+    private String MarcaProduto;
+
     public String getNomeProduto() {
         return nomeProduto;
     }
@@ -10,11 +16,11 @@ public class NRemedio extends Produtos {
         this.nomeProduto = nomeProduto;
     }
 
-    public String getPrecoProduto() {
-        return PrecoProduto;
+    public double getPrecoProduto() {
+        return this.PrecoProduto;
     }
 
-    public void setPrecoProduto(String PrecoProduto) {
+    public void setPrecoProduto(double PrecoProduto) {
         this.PrecoProduto = PrecoProduto;
     }
 
@@ -34,22 +40,16 @@ public class NRemedio extends Produtos {
         this.SecaoProduto = SecaoProduto;
     }
 
-    public void getMarcaProduto(){
-        return MarcaProduto;
+    public String getMarcaProduto() {
+        return this.MarcaProduto;
     }
 
-    public void setMarcaProduto(String MarcaProduto){
+    public void setMarcaProduto(String MarcaProduto) {
         this.MarcaProduto = MarcaProduto;
     }
 
-    private String nomeProduto;
-    private String PrecoProd;
-    private String FabricanteProduto;
-    private String SecaoProduto;
-    private String MarcaProduto;
-    
     @Override
-    public double void PrecoProduto(){
-        return this.PrecoProd;
+    public double PrecoProduto() {
+        return this.PrecoProduto;
     }
 }

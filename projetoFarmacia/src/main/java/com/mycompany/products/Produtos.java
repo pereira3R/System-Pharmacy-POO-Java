@@ -6,38 +6,38 @@ public abstract class Produtos {
     private String Preco;
     private String Tipo;
     private String Marca;
-    
-    public String void getNome(){
+
+    public String getNome() {
         return this.Nome;
     }
 
-    public String void getPreco(){
+    public String getPreco() {
         return this.Preco;
     }
 
-    public String void getTipo(){
+    public String getTipo() {
         return this.Tipo;
     }
 
-    public String void getMarca(){
+    public String getMarca() {
         return this.Marca;
     }
 
-    public String void setNome(String Nome){
+    public void setNome(String Nome) {
         this.Nome = Nome;
     }
 
-    public String void setPreco(String Preco){
+    public void setPreco(String Preco) {
         this.Preco = Preco;
     }
 
-    public String void setTipo(String Tipo){
+    public void setTipo(String Tipo) {
         this.Tipo = Tipo;
     }
 
-    public String void setMarca(String Marca){
+    public void setMarca(String Marca) {
         this.Marca = Marca;
     }
 
-    public abstract void PrecoProduto();
+    public abstract double PrecoProduto();
 }

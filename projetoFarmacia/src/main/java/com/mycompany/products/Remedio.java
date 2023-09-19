@@ -1,9 +1,18 @@
 
 package com.mycompany.products;
-public class Remedio extends Produtos{
+
+public class Remedio extends Produtos {
+
+    private String nomeRemedio;
+    private boolean ReceitaRemedio;
+    private Double PrecoRemedio;
+    private String TipoRemedio;
+    private int Quantidade;
+    private String FarmaceuticaRemedio;
+    private String MarcaRemedio;
 
     public String getNomeRemedio() {
-        return nomeRemedio;
+        return this.nomeRemedio;
     }
 
     public void setNomeRemedio(String nomeRemedio) {
@@ -11,18 +20,18 @@ public class Remedio extends Produtos{
     }
 
     public boolean isReceitaRemedio() {
-        return ReceitaRemedio;
+        return this.ReceitaRemedio;
     }
 
     public void setReceitaRemedio(boolean ReceitaRemedio) {
         this.ReceitaRemedio = ReceitaRemedio;
     }
 
-    public int getPrecoRemedio() {
-        return PrecoRemedio;
+    public double getPrecoRemedio() {
+        return this.PrecoRemedio;
     }
 
-    public void setPrecoRemedio(int PrecoRemedio) {
+    public void setPrecoRemedio(double PrecoRemedio) {
         this.PrecoRemedio = PrecoRemedio;
     }
 
@@ -35,7 +44,7 @@ public class Remedio extends Produtos{
     }
 
     public int getQuantidade() {
-        return Quantidade;
+        return this.Quantidade;
     }
 
     public void setQuantidade(int Quantidade) {
@@ -50,25 +59,17 @@ public class Remedio extends Produtos{
         this.FarmaceuticaRemedio = FarmaceuticaRemedio;
     }
 
-    public void getMarcaRemedio(String MarcaRemedio){
-        return MarcaRemedio;
+    public String getMarcaRemedio(String MarcaRemedio) {
+        return this.MarcaRemedio;
     }
 
-    public void setMarcaRemedio(String MarcaRemedio){
+    public void setMarcaRemedio(String MarcaRemedio) {
         this.MarcaRemedio = MarcaRemedio;
     }
 
-    private String nomeRemedio;
-    private boolean ReceitaRemedio;
-    private Double PrecoRemedio;
-    private String TipoRemedio;
-    private String Quantidade;
-    private String FarmaceuticaRemedio;
-    private String MarcaRemedio;
-
     @Override
-    public Double void PrecoProduto(){
-        return this.PrecoProduto;
+    public double PrecoProduto() {
+        return this.PrecoRemedio;
     }
 
 }
