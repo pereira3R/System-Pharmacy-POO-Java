@@ -51,7 +51,7 @@ public class main {
 
         }
 
-        public static Remedio buscandoRemedio(ArrayList<Remedio> remedios, String nomeRemedio) {
+        public static Produtos buscandoRemedio(ArrayList<Remedio> remedios, String nomeRemedio) {
                 for (int i = 0; i < remedios.size(); i++) {
                         if (remedios.get(i).getNome().equals(nomeRemedio)) {
                                 return remedios.get(i);
@@ -70,6 +70,8 @@ public class main {
         }
 
         public static void main(String[] args) {
+                // Lista de Compras dos Clientes
+                ArrayList<Produtos> compraCliente = new ArrayList<Produtos>();
 
                 // Lista para incluir Todos os produtos
                 ArrayList<Produtos> produtosFarmacia = new ArrayList<Produtos>();
@@ -165,12 +167,11 @@ public class main {
                                                 continue;
                                         }
 
+                                        // Definindo Cliente + Informações
                                         Cliente novoCliente = new Cliente(nomeCliente, cpfCliente, Telefone);
-                                        clienteFarmacia.add(novoCliente);
                                 }
 
                         } else if (selecionarOpcao.equals("Comprar")) {
-
                                 String[] opcaoCompra = { "Remédios", "Não Remédios" };
                                 String compraSelecionada = (String) JOptionPane.showInputDialog(
                                                 null,
@@ -204,9 +205,10 @@ public class main {
                                                                 nomesRemedios[0]);
 
                                                 if (compraRemedio != null) {
-                                                        Remedio produtoCliente = buscandoRemedio(listaRemedios,
+                                                        Produtos produtoCliente = buscandoRemedio(listaRemedios,
                                                                         compraRemedio);
-                                                        boolean receita = produtoCliente.getReceitaRemedio();
+                                                        boolean receita = ((Remedio) produtoCliente)
+                                                                        .getReceitaRemedio();
                                                         if (receita) {
 
                                                                 int resposta = JOptionPane.showConfirmDialog(null,
@@ -218,9 +220,19 @@ public class main {
                                                                 } else {
                                                                         JOptionPane.showMessageDialog(null,
                                                                                         "Para comprar esse remédio,\n você precisa de receita");
+                                                                        break;
                                                                 }
                                                         } else {
+                                                                continue;
                                                         }
+                                                        novoCliente.getCompras(produtoCliente);
+                                                        clienteFarmacia.add(novoCliente);
+
+                                                        String comprasAtualCliente = carrinhoAtualizado(novoCliente);
+                                                        JOptionPane.showMessageDialog(null,
+                                                                        "** Seu carrinho **\n\n" + comprasAtualCliente);
+                                                        
+
                                                 }
                                         }
 

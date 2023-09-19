@@ -54,7 +54,7 @@ public class Cliente {
 
     }
 
-    public Produtos getCompra(int posCompra) {
+    public Produtos getCompras(int posCompra) {
 
         return this.Compras.get(posCompra);
     }
