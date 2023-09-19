@@ -7,13 +7,13 @@ public class NRemedio extends Produtos {
     private String SecaoProduto;
     private String MarcaProduto;
 
-    public NRemedio(String Nome, double Preco, String Tipo, String Marca, String nomeProduto,
-            String FabricanteProduto, String SecaoProduto, String MarcaProduto) {
+    public NRemedio(String Nome, double Preco, String Tipo, String Marca,
+            String FabricanteProduto, String SecaoProduto) {
         super(Nome, Preco, Tipo, Marca);
-        this.nomeProduto = nomeProduto;
+        this.nomeProduto = Nome;
         this.FabricanteProduto = FabricanteProduto;
         this.SecaoProduto = SecaoProduto;
-        this.MarcaProduto = MarcaProduto;
+        this.MarcaProduto = Marca;
     }
 
     public String getNomeProduto() {
