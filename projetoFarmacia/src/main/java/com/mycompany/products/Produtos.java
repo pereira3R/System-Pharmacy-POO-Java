@@ -3,15 +3,22 @@ package com.mycompany.products;
 
 public abstract class Produtos {
     private String Nome;
-    private String Preco;
+    private double Preco;
     private String Tipo;
     private String Marca;
+
+    public Produtos(String Nome, double Preco, String Tipo, String Marca) {
+        this.Nome = Nome;
+        this.Preco = Preco;
+        this.Tipo = Tipo;
+        this.Marca = Marca;
+    }
 
     public String getNome() {
         return this.Nome;
     }
 
-    public String getPreco() {
+    public double getPreco() {
         return this.Preco;
     }
 
@@ -27,7 +34,7 @@ public abstract class Produtos {
         this.Nome = Nome;
     }
 
-    public void setPreco(String Preco) {
+    public void setPreco(double Preco) {
         this.Preco = Preco;
     }
 

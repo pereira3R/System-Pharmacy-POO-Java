@@ -1,6 +1,6 @@
 package com.mycompany.service;
 
-public class Funcionario extends Farmacia {
+public abstract class Funcionario extends Farmacia {
 
     private String Nome;
     private String CPF;
@@ -59,8 +59,5 @@ public class Funcionario extends Farmacia {
         return this.certificado;
     }
 
-    public void calcularSalario(double input) {
-        this.setSalario(this.getSalario() + input);
-    }
-
+    public abstract void calcularSalario(double value);
 }

@@ -28,7 +28,8 @@ public class Farmaceutico extends Funcionario {
         return this.vendas;
     }
 
+    @Override
     public void calcularSalario(double input) {
-        super.calcularSalario(getSalarioBase() * input * 0.1);
+        setSalario(getSalarioBase() * input * 0.1);
     }
 }

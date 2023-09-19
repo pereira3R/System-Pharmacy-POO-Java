@@ -47,6 +47,12 @@ public class main {
                 return false;
         }
 
+        public static void produtosFarmacia(ArrayList<Produtos> remedios) {
+                Produtos addProduto = new Remedio("Paracetamol", 13, "Remédio", "LAV", null, false, 0, null, 0, null,
+                                null);
+
+        }
+
         public static void main(String[] args) {
 
                 // Lista para incluir todos os clientes atendidos na farmácia
@@ -125,10 +131,15 @@ public class main {
                                                                 null // Valor padrão selecionado
                                                 );
                                                 if (selecionaOpcaoCliente.equals("CPF")) {
+                                                        cpfCliente = JOptionPane.showInputDialog("Digite o seu CPF: ");
 
                                                 } else if (selecionaOpcaoCliente.equals("Nome")) {
+                                                        nomeCliente = JOptionPane
+                                                                        .showInputDialog("Digite o seu Nome: ");
 
                                                 } else if (selecionaOpcaoCliente.equals("Telefone")) {
+                                                        telCliente = JOptionPane
+                                                                        .showInputDialog("Digite o seu Telefone: ");
 
                                                 }
                                         } else {
@@ -140,6 +151,22 @@ public class main {
                                 }
 
                         } else if (selecionarOpcao.equals("Comprar")) {
+
+                                String[] opcaoCompra = { "Remédios", "Não Remédios" };
+                                String compraSelecionada = (String) JOptionPane.showInputDialog(
+                                                null,
+                                                "Escolha uma opção:",
+                                                "Menu Compras - LAV",
+                                                JOptionPane.QUESTION_MESSAGE,
+                                                null,
+                                                opcaoCompra,
+                                                opcaoCompra[0]);
+
+                                if (compraSelecionada.equals("Remédios")) {
+                                        JOptionPane.showMessageDialog(null, "** Lista de Remédios **\n\n");
+                                } else if (compraSelecionada.equals("Não Remédios")) {
+                                        JOptionPane.showMessageDialog(null, "** Lista de Produtos **\n\n");
+                                }
 
                         } else if (selecionarOpcao.equals("Sair")) {
                                 break;

@@ -5,11 +5,21 @@ public class Remedio extends Produtos {
 
     private String nomeRemedio;
     private boolean ReceitaRemedio;
-    private Double PrecoRemedio;
     private String TipoRemedio;
     private int Quantidade;
     private String FarmaceuticaRemedio;
     private String MarcaRemedio;
+
+    public Remedio(String Nome, double Preco, String Tipo, String Marca, String nomeRemedio, boolean ReceitaRemedio,
+            String TipoRemedio, int Quantidade, String FarmaceuticaRemedio, String MarcaRemedio) {
+        super(Nome, Preco, Tipo, Marca);
+        this.nomeRemedio = nomeRemedio;
+        this.ReceitaRemedio = ReceitaRemedio;
+        this.TipoRemedio = TipoRemedio;
+        this.Quantidade = Quantidade;
+        this.FarmaceuticaRemedio = FarmaceuticaRemedio;
+        this.MarcaRemedio = MarcaRemedio;
+    }
 
     public String getNomeRemedio() {
         return this.nomeRemedio;
@@ -25,14 +35,6 @@ public class Remedio extends Produtos {
 
     public void setReceitaRemedio(boolean ReceitaRemedio) {
         this.ReceitaRemedio = ReceitaRemedio;
-    }
-
-    public double getPrecoRemedio() {
-        return this.PrecoRemedio;
-    }
-
-    public void setPrecoRemedio(double PrecoRemedio) {
-        this.PrecoRemedio = PrecoRemedio;
     }
 
     public String getTipoRemedio() {
@@ -69,7 +71,7 @@ public class Remedio extends Produtos {
 
     @Override
     public double PrecoProduto() {
-        return this.PrecoRemedio;
+        return this.getPreco();
     }
 
 }

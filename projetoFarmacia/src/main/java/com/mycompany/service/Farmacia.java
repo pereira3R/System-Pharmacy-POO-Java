@@ -1,6 +1,6 @@
 package com.mycompany.service;
 
-public class Farmacia {
+public abstract class Farmacia {
 
     private String Name;
     private String CNPJ;

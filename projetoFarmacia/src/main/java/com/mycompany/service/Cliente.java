@@ -1,16 +1,20 @@
 package com.mycompany.service;
 
+import com.mycompany.products.Produtos;
+import java.util.ArrayList;
+
 public class Cliente {
 
     private String Nome;
     private String CPF;
     private String Telefone;
+    private double valorTotalCompra;
+    private ArrayList<Produtos> Compras = new ArrayList<Produtos>();
 
     public Cliente(String Nome, String CPF, String Telefone) {
         this.Nome = Nome;
         this.CPF = CPF;
         this.Telefone = Telefone;
-    
     }
 
     public void setNome(String input) {
@@ -35,6 +39,24 @@ public class Cliente {
 
     public String getTelefone() {
         return this.Telefone;
+    }
+
+    public void setValorTotalCompra(double input) {
+        this.valorTotalCompra = input;
+    }
+
+    public double getValorTotalCompra() {
+        return this.valorTotalCompra;
+    }
+
+    public void setCompras(Produtos compraCliente) {
+        this.Compras.add(compraCliente);
+
+    }
+
+    public Produtos getCompra(int posCompra) {
+
+        return this.Compras.get(posCompra);
     }
 
 }

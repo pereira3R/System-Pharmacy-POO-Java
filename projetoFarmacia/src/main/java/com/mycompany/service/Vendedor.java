@@ -28,7 +28,8 @@ public class Vendedor extends Funcionario {
         return this.salario;
     }
 
+    @Override
     public void calcularSalario(double input) {
-        super.calcularSalario(getSalarioBase() * input * 0.1);
+        setSalario(getSalarioBase() * input * 0.1);
     }
 }
