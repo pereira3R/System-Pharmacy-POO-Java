@@ -10,15 +10,15 @@ public class Remedio extends Produtos {
     private String FarmaceuticaRemedio;
     private String MarcaRemedio;
 
-    public Remedio(String Nome, double Preco, String Tipo, String Marca, String nomeRemedio, boolean ReceitaRemedio,
-            String TipoRemedio, int Quantidade, String FarmaceuticaRemedio, String MarcaRemedio) {
+    public Remedio(String Nome, double Preco, String Tipo, String Marca, boolean ReceitaRemedio,
+            String TipoRemedio, int Quantidade, String FarmaceuticaRemedio) {
         super(Nome, Preco, Tipo, Marca);
-        this.nomeRemedio = nomeRemedio;
+        this.nomeRemedio = Nome;
         this.ReceitaRemedio = ReceitaRemedio;
         this.TipoRemedio = TipoRemedio;
         this.Quantidade = Quantidade;
         this.FarmaceuticaRemedio = FarmaceuticaRemedio;
-        this.MarcaRemedio = MarcaRemedio;
+        this.MarcaRemedio = Marca;
     }
 
     public String getNomeRemedio() {

@@ -48,7 +48,36 @@ public class main {
         }
 
         public static void cadastrandoProdutos(ArrayList<Produtos> todosProdutos) {
-
+                Produtos addProduto = new NRemedio("Fralda Supreme Care P", 49.90, "Outros", "Huggies",
+                                "Kimberly-Clark", "Higiene");
+                todosProdutos.add(addProduto);
+                addProduto = new NRemedio("Sabonete Líquido Relaxante Hora Do Sono", 26.99, "Outros", "Johnson's",
+                                "Johnson & Johnson Industrial Ltda.", "Higiene");
+                todosProdutos.add(addProduto);
+                addProduto = new NRemedio("Fio Dental Johnson's Reach Essencial Sabor Menta", 12.19, "Outros",
+                                "Johnson's", "Johnson & Johnson", "Higiene");
+                todosProdutos.add(addProduto);
+                addProduto = new NRemedio("Absorvente Externo Noturno Plus Noite e Dia Suave 32un", 26.72, "Outros",
+                                "Sempre Livre", "Johnson & Johnson Industrial Ltda.", "Higiene");
+                todosProdutos.add(addProduto);
+                addProduto = new NRemedio("Gatorade Frutas Cítricas Isotônico com 500ml", 9.25, "Outros", "Gatorade",
+                                "X3 Brasil Soluções", "Bebidas");
+                todosProdutos.add(addProduto);
+                addProduto = new NRemedio("Sorvete Kibon Cremosíssimo Napolitano 1,5 Litro", 29.90, "Outros", "Kibon",
+                                "Kibon", "Alimentos");
+                todosProdutos.add(addProduto);
+                addProduto = new NRemedio("Escova de dente portátil para viagem", 3.99, "Outros", "Needs", "Needs",
+                                "Higiene");
+                todosProdutos.add(addProduto);
+                addProduto = new NRemedio("Protetor Solar Facial Sun Fresh Derm Care FPS 70 Pele Mista a Oleosa", 52.59,
+                                "Outros", "Neutrogena", "Johnson & Johnson", "Cosméticos");
+                todosProdutos.add(addProduto);
+                addProduto = new NRemedio("Hidratante Facial Vita C 50g", 27.99, "Outros", "Needs", "Needs",
+                                "Cosméticos");
+                todosProdutos.add(addProduto);
+                addProduto = new NRemedio("Desodorante Rexona Men Antibacterial Aerossol Antitranspirante 150ml", 16.49,
+                                "Outros", "Rexona", "Rexona", "Higiene");
+                todosProdutos.add(addProduto);
         }
 
         public static Produtos buscandoRemedio(ArrayList<Remedio> remedios, String nomeRemedio) {
@@ -67,6 +96,12 @@ public class main {
                         }
                 }
                 return null;
+        }
+
+        public static String comprasAtualCliente(Cliente clienteNovo) {
+
+                String listaDeProdutos = "";
+                return listaDeProdutos;
         }
 
         public static void main(String[] args) {
@@ -231,7 +266,6 @@ public class main {
                                                         String comprasAtualCliente = carrinhoAtualizado(novoCliente);
                                                         JOptionPane.showMessageDialog(null,
                                                                         "** Seu carrinho **\n\n" + comprasAtualCliente);
-                                                        
 
                                                 }
                                         }
