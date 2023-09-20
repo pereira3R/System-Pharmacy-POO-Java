@@ -17,7 +17,7 @@ public class NRemedio extends Produtos {
     }
 
     public String getNomeProduto() {
-        return nomeProduto;
+        return this.nomeProduto;
     }
 
     public void setNomeProduto(String nomeProduto) {
@@ -25,7 +25,7 @@ public class NRemedio extends Produtos {
     }
 
     public String getFabricanteProduto() {
-        return FabricanteProduto;
+        return this.FabricanteProduto;
     }
 
     public void setFabricanteProduto(String FabricanteProduto) {
@@ -33,7 +33,7 @@ public class NRemedio extends Produtos {
     }
 
     public String getSecaoProduto() {
-        return SecaoProduto;
+        return this.SecaoProduto;
     }
 
     public void setSecaoProduto(String SecaoProduto) {

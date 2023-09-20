@@ -1,62 +1,63 @@
 package com.mycompany.service;
 
-import com.mycompany.products.Produtos;
 import java.util.ArrayList;
+import com.mycompany.products.Produtos;
 
 public class Cliente {
 
-    private String Nome;
-    private String CPF;
-    private String Telefone;
+    private String nome;
+    private String cpf;
+    private String telefone;
     private double valorTotalCompra;
-    private ArrayList<Produtos> Compras = new ArrayList<Produtos>();
+    ArrayList<Produtos> compras = new ArrayList<Produtos>();
 
-    public Cliente(String Nome, String CPF, String Telefone) {
-        this.Nome = Nome;
-        this.CPF = CPF;
-        this.Telefone = Telefone;
+    public Cliente(String nome, String cpf, String telefone) {
+        this.nome = nome;
+        this.cpf = cpf;
+        this.telefone = telefone;
+        this.valorTotalCompra = 0;
     }
 
-    public void setNome(String input) {
-        this.Nome = input;
+    public void setNome(String nome) {
+        this.nome = nome;
     }
 
     public String getNome() {
-        return this.Nome;
+        return this.nome;
     }
 
-    public void setCPF(String input) {
-        this.CPF = input;
+    public void setCPF(String cpf) {
+        // Adicione validações de CPF aqui, se necessário
+        this.cpf = cpf;
     }
 
     public String getCPF() {
-        return this.CPF;
+        return this.cpf;
     }
 
-    public void setTelefone(String input) {
-        this.Telefone = input;
+    public void setTelefone(String telefone) {
+        // Adicione validações de telefone aqui, se necessário
+        this.telefone = telefone;
     }
 
     public String getTelefone() {
-        return this.Telefone;
+        return this.telefone;
     }
 
-    public void setValorTotalCompra(double input) {
-        this.valorTotalCompra = input;
+    public void setValorTotalCompra(double valorTotalCompra) {
+        this.valorTotalCompra = valorTotalCompra;
     }
 
     public double getValorTotalCompra() {
-        return this.valorTotalCompra;
+        return valorTotalCompra;
     }
 
     public void setCompras(Produtos compraCliente) {
-        this.Compras.add(compraCliente);
-
+        compras.add(compraCliente);
     }
 
-    public Produtos getCompras(int posCompra) {
-
-        return this.Compras.get(posCompra);
+    public ArrayList<Produtos> getCompras() {
+        // Retornar uma cópia da lista para evitar modificações externas
+        return this.compras;
     }
-
 }

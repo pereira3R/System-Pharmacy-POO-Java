@@ -2,7 +2,6 @@
 package com.mycompany.main;
 
 //Importando classes services
-import com.mycompany.service.Farmacia;
 import com.mycompany.service.Funcionario;
 import com.mycompany.service.Vendedor;
 import com.mycompany.service.Farmaceutico;
@@ -18,12 +17,8 @@ import java.util.ArrayList;
 
 public class main {
 
-        public void start() {
-                ArrayList<Produtos> produtosRede = new ArrayList<Produtos>();
-        }
-
         public static void cadastrarFuncionarios(ArrayList<Funcionario> funcionariosFarmacia) {
-                Funcionario funcionarioAnthony = new Farmaceutico("LAV", "48. 048. 138/0001-79",
+                Funcionario funcionarioAnthony = new Vendedor("LAV", "48. 048. 138/0001-79",
                                 "Boa Esperança, Rua 8, N. 254", "(66) 99233-7652", "www.farmaciaLav.com.br", 1300,
                                 "Anthony Ricardo Rodrigues Rezende", "072.417.431-02", "Vendedor", 0);
                 funcionariosFarmacia.add(funcionarioAnthony);
@@ -31,7 +26,7 @@ public class main {
                                 "Boa Esperança, Rua 8, N. 254", "(69) 98417-7172", "www.farmaciaLav.com.br", 1300,
                                 "Letízia Manuella Serqueira Eugênio", "012.237.441-02", "Farmacêutico", 1);
                 funcionariosFarmacia.add(funcionarioLetizia);
-                Funcionario funcionarioVinicius = new Farmaceutico("LAV", "48. 048. 138/0001-79",
+                Funcionario funcionarioVinicius = new Vendedor("LAV", "48. 048. 138/0001-79",
                                 "Boa Esperança, Rua 8, N. 254", "(66) 99233-7652", "www.farmaciaLav.com.br", 1300,
                                 "Vinicius Padilha Vieira", "022.407.431-24", "Vendedor", 0);
                 funcionariosFarmacia.add(funcionarioVinicius);
@@ -47,7 +42,7 @@ public class main {
                 return false;
         }
 
-        public static void cadastrandoProdutos(ArrayList<Produtos> todosProdutos) {
+        public static ArrayList<Produtos> cadastrandoProdutos(ArrayList<Produtos> todosProdutos) {
 
                 Produtos addProduto = new NRemedio("Fralda Supreme Care P", 49.90, "Outros", "Huggies",
                                 "Kimberly-Clark", "Higiene");
@@ -108,22 +103,24 @@ public class main {
                 todosProdutos.add(addProduto);
                 addProduto = new Remedio("Resfenol", 11.35, "Remédio", "Kleyhertz", false, "Cápsulas", 10, "Kleyhertz",
                                 "Antigripais");
-
+                return todosProdutos;
         }
 
-        public static Produtos buscandoRemedio(ArrayList<Remedio> remedios, String nomeRemedio) {
+        public static Produtos buscandoRemedio(ArrayList<Produtos> remedios, String nomeRemedio) {
                 for (int i = 0; i < remedios.size(); i++) {
                         if (remedios.get(i).getNome().equals(nomeRemedio)) {
-                                return remedios.get(i);
+                                Produtos resultado = remedios.get(i);
+                                return resultado;
                         }
                 }
                 return null;
         }
 
-        public static NRemedio buscandoNRemedio(ArrayList<NRemedio> Nremedios, String nomeRemedio) {
+        public static Produtos buscandoNRemedio(ArrayList<Produtos> Nremedios, String nomeNRemedio) {
                 for (int i = 0; i < Nremedios.size(); i++) {
-                        if (Nremedios.get(i).getNome().equals(nomeRemedio)) {
-                                return Nremedios.get(i);
+                        if (Nremedios.get(i).getNome().equals(nomeNRemedio)) {
+                                Produtos resultado = Nremedios.get(i);
+                                return resultado;
                         }
                 }
                 return null;
@@ -131,8 +128,12 @@ public class main {
 
         public static String comprasAtualCliente(Cliente clienteNovo) {
 
-                String listaDeProdutos = "";
-                return listaDeProdutos;
+                ArrayList<Produtos> produtosCliente = clienteNovo.getCompras();
+                String listaStringProdutos = "";
+                for (int i = 0; i < produtosCliente.size(); i++) {
+                        listaStringProdutos += "-> " + produtosCliente.get(i).getNome() + "\n";
+                }
+                return listaStringProdutos;
         }
 
         public static void main(String[] args) {
@@ -158,14 +159,17 @@ public class main {
                 String Site = "www.farmaciaLav.com.br";
                 double SalarioBase = 1300;
 
+                // Definindo Cliente + Informações
+                Cliente clienteNovo = new Cliente("", "", "");
+
                 // Apresentando os dados da Farmácia
                 while (true) {
                         JOptionPane.showMessageDialog(null,
-                                        "** Informações sobre a Farmácia LAV **\n\n[1] Nome: " + NomeFarmacia
-                                                        + "\n[2] CNPJ: "
-                                                        + CNPJ + "\n[3] Telefone: " + Telefone + "\n[4] Endereço: "
+                                        "** Informações sobre a Farmácia LAV **\n\n Nome: " + NomeFarmacia
+                                                        + "\n CNPJ: "
+                                                        + CNPJ + "\n Telefone: " + Telefone + "\n Endereço: "
                                                         + Endereco
-                                                        + "\n[5] Site: " + Site + "\n\n [ FARMÁCIA ABERTA ]");
+                                                        + "\n Site: " + Site + "\n\n [ FARMÁCIA ABERTA ]");
 
                         JOptionPane.showMessageDialog(null,
                                         "[AVISO] Para garantir desconto de 10% realize o seu cadastro");
@@ -229,38 +233,49 @@ public class main {
                                                                         .showInputDialog("Digite o seu Telefone: ");
 
                                                 }
+
                                         } else {
                                                 continue;
                                         }
 
-                                        // Definindo Cliente + Informações
-                                        Cliente novoCliente = new Cliente(nomeCliente, cpfCliente, Telefone);
+                                        clienteNovo.setCPF(cpfCliente);
+                                        clienteNovo.setNome(nomeCliente);
+                                        clienteNovo.setTelefone(telCliente);
                                 }
 
                         } else if (selecionarOpcao.equals("Comprar")) {
-                                String[] opcaoCompra = { "Remédios", "Não Remédios" };
-                                String compraSelecionada = (String) JOptionPane.showInputDialog(
-                                                null,
-                                                "Escolha uma opção:",
-                                                "Menu Compras - LAV",
-                                                JOptionPane.QUESTION_MESSAGE,
-                                                null,
-                                                opcaoCompra,
-                                                opcaoCompra[0]);
+                                while (true) {
+                                        String[] opcaoCompra = { "Remédios", "Não Remédios" };
+                                        String compraSelecionada = (String) JOptionPane.showInputDialog(
+                                                        null,
+                                                        "Escolha uma opção:",
+                                                        "Menu Compras - LAV",
+                                                        JOptionPane.QUESTION_MESSAGE,
+                                                        null,
+                                                        opcaoCompra,
+                                                        opcaoCompra[0]);
 
-                                cadastrandoProdutos(produtosFarmacia);
+                                        // Cadastrando Todos os Produtos - 10 Remédios & 10 N. Remédios
+                                        produtosFarmacia = cadastrandoProdutos(produtosFarmacia);
 
-                                if (compraSelecionada.equals("Remédios")) {
-                                        ArrayList<Remedio> listaRemedios = new ArrayList<Remedio>();
-                                        String[] nomesRemedios = {};
-                                        for (int i = 0; i < produtosFarmacia.size(); i++) {
-                                                if (produtosFarmacia.get(i).getTipo().equals("Remédio")) {
-                                                        listaRemedios.add(((Remedio) produtosFarmacia.get(i)));
-                                                        nomesRemedios[i] = produtosFarmacia.get(i).getNome();
+                                        if (compraSelecionada.equals("Remédios")) {
+                                                ArrayList<Produtos> listaRemedios = new ArrayList<Produtos>();
+                                                int countRemedios = 0;
+                                                for (int i = 0; i < produtosFarmacia.size(); i++) {
+                                                        if (produtosFarmacia.get(i).getTipo().equals("Remédio")) {
+                                                                listaRemedios.add(((Remedio) produtosFarmacia.get(i)));
+                                                                countRemedios++;
+                                                        }
                                                 }
-                                        }
-                                        while (true) {
 
+                                                Object[] nomesRemedios = new Object[countRemedios];
+
+                                                for (int i = 0; i < countRemedios; i++) {
+                                                        nomesRemedios[i] = ((Remedio) listaRemedios.get(i))
+                                                                        .getNomeRemedio();
+                                                }
+
+                                                Produtos produtoCliente = null;
                                                 String compraRemedio = (String) JOptionPane.showInputDialog(
                                                                 null,
                                                                 "Escolha uma opção:",
@@ -270,9 +285,9 @@ public class main {
                                                                 nomesRemedios,
                                                                 nomesRemedios[0]);
 
-                                                if (compraRemedio != null) {
-                                                        Produtos produtoCliente = buscandoRemedio(listaRemedios,
-                                                                        compraRemedio);
+                                                if (compraRemedio != "") {
+                                                        produtoCliente = buscandoRemedio(listaRemedios,
+                                                                        (String) compraRemedio);
                                                         boolean receita = ((Remedio) produtoCliente)
                                                                         .getReceitaRemedio();
                                                         if (receita) {
@@ -281,38 +296,39 @@ public class main {
                                                                                 "Você possui Receita ?",
                                                                                 "Confirmação",
                                                                                 JOptionPane.YES_NO_OPTION);
-                                                                if (resposta == 1) {
-                                                                        continue;
-                                                                } else {
+                                                                if (resposta != JOptionPane.YES_OPTION) {
                                                                         JOptionPane.showMessageDialog(null,
                                                                                         "Para comprar esse remédio,\n você precisa de receita");
                                                                         break;
                                                                 }
-                                                        } else {
-                                                                continue;
                                                         }
-                                                        novoCliente.getCompras(produtoCliente);
-                                                        clienteFarmacia.add(novoCliente);
-
-                                                        String comprasAtualCliente = carrinhoAtualizado(novoCliente);
-                                                        JOptionPane.showMessageDialog(null,
-                                                                        "** Seu carrinho **\n\n" + comprasAtualCliente);
 
                                                 }
-                                        }
 
-                                } else if (compraSelecionada.equals("Não Remédios")) {
+                                                clienteNovo.setCompras(produtoCliente);
+                                                String comprasAtualCliente = comprasAtualCliente(clienteNovo);
+                                                JOptionPane.showMessageDialog(null,
+                                                                "** Seu carrinho **\n\n" + comprasAtualCliente);
 
-                                        ArrayList<NRemedio> listaNRemedios = new ArrayList<NRemedio>();
-                                        Object[] nomesNRemedios = {};
-                                        for (int i = 0; i < produtosFarmacia.size(); i++) {
-                                                if (produtosFarmacia.get(i).getTipo().equals("Não Remédio")) {
-                                                        listaNRemedios.add(((NRemedio) produtosFarmacia.get(i)));
-                                                        nomesNRemedios[i] = produtosFarmacia.get(i);
+                                        } else if (compraSelecionada.equals("Não Remédios")) {
+                                                ArrayList<Produtos> listaNRemedios = new ArrayList<Produtos>();
+                                                int countNRemedios = 0;
+                                                for (int i = 0; i < produtosFarmacia.size(); i++) {
+                                                        if (produtosFarmacia.get(i).getTipo().equals("Outros")) {
+                                                                listaNRemedios.add(
+                                                                                ((NRemedio) produtosFarmacia.get(i)));
+                                                                countNRemedios++;
+                                                        }
                                                 }
-                                        }
-                                        while (true) {
 
+                                                Object[] nomesNRemedios = new Object[countNRemedios];
+
+                                                for (int i = 0; i < countNRemedios; i++) {
+                                                        nomesNRemedios[i] = ((NRemedio) listaNRemedios.get(i))
+                                                                        .getNomeProduto();
+                                                }
+
+                                                Produtos produtoCliente = null;
                                                 String compraNRemedio = (String) JOptionPane.showInputDialog(
                                                                 null,
                                                                 "Escolha uma opção:",
@@ -322,22 +338,27 @@ public class main {
                                                                 nomesNRemedios,
                                                                 nomesNRemedios[0]);
 
-                                                if (compraNRemedio != null) {
-                                                        NRemedio produtoCliente = buscandoNRemedio(listaNRemedios,
-                                                                        compraNRemedio);
+                                                if (compraNRemedio != "") {
 
-                                                        int resposta = JOptionPane.showConfirmDialog(null,
-                                                                        "Deseja comprar mais produtos ?",
-                                                                        "Confirmação",
-                                                                        JOptionPane.YES_NO_OPTION);
-                                                        if (resposta == 1) {
-                                                                continue;
-                                                        } else {
-                                                                break;
-                                                        }
+                                                        produtoCliente = buscandoNRemedio(listaNRemedios,
+                                                                        (String) compraNRemedio);
 
                                                 }
 
+                                                clienteNovo.setCompras(produtoCliente);
+                                                String comprasAtualCliente = comprasAtualCliente(clienteNovo);
+                                                JOptionPane.showMessageDialog(null,
+                                                                "** Seu carrinho **\n\n" + comprasAtualCliente);
+
+                                        }
+
+                                        int resposta = JOptionPane.showConfirmDialog(null,
+                                                        "Deseja continuar comprando ?",
+                                                        "Confirmação",
+                                                        JOptionPane.YES_NO_OPTION);
+
+                                        if (resposta != JOptionPane.YES_OPTION) {
+                                                break;
                                         }
                                 }
 
