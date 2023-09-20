@@ -12,6 +12,8 @@ import com.mycompany.products.Produtos;
 import com.mycompany.products.Remedio;
 
 import javax.swing.JOptionPane;
+
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -206,6 +208,11 @@ public class main {
         public static String relatorioFinalDia() {
                 String relatorio = "";
                 return relatorio;
+        }
+
+        public static String formatarNumeroComDuasCasasDecimais(double numero) {
+                DecimalFormat formato = new DecimalFormat("0.00");
+                return formato.format(numero);
         }
 
         public static void main(String[] args) {
@@ -445,7 +452,9 @@ public class main {
                                                         double valorTotal = calculandoTotalCarrinho(clienteNovo);
                                                         String comprasAtualCliente = comprasAtualCliente(clienteNovo);
                                                         JOptionPane.showMessageDialog(null,
-                                                                        "** Seu carrinho **\nValor Total: " + valorTotal
+                                                                        "** Seu carrinho **\nValor Total: "
+                                                                                        + formatarNumeroComDuasCasasDecimais(
+                                                                                                        valorTotal)
                                                                                         + "\n\n" + comprasAtualCliente);
                                                 }
 
@@ -501,7 +510,9 @@ public class main {
                                                         double valorTotal = calculandoTotalCarrinho(clienteNovo);
                                                         String comprasAtualCliente = comprasAtualCliente(clienteNovo);
                                                         JOptionPane.showMessageDialog(null,
-                                                                        "** Seu carrinho **\nValor Total: " + valorTotal
+                                                                        "** Seu carrinho **\nValor Total: "
+                                                                                        + formatarNumeroComDuasCasasDecimais(
+                                                                                                        valorTotal)
                                                                                         + "\n\n" + comprasAtualCliente);
                                                 }
 
@@ -532,13 +543,16 @@ public class main {
                                                                 if (verificandoCliente(clienteFarmacia, cpf)) {
                                                                         JOptionPane.showMessageDialog(null,
                                                                                         "Você tem Cadastro!!\n\nValor: R$"
-                                                                                                        + valorTotal
+                                                                                                        + formatarNumeroComDuasCasasDecimais(
+                                                                                                                        valorTotal)
                                                                                                         + "\nValor 10% OFF: R$"
-                                                                                                        + (valorTotal * 0.9));
+                                                                                                        + formatarNumeroComDuasCasasDecimais(
+                                                                                                                        valorTotal * 0.9));
                                                                 } else {
                                                                         JOptionPane.showMessageDialog(null,
                                                                                         "Você não tem Cadastro!!\n\nValor: R$"
-                                                                                                        + valorTotal);
+                                                                                                        + formatarNumeroComDuasCasasDecimais(
+                                                                                                                        valorTotal));
                                                                 }
 
                                                                 if (auxAtendente == null) {
@@ -577,6 +591,8 @@ public class main {
                         if (contadorCliente == 11) {
                                 break;
                         }
+                        // relatorio cliente
+                        // relatorio funcionario
                 }
         }
 }
