@@ -35,4 +35,9 @@ public class Vendedor extends Funcionario {
     public void calcularSalario(Produtos produto) {
         setSalario(produto.getPreco() * 0.1);
     }
+
+    @Override
+    public void calcularComissaoVendas(int vendas) {
+
+    }
 }

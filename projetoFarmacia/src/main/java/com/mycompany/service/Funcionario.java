@@ -61,4 +61,6 @@ public abstract class Funcionario extends Farmacia {
     }
 
     public abstract void calcularSalario(Produtos input);
+
+    public abstract void calcularComissaoVendas(int input);
 }

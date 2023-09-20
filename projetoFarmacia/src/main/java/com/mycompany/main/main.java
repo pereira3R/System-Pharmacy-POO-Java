@@ -18,17 +18,20 @@ import java.util.Random;
 public class main {
 
         // Método para cadastrar os funcionários únicos da Farmácia LAV
-        public static void cadastrarFuncionarios(ArrayList<Funcionario> funcionariosFarmacia) {
+        public static void cadastrarFuncionarios(ArrayList<Funcionario> funcionariosFarmacia, double SalarioBase) {
                 Funcionario funcionarioAnthony = new Vendedor("LAV", "48. 048. 138/0001-79",
-                                "Boa Esperança, Rua 8, N. 254", "(66) 99233-7652", "www.farmaciaLav.com.br", 1300,
+                                "Boa Esperança, Rua 8, N. 254", "(66) 99233-7652", "www.farmaciaLav.com.br",
+                                SalarioBase,
                                 "Anthony Ricardo Rodrigues Rezende", "072.417.431-02", "Vendedor", 0);
                 funcionariosFarmacia.add(funcionarioAnthony);
                 Funcionario funcionarioLetizia = new Farmaceutico("LAV", "48. 048. 138/0001-79",
-                                "Boa Esperança, Rua 8, N. 254", "(69) 98417-7172", "www.farmaciaLav.com.br", 1300,
+                                "Boa Esperança, Rua 8, N. 254", "(69) 98417-7172", "www.farmaciaLav.com.br",
+                                SalarioBase,
                                 "Letízia Manuella Serqueira Eugênio", "012.237.441-02", "Farmacêutico", 1);
                 funcionariosFarmacia.add(funcionarioLetizia);
                 Funcionario funcionarioVinicius = new Vendedor("LAV", "48. 048. 138/0001-79",
-                                "Boa Esperança, Rua 8, N. 254", "(66) 99233-7652", "www.farmaciaLav.com.br", 1300,
+                                "Boa Esperança, Rua 8, N. 254", "(66) 99233-7652", "www.farmaciaLav.com.br",
+                                SalarioBase,
                                 "Vinicius Padilha Vieira", "022.407.431-24", "Vendedor", 0);
                 funcionariosFarmacia.add(funcionarioVinicius);
         }
@@ -167,34 +170,35 @@ public class main {
         }
 
         // Calculando o salário do Vendedor
-        public static void calculaSalarioVendedor(Funcionario vendedor, ArrayList<Funcionario> farmaciaFuncionarios,
-                        Cliente cliente) {
-                ArrayList<Produtos> todosProdutos = cliente.getCompras();
-                int i;
-                for (i = 0; i < farmaciaFuncionarios.size(); i++) {
-                        if (vendedor.getCPF().equals(farmaciaFuncionarios.get(i).getCPF())) {
-                                break;
-                        }
-                }
-                for (int j = 0; j < todosProdutos.size(); j++) {
-                        farmaciaFuncionarios.get(i).setSalario(todosProdutos.get(j).getPreco());
-                }
-        }
-
-        // Calculando o salário do Funcionário
-
-        public static void calculaSalarioFarmaceutico(Funcionario farmaceutico,
+        public static void calculaSalarioFuncionario(Funcionario funcionario,
                         ArrayList<Funcionario> farmaciaFuncionarios,
-                        Cliente cliente) {
+                        Cliente cliente, int flag) {
                 ArrayList<Produtos> todosProdutos = cliente.getCompras();
-                int i;
-                for (i = 0; i < farmaciaFuncionarios.size(); i++) {
-                        if (farmaceutico.getCPF().equals(farmaciaFuncionarios.get(i).getCPF())) {
-                                break;
+                if (flag == 0) {
+                        int i;
+                        for (i = 0; i < farmaciaFuncionarios.size(); i++) {
+                                if (funcionario.getCPF().equals(farmaciaFuncionarios.get(i).getCPF())) {
+                                        break;
+                                }
                         }
-                }
-                for (int j = 0; j < todosProdutos.size(); j++) {
-                        farmaciaFuncionarios.get(i).setSalario(todosProdutos.get(j).getPreco());
+                        for (int j = 0; j < todosProdutos.size(); j++) {
+                                farmaciaFuncionarios.get(i).setSalario(todosProdutos.get(j).getPreco());
+                        }
+                } else {
+                        int i;
+                        for (i = 0; i < farmaciaFuncionarios.size(); i++) {
+                                if (funcionario.getCPF().equals(farmaciaFuncionarios.get(i).getCPF())) {
+                                        break;
+                                }
+                        }
+
+                        for (int j = 0; j < todosProdutos.size(); j++) {
+                                if (((Remedio) todosProdutos.get(j)).getTipoRemedio().equals("Injetável")) {
+                                        farmaciaFuncionarios.get(1).setSalario(todosProdutos.get(j).getPreco());
+                                } else {
+                                        farmaciaFuncionarios.get(i).setSalario(todosProdutos.get(j).getPreco());
+                                }
+                        }
                 }
         }
 
@@ -206,21 +210,17 @@ public class main {
 
         public static void main(String[] args) {
 
+                // Criando a flag para validacao de casos de mudanca de atendimento
+                int flag = 0;
+
                 // Paraa contar o número de clientes
                 int contadorCliente = 0;
-
-                // Lista de Compras dos Clientes
-                ArrayList<Produtos> compraCliente = new ArrayList<Produtos>();
 
                 // Lista para incluir Todos os produtos
                 ArrayList<Produtos> produtosFarmacia = new ArrayList<Produtos>();
 
                 // Lista para incluir todos os clientes atendidos na farmácia
                 ArrayList<Cliente> clienteFarmacia = new ArrayList<Cliente>();
-
-                // Lista para incluir os funcionários da Farmácia
-                ArrayList<Funcionario> farmaciaFuncionarios = new ArrayList<Funcionario>();
-                cadastrarFuncionarios(farmaciaFuncionarios);
 
                 // Coletando informações sobre a Farmacia
 
@@ -231,8 +231,17 @@ public class main {
                 String Site = "www.farmaciaLav.com.br";
                 double SalarioBase = 1300;
 
+                // Lista para incluir os funcionários da Farmácia
+                ArrayList<Funcionario> farmaciaFuncionarios = new ArrayList<Funcionario>();
+                cadastrarFuncionarios(farmaciaFuncionarios, SalarioBase);
+
+                // Cadastrando Todos os Produtos - 10 Remédios & 10 N. Remédios
+                produtosFarmacia = cadastrandoProdutos(produtosFarmacia);
+
                 // Apresentando os dados da Farmácia
                 while (true) {
+                        // Atualizando o flag para 0 novamente, pois receberemos um novo cliente;
+                        flag = 0;
 
                         // Instanciano uma var random, pois vamos precisar para randomizar o atendimento
                         // do cliente, de acordo com os funcionários fixos
@@ -240,7 +249,7 @@ public class main {
                         Funcionario auxAtendente = null;
                         Funcionario atendente = null;
 
-                        // Definindo Cliente + Informações
+                        // Instanciando Cliente + Definição e Informações
                         Cliente clienteNovo = new Cliente("", "", "");
                         JOptionPane.showMessageDialog(null,
                                         "** Informações sobre a Farmácia LAV **\n\n Nome: " + NomeFarmacia
@@ -278,7 +287,6 @@ public class main {
                                         String nomeCliente = JOptionPane.showInputDialog("Digite o seu Nome: ");
                                         String telCliente = JOptionPane.showInputDialog("Digite o seu Telefone: ");
 
-                                        // Instanciando um Novo Cliente
                                         JOptionPane.showMessageDialog(null,
                                                         "** Informações Passadas **\n\nCPF: " + cpfCliente + "\nNome: "
                                                                         + nomeCliente + "\nTelefone: " + telCliente);
@@ -289,16 +297,16 @@ public class main {
                                         if (resposta == JOptionPane.YES_OPTION) {
                                                 Object[] opcaoCliente = { "CPF", "Nome", "Telefone", "Tudo" };
 
+                                                // Perguntando se o Cliente deseja alterar algo
                                                 Object selecionaOpcaoCliente = JOptionPane.showInputDialog(
                                                                 null,
                                                                 "** Alteração de Dados **",
                                                                 "Opção",
                                                                 JOptionPane.INFORMATION_MESSAGE,
                                                                 null,
-                                                                opcaoCliente, // Você pode passar o array de itens aqui,
-                                                                              // mas não
-                                                                              // é usado diretamente
-                                                                null // Valor padrão selecionado
+                                                                opcaoCliente,
+                                                                null
+
                                                 );
                                                 if (selecionaOpcaoCliente.equals("CPF")) {
                                                         cpfCliente = JOptionPane.showInputDialog("Digite o seu CPF: ");
@@ -326,6 +334,7 @@ public class main {
                                                 continue;
                                         }
 
+                                        // Inserindo todos as informações na classe cliente instanciado como clienteNovo
                                         clienteNovo.setCPF(cpfCliente);
                                         clienteNovo.setNome(nomeCliente);
                                         clienteNovo.setTelefone(telCliente);
@@ -335,7 +344,11 @@ public class main {
                                 }
 
                         } else if (selecionarOpcao.equals("Comprar")) {
+
+                                // Selecionado em "Comprar"
                                 while (true) {
+
+                                        // Mostrando as opções Remédio e não remédio
                                         String[] opcaoCompra = { "Remédios", "Não Remédios" };
                                         String compraSelecionada = (String) JOptionPane.showInputDialog(
                                                         null,
@@ -345,9 +358,6 @@ public class main {
                                                         null,
                                                         opcaoCompra,
                                                         opcaoCompra[0]);
-
-                                        // Cadastrando Todos os Produtos - 10 Remédios & 10 N. Remédios
-                                        produtosFarmacia = cadastrandoProdutos(produtosFarmacia);
 
                                         if (compraSelecionada.equals("Remédios")) {
 
@@ -415,6 +425,7 @@ public class main {
                                                                         JOptionPane.showConfirmDialog(null,
                                                                                         "Vamos te encaminhar para a farmacêutica\npara realizar a aplicação do injetável\n\nFarmacêutica: "
                                                                                                         + atendente.getNome());
+                                                                        flag = 1;
                                                                 }
                                                         }
 
@@ -530,18 +541,21 @@ public class main {
                                                                 }
 
                                                                 if (auxAtendente == null) {
-                                                                        if (atendente.getTipoFuncionario()
+                                                                        calculaSalarioFuncionario(atendente,
+                                                                                        farmaciaFuncionarios,
+                                                                                        clienteNovo, flag);
+                                                                } else {
+                                                                        if (auxAtendente.getTipoFuncionario()
                                                                                         .equals("Vendedor")) {
-                                                                                calculaSalarioVendedor(atendente,
+                                                                                calculaSalarioFuncionario(auxAtendente,
                                                                                                 farmaciaFuncionarios,
-                                                                                                clienteNovo);
+                                                                                                clienteNovo, flag);
                                                                         } else if (atendente.getTipoFuncionario()
                                                                                         .equals("Farmacêutico")) {
-                                                                                calculaSalarioFarmaceutico(atendente,
+                                                                                calculaSalarioFuncionario(atendente,
                                                                                                 farmaciaFuncionarios,
-                                                                                                clienteNovo);
+                                                                                                clienteNovo, flag);
                                                                         }
-
                                                                 }
 
                                                         } else {
@@ -558,6 +572,13 @@ public class main {
                                 break;
 
                         }
+
+                        if (contadorCliente == 11) {
+                                break;
+                        }
                 }
+                relatorioCliente();
+                relatorioFuncionario();
+                relatorioFarmacia();
         }
 }
