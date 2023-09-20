@@ -14,6 +14,7 @@ import com.mycompany.products.Remedio;
 import javax.swing.JOptionPane;
 import java.util.ArrayList;
 import java.util.Random;
+import java.text.DecimalFormat;
 
 public class main {
 
@@ -39,7 +40,6 @@ public class main {
         // Funcao que busca reconhecer se há algum cpf já registrado retornando true, se
         // verdadeiro e false se o contrário
         public static boolean verificandoCliente(ArrayList<Cliente> clienteFarmacia, String CPF) {
-
                 for (int i = 0; i < clienteFarmacia.size(); i++) {
                         String cpfBuscado = clienteFarmacia.get(i).getCPF();
                         if (cpfBuscado.equals(CPF)) {
@@ -208,6 +208,11 @@ public class main {
                 return relatorio;
         }
 
+        public static String formatarNumeroComDuasCasasDecimais(double numero) {
+                DecimalFormat formato = new DecimalFormat("0.00");
+                return formato.format(numero);
+        }
+
         public static void main(String[] args) {
 
                 // Criando a flag para validacao de casos de mudanca de atendimento
@@ -277,7 +282,7 @@ public class main {
 
                                 // Cadastrando os Clientes
                                 JOptionPane.showMessageDialog(null,
-                                                "** Bem-Vindo ** \n\n Precisamos de algumas Informações \n\n CPF:\n Nome:\n Telefone:");
+                                                "** Bem-Vindo ** \n\n Precisamos de algumas informações \n\n CPF:\n Nome:\n Telefone:");
                                 String cpfCliente = JOptionPane.showInputDialog("Digite o seu CPF: ");
 
                                 // Verificando se o cpf do cliente atual já foi cadastrado
@@ -330,8 +335,6 @@ public class main {
 
                                                 }
 
-                                        } else {
-                                                continue;
                                         }
 
                                         // Inserindo todos as informações na classe cliente instanciado como clienteNovo
@@ -362,8 +365,7 @@ public class main {
                                         if (compraSelecionada.equals("Remédios")) {
 
                                                 atendente = farmaciaFuncionarios.get(
-                                                                random.nextInt((farmaciaFuncionarios.size() - 0) + 1)
-                                                                                + 1);
+                                                                random.nextInt(3));
                                                 JOptionPane.showMessageDialog(null,
                                                                 "Atendimento com:\n\n Nome: " + atendente.getNome()
                                                                                 + "\n Cargo: "
@@ -403,7 +405,7 @@ public class main {
                                                         if (receita) {
 
                                                                 int resposta = JOptionPane.showConfirmDialog(null,
-                                                                                "Você possui Receita ?",
+                                                                                "Você possui Receita?",
                                                                                 "Confirmação",
                                                                                 JOptionPane.YES_NO_OPTION);
                                                                 if (resposta != JOptionPane.YES_OPTION) {
@@ -432,7 +434,7 @@ public class main {
                                                 }
 
                                                 int respostaClienteProduto = JOptionPane.showConfirmDialog(null,
-                                                                "Deseja colocar no carrinho ?\n\nNome: "
+                                                                "Deseja colocar no carrinho?\n\nNome: "
                                                                                 + produtoCliente.getNome() +
                                                                                 "\nMarca: "
                                                                                 + produtoCliente.getMarca()
@@ -486,7 +488,7 @@ public class main {
                                                 }
 
                                                 int respostaClienteProduto = JOptionPane.showConfirmDialog(null,
-                                                                "Deseja colocar no carrinho ?\n\nNome: "
+                                                                "Deseja colocar no carrinho?\n\nNome: "
                                                                                 + produtoCliente.getNome() +
                                                                                 "\nMarca: "
                                                                                 + produtoCliente.getMarca()
@@ -507,7 +509,7 @@ public class main {
                                         }
 
                                         int resposta = JOptionPane.showConfirmDialog(null,
-                                                        "Deseja continuar comprando ?",
+                                                        "Deseja continuar comprando?",
                                                         "Confirmação",
                                                         JOptionPane.YES_NO_OPTION);
 
@@ -517,7 +519,7 @@ public class main {
 
                                                         String comprasAtualCliente = comprasAtualCliente(clienteNovo);
                                                         String cpf = JOptionPane.showInputDialog(
-                                                                        "Antes de ir para o carrinho\npasse o seu cpf:");
+                                                                        "Passe o seu CPF:");
                                                         int respostaFecharCarrinho = JOptionPane.showConfirmDialog(null,
                                                                         "** No seu carrinho tem: **\n\n"
                                                                                         + comprasAtualCliente
@@ -530,14 +532,14 @@ public class main {
                                                                                 clienteNovo);
                                                                 if (verificandoCliente(clienteFarmacia, cpf)) {
                                                                         JOptionPane.showMessageDialog(null,
-                                                                                        "Você tem Cadastro!!\n\nValor: R$"
-                                                                                                        + valorTotal
-                                                                                                        + "\nValor 10% OFF: R$"
-                                                                                                        + (valorTotal * 0.9));
+                                                                                        "Você tem Cadastro!\n\nValor: R$"
+                                                                                                        + formatarNumeroComDuasCasasDecimais(valorTotal)
+                                                                                                        + "\nValor com desconto: R$"
+                                                                                                        + formatarNumeroComDuasCasasDecimais(valorTotal * 0.9));
                                                                 } else {
                                                                         JOptionPane.showMessageDialog(null,
-                                                                                        "Você não tem Cadastro!!\n\nValor: R$"
-                                                                                                        + valorTotal);
+                                                                                        "Você não tem Cadastro!\n\nValor: R$"
+                                                                                                        + formatarNumeroComDuasCasasDecimais(valorTotal));
                                                                 }
 
                                                                 if (auxAtendente == null) {
