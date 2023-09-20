@@ -35,7 +35,8 @@ public class main {
         public static boolean verificandoCliente(ArrayList<Cliente> clienteFarmacia, String CPF) {
 
                 for (int i = 0; i < clienteFarmacia.size(); i++) {
-                        if (clienteFarmacia.get(i).getCPF().equals(CPF)) {
+                        String cpfBuscado = clienteFarmacia.get(i).getCPF();
+                        if (cpfBuscado.equals(CPF)) {
                                 return true;
                         }
                 }
@@ -168,11 +169,10 @@ public class main {
                 String Site = "www.farmaciaLav.com.br";
                 double SalarioBase = 1300;
 
-                // Definindo Cliente + Informações
-                Cliente clienteNovo = new Cliente("", "", "");
-
                 // Apresentando os dados da Farmácia
                 while (true) {
+                        // Definindo Cliente + Informações
+                        Cliente clienteNovo = new Cliente("", "", "");
                         JOptionPane.showMessageDialog(null,
                                         "** Informações sobre a Farmácia LAV **\n\n Nome: " + NomeFarmacia
                                                         + "\n CNPJ: "
@@ -400,7 +400,8 @@ public class main {
                                                 if (clienteNovo.getCompras() != null) {
 
                                                         String comprasAtualCliente = comprasAtualCliente(clienteNovo);
-
+                                                        String cpf = JOptionPane.showInputDialog(
+                                                                        "Antes de ir para o carrinho\npasse o seu cpf:");
                                                         int respostaFecharCarrinho = JOptionPane.showConfirmDialog(null,
                                                                         "** No seu carrinho tem: **\n\n"
                                                                                         + comprasAtualCliente
@@ -411,8 +412,7 @@ public class main {
                                                         if (respostaFecharCarrinho == JOptionPane.YES_OPTION) {
                                                                 double valorTotal = calculandoTotalCarrinho(
                                                                                 clienteNovo);
-                                                                if (verificandoCliente(clienteFarmacia,
-                                                                                clienteNovo.getCPF())) {
+                                                                if (verificandoCliente(clienteFarmacia, cpf)) {
                                                                         JOptionPane.showMessageDialog(null,
                                                                                         "Você tem Cadastro!!\n\nValor: R$"
                                                                                                         + valorTotal
