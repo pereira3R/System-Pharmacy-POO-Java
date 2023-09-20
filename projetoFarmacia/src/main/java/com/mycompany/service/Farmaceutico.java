@@ -1,19 +1,22 @@
 
 package com.mycompany.service;
 
+import com.mycompany.products.Produtos;
+
 public class Farmaceutico extends Funcionario {
 
-    private double salario = getSalarioBase();
+    private double salario;
     private double vendas;
     protected int permissao;
 
     public Farmaceutico(String NomeFarmacia, String CNPJ, String Endereco, String Telefone, String Site,
             double SalarioBase, String Nome, String CPF, String tipoFuncionario, int certificado) {
         super(NomeFarmacia, CNPJ, Endereco, Telefone, Site, SalarioBase, Nome, CPF, tipoFuncionario, certificado);
+        this.salario = getSalarioBase();
     }
 
     public void setSalario(double input) {
-        this.salario = input;
+        this.salario += input;
     }
 
     public double getSalario() {
@@ -29,7 +32,7 @@ public class Farmaceutico extends Funcionario {
     }
 
     @Override
-    public void calcularSalario(double input) {
-        setSalario(getSalarioBase() * input * 0.1);
+    public void calcularSalario(Produtos produto) {
+        setSalario(produto.getPreco() * 0.1);
     }
 }

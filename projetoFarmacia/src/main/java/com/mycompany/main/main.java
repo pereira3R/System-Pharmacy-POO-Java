@@ -83,6 +83,10 @@ public class main {
                 todosProdutos.add(addProduto);
 
                 // Todos os produtos da Farmácia que se classificam como N. Remédios
+                addProduto = new Remedio("“Benzetacil”", 17.99, "Remédio", "Schering-Plough", true, "Injetável", 4,
+                                "Schering-Plough",
+                                "Antibióticos");
+                todosProdutos.add(addProduto);
                 addProduto = new Remedio("Dipirona", 5.99, "Remédio", "EMS S/A", false, "Comprimidos", 10, "EMS S/A",
                                 "Analgésicos");
                 todosProdutos.add(addProduto);
@@ -162,6 +166,38 @@ public class main {
                 return valorTotal;
         }
 
+        // Calculando o salário do Vendedor
+        public static void calculaSalarioVendedor(Funcionario vendedor, ArrayList<Funcionario> farmaciaFuncionarios,
+                        Cliente cliente) {
+                ArrayList<Produtos> todosProdutos = cliente.getCompras();
+                int i;
+                for (i = 0; i < farmaciaFuncionarios.size(); i++) {
+                        if (vendedor.getCPF().equals(farmaciaFuncionarios.get(i).getCPF())) {
+                                break;
+                        }
+                }
+                for (int j = 0; j < todosProdutos.size(); j++) {
+                        farmaciaFuncionarios.get(i).setSalario(todosProdutos.get(j).getPreco());
+                }
+        }
+
+        // Calculando o salário do Funcionário
+
+        public static void calculaSalarioFarmaceutico(Funcionario farmaceutico,
+                        ArrayList<Funcionario> farmaciaFuncionarios,
+                        Cliente cliente) {
+                ArrayList<Produtos> todosProdutos = cliente.getCompras();
+                int i;
+                for (i = 0; i < farmaciaFuncionarios.size(); i++) {
+                        if (farmaceutico.getCPF().equals(farmaciaFuncionarios.get(i).getCPF())) {
+                                break;
+                        }
+                }
+                for (int j = 0; j < todosProdutos.size(); j++) {
+                        farmaciaFuncionarios.get(i).setSalario(todosProdutos.get(j).getPreco());
+                }
+        }
+
         // Arrumar Relatório
         public static String relatorioFinalDia() {
                 String relatorio = "";
@@ -170,10 +206,8 @@ public class main {
 
         public static void main(String[] args) {
 
-                // Instanciano uma var random, pois vamos precisar para randomizar o atendimento
-                // do cliente, de acordo com os funcionários fixos
-                Random random = new Random();
-                Funcionario atendente = null;
+                // Paraa contar o número de clientes
+                int contadorCliente = 0;
 
                 // Lista de Compras dos Clientes
                 ArrayList<Produtos> compraCliente = new ArrayList<Produtos>();
@@ -199,6 +233,13 @@ public class main {
 
                 // Apresentando os dados da Farmácia
                 while (true) {
+
+                        // Instanciano uma var random, pois vamos precisar para randomizar o atendimento
+                        // do cliente, de acordo com os funcionários fixos
+                        Random random = new Random();
+                        Funcionario auxAtendente = null;
+                        Funcionario atendente = null;
+
                         // Definindo Cliente + Informações
                         Cliente clienteNovo = new Cliente("", "", "");
                         JOptionPane.showMessageDialog(null,
@@ -290,6 +331,7 @@ public class main {
                                         clienteNovo.setTelefone(telCliente);
                                         clienteNovo.setAtendidoPor(atendente);
                                         clienteFarmacia.add(clienteNovo);
+                                        contadorCliente++;
                                 }
 
                         } else if (selecionarOpcao.equals("Comprar")) {
@@ -361,12 +403,18 @@ public class main {
                                                                 }
                                                         }
 
-                                                        if (((Remedio) produtoCliente).getInjetavel()) {
+                                                        if (((Remedio) produtoCliente).getTipoRemedio()
+                                                                        .equals("Injetável")) {
                                                                 if (atendente.getTipoFuncionario()
                                                                                 .equals("Vendedor")) {
-                                                                        JOptionPane.showConfirmDialog(null, "Vamos te encaminhar para a farmacêutica\npara realizar a aplicação do injetável");
+                                                                        auxAtendente = atendente;
                                                                         atendente = farmaciaFuncionarios.get(1);
-                                                                        clienteFarmacia.get(i);
+                                                                        clienteNovo.setAtendidoPor(atendente);
+                                                                        clienteFarmacia.set(contadorCliente,
+                                                                                        clienteNovo);
+                                                                        JOptionPane.showConfirmDialog(null,
+                                                                                        "Vamos te encaminhar para a farmacêutica\npara realizar a aplicação do injetável\n\nFarmacêutica: "
+                                                                                                        + atendente.getNome());
                                                                 }
                                                         }
 
@@ -480,6 +528,22 @@ public class main {
                                                                                         "Você não tem Cadastro!!\n\nValor: R$"
                                                                                                         + valorTotal);
                                                                 }
+
+                                                                if (auxAtendente == null) {
+                                                                        if (atendente.getTipoFuncionario()
+                                                                                        .equals("Vendedor")) {
+                                                                                calculaSalarioVendedor(atendente,
+                                                                                                farmaciaFuncionarios,
+                                                                                                clienteNovo);
+                                                                        } else if (atendente.getTipoFuncionario()
+                                                                                        .equals("Farmacêutico")) {
+                                                                                calculaSalarioFarmaceutico(atendente,
+                                                                                                farmaciaFuncionarios,
+                                                                                                clienteNovo);
+                                                                        }
+
+                                                                }
+
                                                         } else {
                                                                 JOptionPane.showMessageDialog(null,
                                                                                 "** Carrinho Fechado **");

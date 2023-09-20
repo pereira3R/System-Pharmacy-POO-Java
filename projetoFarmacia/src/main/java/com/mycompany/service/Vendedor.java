@@ -1,6 +1,8 @@
 
 package com.mycompany.service;
 
+import com.mycompany.products.Produtos;
+
 public class Vendedor extends Funcionario {
 
     private int vendas;
@@ -10,6 +12,7 @@ public class Vendedor extends Funcionario {
     public Vendedor(String NomeFarmacia, String CNPJ, String Endereco, String Telefone, String Site, double SalarioBase,
             String Nome, String CPF, String tipoFuncionario, int certificado) {
         super(NomeFarmacia, CNPJ, Endereco, Telefone, Site, SalarioBase, Nome, CPF, tipoFuncionario, certificado);
+        this.salario = 0;
     }
 
     public void setVendas(int input) {
@@ -21,7 +24,7 @@ public class Vendedor extends Funcionario {
     }
 
     public void setSalario(double input) {
-        this.salario = input;
+        this.salario += input;
     }
 
     public double getSalario() {
@@ -29,7 +32,7 @@ public class Vendedor extends Funcionario {
     }
 
     @Override
-    public void calcularSalario(double input) {
-        setSalario(getSalarioBase() * input * 0.1);
+    public void calcularSalario(Produtos produto) {
+        setSalario(produto.getPreco() * 0.1);
     }
 }

@@ -1,5 +1,7 @@
 package com.mycompany.service;
 
+import com.mycompany.products.Produtos;
+
 public abstract class Funcionario extends Farmacia {
 
     private String Nome;
@@ -58,5 +60,5 @@ public abstract class Funcionario extends Farmacia {
         return this.certificado;
     }
 
-    public abstract void calcularSalario(double value);
+    public abstract void calcularSalario(Produtos input);
 }
