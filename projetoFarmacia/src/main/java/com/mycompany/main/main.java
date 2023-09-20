@@ -136,6 +136,15 @@ public class main {
                 return listaStringProdutos;
         }
 
+        public static double calculandoTotalCarrinho(Cliente cliente) {
+                ArrayList<Produtos> produtosCliente = cliente.getCompras();
+                double valorTotal = 0;
+                for (int i = 0; i < produtosCliente.size(); i++) {
+                        valorTotal += produtosCliente.get(i).getPreco();
+                }
+                return valorTotal;
+        }
+
         public static void main(String[] args) {
                 // Lista de Compras dos Clientes
                 ArrayList<Produtos> compraCliente = new ArrayList<Produtos>();
@@ -241,6 +250,7 @@ public class main {
                                         clienteNovo.setCPF(cpfCliente);
                                         clienteNovo.setNome(nomeCliente);
                                         clienteNovo.setTelefone(telCliente);
+                                        clienteFarmacia.add(clienteNovo);
                                 }
 
                         } else if (selecionarOpcao.equals("Comprar")) {
@@ -305,10 +315,24 @@ public class main {
 
                                                 }
 
-                                                clienteNovo.setCompras(produtoCliente);
-                                                String comprasAtualCliente = comprasAtualCliente(clienteNovo);
-                                                JOptionPane.showMessageDialog(null,
-                                                                "** Seu carrinho **\n\n" + comprasAtualCliente);
+                                                int respostaClienteProduto = JOptionPane.showConfirmDialog(null,
+                                                                "Deseja colocar no carrinho ?\n\nNome: "
+                                                                                + produtoCliente.getNome() +
+                                                                                "\nMarca: "
+                                                                                + produtoCliente.getMarca()
+                                                                                + "\nPreço: "
+                                                                                + produtoCliente.getPreco()
+                                                                                + "\n",
+
+                                                                "Sobre o Produto",
+                                                                JOptionPane.YES_NO_OPTION);
+                                                if (respostaClienteProduto == JOptionPane.YES_OPTION) {
+
+                                                        clienteNovo.setCompras(produtoCliente);
+                                                        String comprasAtualCliente = comprasAtualCliente(clienteNovo);
+                                                        JOptionPane.showMessageDialog(null,
+                                                                        "** Seu carrinho **\n\n" + comprasAtualCliente);
+                                                }
 
                                         } else if (compraSelecionada.equals("Não Remédios")) {
                                                 ArrayList<Produtos> listaNRemedios = new ArrayList<Produtos>();
@@ -345,10 +369,24 @@ public class main {
 
                                                 }
 
-                                                clienteNovo.setCompras(produtoCliente);
-                                                String comprasAtualCliente = comprasAtualCliente(clienteNovo);
-                                                JOptionPane.showMessageDialog(null,
-                                                                "** Seu carrinho **\n\n" + comprasAtualCliente);
+                                                int respostaClienteProduto = JOptionPane.showConfirmDialog(null,
+                                                                "Deseja colocar no carrinho ?\n\nNome: "
+                                                                                + produtoCliente.getNome() +
+                                                                                "\nMarca: "
+                                                                                + produtoCliente.getMarca()
+                                                                                + "\nPreço: "
+                                                                                + produtoCliente.getPreco()
+                                                                                + "\n",
+
+                                                                "Sobre o Produto",
+                                                                JOptionPane.YES_NO_OPTION);
+                                                if (respostaClienteProduto == JOptionPane.YES_OPTION) {
+
+                                                        clienteNovo.setCompras(produtoCliente);
+                                                        String comprasAtualCliente = comprasAtualCliente(clienteNovo);
+                                                        JOptionPane.showMessageDialog(null,
+                                                                        "** Seu carrinho **\n\n" + comprasAtualCliente);
+                                                }
 
                                         }
 
@@ -358,6 +396,39 @@ public class main {
                                                         JOptionPane.YES_NO_OPTION);
 
                                         if (resposta != JOptionPane.YES_OPTION) {
+
+                                                if (clienteNovo.getCompras() != null) {
+
+                                                        String comprasAtualCliente = comprasAtualCliente(clienteNovo);
+
+                                                        int respostaFecharCarrinho = JOptionPane.showConfirmDialog(null,
+                                                                        "** No seu carrinho tem: **\n\n"
+                                                                                        + comprasAtualCliente
+                                                                                        + "\n\n Deseja fechar o carrinho ?",
+                                                                        "Confirmação",
+                                                                        JOptionPane.YES_NO_OPTION);
+
+                                                        if (respostaFecharCarrinho == JOptionPane.YES_OPTION) {
+                                                                double valorTotal = calculandoTotalCarrinho(
+                                                                                clienteNovo);
+                                                                if (verificandoCliente(clienteFarmacia,
+                                                                                clienteNovo.getCPF())) {
+                                                                        JOptionPane.showMessageDialog(null,
+                                                                                        "Você tem Cadastro!!\n\nValor: R$"
+                                                                                                        + valorTotal
+                                                                                                        + "\nValor 10% OFF: R$"
+                                                                                                        + (valorTotal * 0.9));
+                                                                } else {
+                                                                        JOptionPane.showMessageDialog(null,
+                                                                                        "Você não tem Cadastro!!\n\nValor: R$"
+                                                                                                        + valorTotal);
+                                                                }
+                                                        } else {
+                                                                JOptionPane.showMessageDialog(null,
+                                                                                "** Carrinho Fechado **");
+                                                        }
+
+                                                }
                                                 break;
                                         }
                                 }
