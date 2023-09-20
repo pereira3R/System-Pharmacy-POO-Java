@@ -10,6 +10,7 @@ public class Remedio extends Produtos {
     private String FarmaceuticaRemedio;
     private String MarcaRemedio;
     private String secaoRemedio;
+    private Boolean injetavel = false;
 
     public Remedio(String Nome, double Preco, String Tipo, String Marca, boolean ReceitaRemedio,
             String TipoRemedio, int Quantidade, String FarmaceuticaRemedio, String secaoRemedio) {
@@ -77,6 +78,14 @@ public class Remedio extends Produtos {
 
     public String getSecaoString() {
         return this.secaoRemedio;
+    }
+
+    public void setInjetavel(Boolean input) {
+        this.injetavel = input;
+    }
+
+    public Boolean getInjetavel() {
+        return this.injetavel;
     }
 
     @Override

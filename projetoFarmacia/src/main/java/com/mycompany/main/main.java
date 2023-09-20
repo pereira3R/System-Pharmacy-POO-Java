@@ -6,14 +6,14 @@ import com.mycompany.service.Funcionario;
 import com.mycompany.service.Vendedor;
 import com.mycompany.service.Farmaceutico;
 import com.mycompany.service.Cliente;
-
+import com.mycompany.products.NRemedio;
 //Importando classes products 
 import com.mycompany.products.Produtos;
 import com.mycompany.products.Remedio;
-import com.mycompany.products.NRemedio;
 
 import javax.swing.JOptionPane;
 import java.util.ArrayList;
+import java.util.Random;
 
 public class main {
 
@@ -49,6 +49,8 @@ public class main {
         // Método feito para adicionar todos os produtos do estoque da Farmácia LAV
         public static ArrayList<Produtos> cadastrandoProdutos(ArrayList<Produtos> todosProdutos) {
 
+                // Todos os produtos da Farmácia que se classificam como Remédios
+
                 Produtos addProduto = new NRemedio("Fralda Supreme Care P", 49.90, "Outros", "Huggies",
                                 "Kimberly-Clark", "Higiene");
                 todosProdutos.add(addProduto);
@@ -79,6 +81,8 @@ public class main {
                 addProduto = new NRemedio("Desodorante Rexona Men Antibacterial Aerossol Antitranspirante 150ml", 16.49,
                                 "Outros", "Rexona", "Rexona", "Higiene");
                 todosProdutos.add(addProduto);
+
+                // Todos os produtos da Farmácia que se classificam como N. Remédios
                 addProduto = new Remedio("Dipirona", 5.99, "Remédio", "EMS S/A", false, "Comprimidos", 10, "EMS S/A",
                                 "Analgésicos");
                 todosProdutos.add(addProduto);
@@ -165,6 +169,12 @@ public class main {
         }
 
         public static void main(String[] args) {
+
+                // Instanciano uma var random, pois vamos precisar para randomizar o atendimento
+                // do cliente, de acordo com os funcionários fixos
+                Random random = new Random();
+                Funcionario atendente = null;
+
                 // Lista de Compras dos Clientes
                 ArrayList<Produtos> compraCliente = new ArrayList<Produtos>();
 
@@ -220,6 +230,7 @@ public class main {
                                                 "** Bem-Vindo ** \n\n Precisamos de algumas Informações \n\n CPF:\n Nome:\n Telefone:");
                                 String cpfCliente = JOptionPane.showInputDialog("Digite o seu CPF: ");
 
+                                // Verificando se o cpf do cliente atual já foi cadastrado
                                 if (verificandoCliente(clienteFarmacia, cpfCliente)) {
                                         JOptionPane.showMessageDialog(null, "Bem-vindo novamente !!");
                                 } else {
@@ -277,6 +288,7 @@ public class main {
                                         clienteNovo.setCPF(cpfCliente);
                                         clienteNovo.setNome(nomeCliente);
                                         clienteNovo.setTelefone(telCliente);
+                                        clienteNovo.setAtendidoPor(atendente);
                                         clienteFarmacia.add(clienteNovo);
                                 }
 
@@ -296,6 +308,15 @@ public class main {
                                         produtosFarmacia = cadastrandoProdutos(produtosFarmacia);
 
                                         if (compraSelecionada.equals("Remédios")) {
+
+                                                atendente = farmaciaFuncionarios.get(
+                                                                random.nextInt((farmaciaFuncionarios.size() - 0) + 1)
+                                                                                + 1);
+                                                JOptionPane.showMessageDialog(null,
+                                                                "Atendimento com:\n\n Nome: " + atendente.getNome()
+                                                                                + "\n Cargo: "
+                                                                                + atendente.getTipoFuncionario());
+
                                                 ArrayList<Produtos> listaRemedios = new ArrayList<Produtos>();
                                                 int countRemedios = 0;
                                                 for (int i = 0; i < produtosFarmacia.size(); i++) {
@@ -337,6 +358,15 @@ public class main {
                                                                         JOptionPane.showMessageDialog(null,
                                                                                         "Para comprar esse remédio,\n você precisa de receita");
                                                                         break;
+                                                                }
+                                                        }
+
+                                                        if (((Remedio) produtoCliente).getInjetavel()) {
+                                                                if (atendente.getTipoFuncionario()
+                                                                                .equals("Vendedor")) {
+                                                                        JOptionPane.showConfirmDialog(null, "Vamos te encaminhar para a farmacêutica\npara realizar a aplicação do injetável");
+                                                                        atendente = farmaciaFuncionarios.get(1);
+                                                                        clienteFarmacia.get(i);
                                                                 }
                                                         }
 
@@ -462,8 +492,8 @@ public class main {
 
                         } else if (selecionarOpcao.equals("Sair")) {
                                 break;
+
                         }
                 }
         }
-
 }

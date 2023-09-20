@@ -7,7 +7,6 @@ public abstract class Funcionario extends Farmacia {
     private String tipoFuncionario;
     private double salario;
     private int certificado = 0;
-    protected int permissao = 2;
 
     public Funcionario(String NomeFarmacia, String CNPJ, String Endereco, String Telefone, String Site,
             double SalarioBase,

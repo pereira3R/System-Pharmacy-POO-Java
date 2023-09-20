@@ -10,6 +10,7 @@ public class Cliente {
     private String telefone;
     private double valorTotalCompra;
     ArrayList<Produtos> compras = new ArrayList<Produtos>();
+    private Funcionario atendidoPor;
 
     public Cliente(String nome, String cpf, String telefone) {
         this.nome = nome;
@@ -59,5 +60,13 @@ public class Cliente {
     public ArrayList<Produtos> getCompras() {
         // Retornar uma cópia da lista para evitar modificações externas
         return this.compras;
+    }
+
+    public void setAtendidoPor(Funcionario input) {
+        this.atendidoPor = input;
+    }
+
+    public Funcionario getAtendidoPor() {
+        return this.atendidoPor;
     }
 }
