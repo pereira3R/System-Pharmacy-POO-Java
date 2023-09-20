@@ -228,7 +228,7 @@ public class main {
                 String CNPJ = "48. 048. 138/0001-79";
                 String Telefone = "(66) 99233-7652";
                 String Endereco = "Boa Esperança, Rua 8, N. 254";
-                String Site = "www.farmaciaLav.com.br";
+                String Site = "www.farmacialav.com.br";
                 double SalarioBase = 1300;
 
                 // Lista para incluir os funcionários da Farmácia
