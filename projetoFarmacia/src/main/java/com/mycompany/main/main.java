@@ -17,6 +17,7 @@ import java.util.ArrayList;
 
 public class main {
 
+        // Método para cadastrar os funcionários únicos da Farmácia LAV
         public static void cadastrarFuncionarios(ArrayList<Funcionario> funcionariosFarmacia) {
                 Funcionario funcionarioAnthony = new Vendedor("LAV", "48. 048. 138/0001-79",
                                 "Boa Esperança, Rua 8, N. 254", "(66) 99233-7652", "www.farmaciaLav.com.br", 1300,
@@ -32,6 +33,8 @@ public class main {
                 funcionariosFarmacia.add(funcionarioVinicius);
         }
 
+        // Funcao que busca reconhecer se há algum cpf já registrado retornando true, se
+        // verdadeiro e false se o contrário
         public static boolean verificandoCliente(ArrayList<Cliente> clienteFarmacia, String CPF) {
 
                 for (int i = 0; i < clienteFarmacia.size(); i++) {
@@ -43,6 +46,7 @@ public class main {
                 return false;
         }
 
+        // Método feito para adicionar todos os produtos do estoque da Farmácia LAV
         public static ArrayList<Produtos> cadastrandoProdutos(ArrayList<Produtos> todosProdutos) {
 
                 Produtos addProduto = new NRemedio("Fralda Supreme Care P", 49.90, "Outros", "Huggies",
@@ -107,6 +111,8 @@ public class main {
                 return todosProdutos;
         }
 
+        // Funcao para buscar e retornar um produto do tipo Remedio na lista do produtos
+        // Remédios
         public static Produtos buscandoRemedio(ArrayList<Produtos> remedios, String nomeRemedio) {
                 for (int i = 0; i < remedios.size(); i++) {
                         if (remedios.get(i).getNome().equals(nomeRemedio)) {
@@ -117,6 +123,8 @@ public class main {
                 return null;
         }
 
+        // Funcao para buscar e retornar um produto do tipo N. Remedio na lista dos
+        // produtos N. Remedios
         public static Produtos buscandoNRemedio(ArrayList<Produtos> Nremedios, String nomeNRemedio) {
                 for (int i = 0; i < Nremedios.size(); i++) {
                         if (Nremedios.get(i).getNome().equals(nomeNRemedio)) {
@@ -127,6 +135,8 @@ public class main {
                 return null;
         }
 
+        // Funcao para concatenar e retornar a String com os nomes de todos os produtos
+        // selecionados para comprar pelo cliente
         public static String comprasAtualCliente(Cliente clienteNovo) {
 
                 ArrayList<Produtos> produtosCliente = clienteNovo.getCompras();
@@ -137,6 +147,8 @@ public class main {
                 return listaStringProdutos;
         }
 
+        // Função para calcular e retornar a soma de todos os produtos que estão no
+        // carrinho do cliente
         public static double calculandoTotalCarrinho(Cliente cliente) {
                 ArrayList<Produtos> produtosCliente = cliente.getCompras();
                 double valorTotal = 0;
@@ -144,6 +156,12 @@ public class main {
                         valorTotal += produtosCliente.get(i).getPreco();
                 }
                 return valorTotal;
+        }
+
+        // Arrumar Relatório
+        public static String relatorioFinalDia() {
+                String relatorio = "";
+                return relatorio;
         }
 
         public static void main(String[] args) {
@@ -217,7 +235,7 @@ public class main {
                                                         "Você deseja alterar os dados ?",
                                                         "Confirmação", JOptionPane.YES_NO_OPTION);
                                         if (resposta == JOptionPane.YES_OPTION) {
-                                                Object[] opcaoCliente = { "CPF", "Nome", "Telefone" };
+                                                Object[] opcaoCliente = { "CPF", "Nome", "Telefone", "Tudo" };
 
                                                 Object selecionaOpcaoCliente = JOptionPane.showInputDialog(
                                                                 null,
@@ -238,6 +256,15 @@ public class main {
                                                                         .showInputDialog("Digite o seu Nome: ");
 
                                                 } else if (selecionaOpcaoCliente.equals("Telefone")) {
+                                                        telCliente = JOptionPane
+                                                                        .showInputDialog("Digite o seu Telefone: ");
+
+                                                } else if (selecionaOpcaoCliente.equals("Tudo")) {
+
+                                                        cpfCliente = JOptionPane.showInputDialog("Digite o seu CPF: ");
+
+                                                        nomeCliente = JOptionPane
+                                                                        .showInputDialog("Digite o seu Nome: ");
                                                         telCliente = JOptionPane
                                                                         .showInputDialog("Digite o seu Telefone: ");
 

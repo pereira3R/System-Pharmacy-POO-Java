@@ -2,6 +2,7 @@ package com.mycompany.products;
 
 public class NRemedio extends Produtos {
 
+    // Criando todas as características da classe NRemedio
     private String nomeProduto;
     private String FabricanteProduto;
     private String SecaoProduto;
