@@ -330,8 +330,6 @@ public class main {
 
                                                 }
 
-                                        } else {
-                                                continue;
                                         }
 
                                         // Inserindo todos as informações na classe cliente instanciado como clienteNovo
@@ -349,7 +347,7 @@ public class main {
                                 while (true) {
 
                                         // Mostrando as opções Remédio e não remédio
-                                        String[] opcaoCompra = { "Remédios", "Não Remédios" };
+                                        String[] opcaoCompra = { "Remédios", "Outros" };
                                         String compraSelecionada = (String) JOptionPane.showInputDialog(
                                                         null,
                                                         "Escolha uma opção:",
@@ -362,8 +360,7 @@ public class main {
                                         if (compraSelecionada.equals("Remédios")) {
 
                                                 atendente = farmaciaFuncionarios.get(
-                                                                random.nextInt((farmaciaFuncionarios.size() - 0) + 1)
-                                                                                + 1);
+                                                                random.nextInt(3));
                                                 JOptionPane.showMessageDialog(null,
                                                                 "Atendimento com:\n\n Nome: " + atendente.getNome()
                                                                                 + "\n Cargo: "
@@ -445,12 +442,14 @@ public class main {
                                                 if (respostaClienteProduto == JOptionPane.YES_OPTION) {
 
                                                         clienteNovo.setCompras(produtoCliente);
+                                                        double valorTotal = calculandoTotalCarrinho(clienteNovo);
                                                         String comprasAtualCliente = comprasAtualCliente(clienteNovo);
                                                         JOptionPane.showMessageDialog(null,
-                                                                        "** Seu carrinho **\n\n" + comprasAtualCliente);
+                                                                        "** Seu carrinho **\nValor Total: " + valorTotal
+                                                                                        + "\n\n" + comprasAtualCliente);
                                                 }
 
-                                        } else if (compraSelecionada.equals("Não Remédios")) {
+                                        } else if (compraSelecionada.equals("Outros")) {
                                                 ArrayList<Produtos> listaNRemedios = new ArrayList<Produtos>();
                                                 int countNRemedios = 0;
                                                 for (int i = 0; i < produtosFarmacia.size(); i++) {
@@ -499,9 +498,11 @@ public class main {
                                                 if (respostaClienteProduto == JOptionPane.YES_OPTION) {
 
                                                         clienteNovo.setCompras(produtoCliente);
+                                                        double valorTotal = calculandoTotalCarrinho(clienteNovo);
                                                         String comprasAtualCliente = comprasAtualCliente(clienteNovo);
                                                         JOptionPane.showMessageDialog(null,
-                                                                        "** Seu carrinho **\n\n" + comprasAtualCliente);
+                                                                        "** Seu carrinho **\nValor Total: " + valorTotal
+                                                                                        + "\n\n" + comprasAtualCliente);
                                                 }
 
                                         }
