@@ -577,8 +577,5 @@ public class main {
                                 break;
                         }
                 }
-                relatorioCliente();
-                relatorioFuncionario();
-                relatorioFarmacia();
         }
 }
