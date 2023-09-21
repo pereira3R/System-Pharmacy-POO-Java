@@ -1,8 +1,10 @@
 package com.mycompany.service;
 
+//Importando  a interface: painelControle + classe mãe: Produtos 
+import com.mycompany.controler.painelControle;
 import com.mycompany.products.Produtos;
 
-public abstract class Funcionario extends Farmacia {
+public abstract class Funcionario extends Farmacia implements painelControle {
 
     private String Nome;
     private String CPF;

@@ -6,8 +6,8 @@ import com.mycompany.products.Produtos;
 public class Farmaceutico extends Funcionario {
 
     private double salario;
-    private double vendas;
-    protected int permissao;
+    private int vendas;
+    protected int nivelAcesso = 2;
 
     public Farmaceutico(String NomeFarmacia, String CNPJ, String Endereco, String Telefone, String Site,
             double SalarioBase, String Nome, String CPF, String tipoFuncionario, int certificado) {
@@ -24,11 +24,11 @@ public class Farmaceutico extends Funcionario {
         return this.salario;
     }
 
-    public void setVendas(double input) {
+    public void setVendas(int input) {
         this.vendas += input;
     }
 
-    public double getVendas() {
+    public int getVendas() {
         return this.vendas;
     }
 
@@ -39,6 +39,14 @@ public class Farmaceutico extends Funcionario {
 
     @Override
     public void calcularComissaoVendas(int vendas) {
-
+        if (vendas > 6) {
+            setSalario(getSalarioBase() * 0.1);
+        }
     }
+
+    @Override
+    public int getNivelAcesso(int input) {
+        return this.nivelAcesso;
+    }
+
 }

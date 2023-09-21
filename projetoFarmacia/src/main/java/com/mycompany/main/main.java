@@ -204,6 +204,21 @@ public class main {
                 }
         }
 
+        public static void inserirVendas(Funcionario atendente, ArrayList<Funcionario> farmaciaFuncionarios,
+                        int vendas) {
+                int i;
+                for (i = 0; i < farmaciaFuncionarios.size(); i++) {
+                        if (atendente.getNome().equals(farmaciaFuncionarios.get(i).getNome())) {
+                                break;
+                        }
+                }
+                if (farmaciaFuncionarios.get(i).equals("Vendedor")) {
+                        ((Vendedor) farmaciaFuncionarios.get(i)).setVendas(vendas);
+                } else if (farmaciaFuncionarios.get(i).equals("Farmaceutico")) {
+                        ((Farmaceutico) farmaciaFuncionarios.get(i)).setVendas(vendas);
+                }
+        }
+
         // Arrumar Relatório
         public static String relatorioFinalDia() {
                 String relatorio = "";
@@ -248,11 +263,21 @@ public class main {
                 // Apresentando os dados da Farmácia
                 while (true) {
 
-                        // Condicao de Parada para fim de expediente + Print dos Relatórios
+                        // Condicao de Parada para fim de expediente + Incremento de Salario por vendas
+                        // + Print dos Relatórios
                         if (contadorCliente == 2) {
                                 JOptionPane.showMessageDialog(null, "Fim de expediente !!");
-                                // String clienteR = relatorioCliente();
-                                // String funcionarioR = relatorioFuncionarios();
+                                for (int i = 0; i < farmaciaFuncionarios.size(); i++) {
+                                        if (farmaciaFuncionarios.get(i).equals("Vendedor")) {
+                                                ((Vendedor) farmaciaFuncionarios.get(i)).calcularComissaoVendas(
+                                                                ((Vendedor) farmaciaFuncionarios.get(i)).getVendas());
+                                        }
+
+                                        else if (farmaciaFuncionarios.get(i).equals("Farmaceutico")) {
+                                                ((Vendedor) farmaciaFuncionarios.get(i)).calcularComissaoVendas(
+                                                                ((Vendedor) farmaciaFuncionarios.get(i)).getVendas());
+                                        }
+                                }
                                 break;
                         }
 
@@ -580,32 +605,39 @@ public class main {
                                                                 if (auxAtendente == null) {
                                                                         if (atendente.getTipoFuncionario()
                                                                                         .equals("Vendedor")) {
-                                                                                ((Vendedor) atendente).setVendas(
+                                                                                inserirVendas(atendente,
+                                                                                                farmaciaFuncionarios,
                                                                                                 contaCompras);
                                                                         } else if (atendente.getTipoFuncionario()
                                                                                         .equals("Farmaceutico")) {
-                                                                                ((Farmaceutico) atendente).setVendas(
+                                                                                inserirVendas(atendente,
+                                                                                                farmaciaFuncionarios,
                                                                                                 contaCompras);
                                                                         }
                                                                         calculaSalarioFuncionario(atendente,
                                                                                         farmaciaFuncionarios,
                                                                                         clienteNovo, flag);
+
                                                                 } else {
                                                                         if (auxAtendente.getTipoFuncionario()
                                                                                         .equals("Vendedor")) {
                                                                                 calculaSalarioFuncionario(auxAtendente,
                                                                                                 farmaciaFuncionarios,
                                                                                                 clienteNovo, flag);
-                                                                                ((Vendedor) atendente).setVendas(
+                                                                                inserirVendas(atendente,
+                                                                                                farmaciaFuncionarios,
                                                                                                 contaCompras);
-                                                                        } else if (atendente.getTipoFuncionario()
+                                                                        }
+                                                                        if (atendente.getTipoFuncionario()
                                                                                         .equals("Farmacêutico")) {
                                                                                 calculaSalarioFuncionario(atendente,
                                                                                                 farmaciaFuncionarios,
                                                                                                 clienteNovo, flag);
-                                                                                ((Farmaceutico) atendente).setVendas(
+                                                                                inserirVendas(atendente,
+                                                                                                farmaciaFuncionarios,
                                                                                                 contaFarmaceutico);
                                                                         }
+
                                                                 }
 
                                                         } else {

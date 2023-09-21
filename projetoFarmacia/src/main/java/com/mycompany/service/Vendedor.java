@@ -7,7 +7,7 @@ public class Vendedor extends Funcionario {
 
     private int vendas;
     private double salario;
-    protected int permissao;
+    protected int nivelAcesso = 1;
 
     public Vendedor(String NomeFarmacia, String CNPJ, String Endereco, String Telefone, String Site, double SalarioBase,
             String Nome, String CPF, String tipoFuncionario, int certificado) {
@@ -39,6 +39,14 @@ public class Vendedor extends Funcionario {
 
     @Override
     public void calcularComissaoVendas(int vendas) {
+        if (vendas > 6) {
+            setSalario(getSalarioBase() * 0.1);
+        }
+    }
 
+    @Override
+    public int getNivelAcesso(int input) {
+
+        return this.nivelAcesso;
     }
 }
