@@ -13,10 +13,11 @@ public class Vendedor extends Funcionario {
             String Nome, String CPF, String tipoFuncionario, int certificado) {
         super(NomeFarmacia, CNPJ, Endereco, Telefone, Site, SalarioBase, Nome, CPF, tipoFuncionario, certificado);
         this.salario = 0;
+        this.vendas = 0;
     }
 
     public void setVendas(int input) {
-        this.vendas = input;
+        this.vendas += input;
     }
 
     public int getVendas() {

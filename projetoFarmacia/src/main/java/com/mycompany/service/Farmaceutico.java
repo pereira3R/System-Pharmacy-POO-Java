@@ -13,6 +13,7 @@ public class Farmaceutico extends Funcionario {
             double SalarioBase, String Nome, String CPF, String tipoFuncionario, int certificado) {
         super(NomeFarmacia, CNPJ, Endereco, Telefone, Site, SalarioBase, Nome, CPF, tipoFuncionario, certificado);
         this.salario = getSalarioBase();
+        this.vendas = 0;
     }
 
     public void setSalario(double input) {
@@ -24,7 +25,7 @@ public class Farmaceutico extends Funcionario {
     }
 
     public void setVendas(double input) {
-        this.vendas = input;
+        this.vendas += input;
     }
 
     public double getVendas() {

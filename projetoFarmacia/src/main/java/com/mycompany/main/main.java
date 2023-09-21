@@ -250,6 +250,10 @@ public class main {
                         // Atualizando o flag para 0 novamente, pois receberemos um novo cliente;
                         flag = 0;
 
+                        // Armazenar a quantidade de compras efetuadas pelo cliente
+                        int contaCompras = 0;
+                        int contaFarmaceutico = 0;
+
                         // Instanciano uma var random, pois vamos precisar para randomizar o atendimento
                         // do cliente, de acordo com os funcionários fixos
                         Random random = new Random();
@@ -352,7 +356,6 @@ public class main {
 
                                 // Selecionado em "Comprar"
                                 while (true) {
-
                                         // Mostrando as opções Remédio e não remédio
                                         String[] opcaoCompra = { "Remédios", "Outros" };
                                         String compraSelecionada = (String) JOptionPane.showInputDialog(
@@ -429,8 +432,11 @@ public class main {
                                                                         JOptionPane.showConfirmDialog(null,
                                                                                         "Vamos te encaminhar para a farmacêutica\npara realizar a aplicação do injetável\n\nFarmacêutica: "
                                                                                                         + atendente.getNome());
+                                                                        contaFarmaceutico++;
                                                                         flag = 1;
                                                                 }
+                                                        } else if (flag == 0) {
+                                                                contaCompras++;
                                                         }
 
                                                 }
@@ -459,6 +465,13 @@ public class main {
                                                 }
 
                                         } else if (compraSelecionada.equals("Outros")) {
+
+                                                if (flag == 1) {
+                                                        contaFarmaceutico++;
+                                                } else {
+                                                        contaCompras++;
+                                                }
+
                                                 ArrayList<Produtos> listaNRemedios = new ArrayList<Produtos>();
                                                 int countNRemedios = 0;
                                                 for (int i = 0; i < produtosFarmacia.size(); i++) {
@@ -556,6 +569,15 @@ public class main {
                                                                 }
 
                                                                 if (auxAtendente == null) {
+                                                                        if (atendente.getTipoFuncionario()
+                                                                                        .equals("Vendedor")) {
+                                                                                ((Vendedor) atendente).setVendas(
+                                                                                                contaCompras);
+                                                                        } else if (atendente.getTipoFuncionario()
+                                                                                        .equals("Farmaceutico")) {
+                                                                                ((Farmaceutico) atendente).setVendas(
+                                                                                                contaCompras);
+                                                                        }
                                                                         calculaSalarioFuncionario(atendente,
                                                                                         farmaciaFuncionarios,
                                                                                         clienteNovo, flag);
@@ -565,11 +587,15 @@ public class main {
                                                                                 calculaSalarioFuncionario(auxAtendente,
                                                                                                 farmaciaFuncionarios,
                                                                                                 clienteNovo, flag);
+                                                                                ((Vendedor) atendente).setVendas(
+                                                                                                contaCompras);
                                                                         } else if (atendente.getTipoFuncionario()
                                                                                         .equals("Farmacêutico")) {
                                                                                 calculaSalarioFuncionario(atendente,
                                                                                                 farmaciaFuncionarios,
                                                                                                 clienteNovo, flag);
+                                                                                ((Farmaceutico) atendente).setVendas(
+                                                                                                contaFarmaceutico);
                                                                         }
                                                                 }
 
