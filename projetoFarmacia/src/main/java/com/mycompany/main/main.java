@@ -247,6 +247,15 @@ public class main {
 
                 // Apresentando os dados da Farmácia
                 while (true) {
+
+                        // Condicao de Parada para fim de expediente + Print dos Relatórios
+                        if (contadorCliente == 2) {
+                                JOptionPane.showMessageDialog(null, "Fim de expediente !!");
+                                // String clienteR = relatorioCliente();
+                                // String funcionarioR = relatorioFuncionarios();
+                                break;
+                        }
+
                         // Atualizando o flag para 0 novamente, pois receberemos um novo cliente;
                         flag = 0;
 
@@ -349,7 +358,7 @@ public class main {
                                         clienteNovo.setTelefone(telCliente);
                                         clienteNovo.setAtendidoPor(atendente);
                                         clienteFarmacia.add(clienteNovo);
-                                        contadorCliente++;
+
                                 }
 
                         } else if (selecionarOpcao.equals("Comprar")) {
@@ -608,15 +617,14 @@ public class main {
                                                 break;
                                         }
                                 }
+                                // Contando os clientes ao longo do dia
+                                contadorCliente++;
 
                         } else if (selecionarOpcao.equals("Sair")) {
                                 break;
 
                         }
 
-                        if (contadorCliente == 11) {
-                                break;
-                        }
                         // relatorio cliente
                         // relatorio funcionario
                 }
