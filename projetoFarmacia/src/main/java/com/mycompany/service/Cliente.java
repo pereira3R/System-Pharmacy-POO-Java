@@ -8,15 +8,15 @@ public class Cliente {
     private String nome;
     private String cpf;
     private String telefone;
-    private double valorTotalCompra;
+    private double valorTotalCompra = 0;
     ArrayList<Produtos> compras = new ArrayList<Produtos>();
     private Funcionario atendidoPor;
+    private int Contador = 0;
 
     public Cliente(String nome, String cpf, String telefone) {
         this.nome = nome;
         this.cpf = cpf;
         this.telefone = telefone;
-        this.valorTotalCompra = 0;
     }
 
     public void setNome(String nome) {
@@ -36,6 +36,14 @@ public class Cliente {
         return this.cpf;
     }
 
+    public int getContador(){
+        return this.Contador;
+    }
+
+    public void setContador(){
+        this.Contador += 1;
+    }
+
     public void setTelefone(String telefone) {
         // Adicione validações de telefone aqui, se necessário
         this.telefone = telefone;
@@ -46,7 +54,7 @@ public class Cliente {
     }
 
     public void setValorTotalCompra(double valorTotalCompra) {
-        this.valorTotalCompra = valorTotalCompra;
+        this.valorTotalCompra = this.valorTotalCompra + valorTotalCompra;
     }
 
     public double getValorTotalCompra() {
@@ -54,7 +62,7 @@ public class Cliente {
     }
 
     public void setCompras(Produtos compraCliente) {
-        compras.add(compraCliente);
+        this.compras.add(compraCliente);
     }
 
     public ArrayList<Produtos> getCompras() {

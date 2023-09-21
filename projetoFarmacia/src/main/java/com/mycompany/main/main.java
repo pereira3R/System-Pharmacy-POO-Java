@@ -16,8 +16,9 @@ import javax.swing.JOptionPane;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Random;
+import java.lang.Math;
 
-public class main {
+public class main{
 
         // Método para cadastrar os funcionários únicos da Farmácia LAV
         public static void cadastrarFuncionarios(ArrayList<Funcionario> funcionariosFarmacia, double SalarioBase) {
@@ -28,7 +29,7 @@ public class main {
                 funcionariosFarmacia.add(funcionarioAnthony);
                 Funcionario funcionarioLetizia = new Farmaceutico("LAV", "48. 048. 138/0001-79",
                                 "Boa Esperança, Rua 8, N. 254", "(69) 98417-7172", "www.farmaciaLav.com.br",
-                                SalarioBase,
+                                2500,
                                 "Letízia Manuella Serqueira Eugênio", "012.237.441-02", "Farmacêutico", 1);
                 funcionariosFarmacia.add(funcionarioLetizia);
                 Funcionario funcionarioVinicius = new Vendedor("LAV", "48. 048. 138/0001-79",
@@ -44,7 +45,7 @@ public class main {
 
                 for (int i = 0; i < clienteFarmacia.size(); i++) {
                         String cpfBuscado = clienteFarmacia.get(i).getCPF();
-                        if (cpfBuscado.equals(CPF)) {
+                        if (cpfBuscado.equals(CPF) && (clienteFarmacia.get(i).getNome() != "Desconhecido")) {
                                 return true;
                         }
                 }
@@ -212,25 +213,59 @@ public class main {
                                 break;
                         }
                 }
-                if (farmaciaFuncionarios.get(i).equals("Vendedor")) {
+                if (farmaciaFuncionarios.get(i).getTipoFuncionario().equals("Vendedor")) {
                         ((Vendedor) farmaciaFuncionarios.get(i)).setVendas(vendas);
-                } else if (farmaciaFuncionarios.get(i).equals("Farmaceutico")) {
+                } else if (farmaciaFuncionarios.get(i).getTipoFuncionario().equals("Farmaceutico")) {
                         ((Farmaceutico) farmaciaFuncionarios.get(i)).setVendas(vendas);
                 }
         }
 
         // Arrumar Relatório
-        public static String relatorioFinalDia() {
-                String relatorio = "";
+        public static String relatorioFinalDia(ArrayList<Cliente> clienteFarmacia, ArrayList<Funcionario> Funcionarios) {
+                String relatorio = "Relatório de Funcionários:\n\n";
+                for (int i=0; i< Funcionarios.size(); i++){
+                        relatorio = relatorio + "Nome do funcionário: " + Funcionarios.get(i).getNome() + "\n" +
+                        "Cargo: " + Funcionarios.get(i).getTipoFuncionario() + "\n";
+                        if (Funcionarios.get(i).getTipoFuncionario().equals("Vendedor")){
+                                Funcionarios.get(i).calcularComissaoVendas(((Vendedor) Funcionarios.get(i)).getVendas());
+                                relatorio = relatorio + "Número de Vendas: " + ((Vendedor) Funcionarios.get(i)).getVendas() + "\n" +
+                        "Taxa de Comissão (%): " + "10" + "\n" +
+                        "Salário (R$):" + Funcionarios.get(i).getSalario() + "\n";
+                        } else if (Funcionarios.get(i).getTipoFuncionario().equals("Farmacêutico")){
+                                Funcionarios.get(i).calcularComissaoVendas(((Farmaceutico) Funcionarios.get(i)).getVendas());
+                                relatorio = relatorio + "Número de Vendas: " + ((Farmaceutico) Funcionarios.get(i)).getVendas() + "\n" +
+                        "Taxa de Comissão (%): " + "10" + "\n" +
+                        "Salário (R$):" + Funcionarios.get(i).getSalario()  + "\n";
+                        }
+                        relatorio = relatorio + "\n";
+                }
+                relatorio = relatorio + "\nRelatório de Clientes:\n\n";
+                for (Cliente C: clienteFarmacia){
+                        ArrayList<Produtos> todasCompras = C.getCompras();
+                        if (C.getNome() != "Desconhecido"){
+                                relatorio = relatorio + "Nome: " + C.getNome() + "\n" + "CPF: " + C.getCPF() + "\n" + "Quantidade de compras: " + todasCompras.size() + "\n" + "Valor total de compras: " + formatarNumeroComDuasCasasDecimais(C.getValorTotalCompra()) + "\n\n";
+                        }
+                }
                 return relatorio;
         }
 
+        public static int Buscar(ArrayList<Cliente> clienteFarmacia, String CPF){
+                for (int i = 0; i<clienteFarmacia.size(); i++){
+                        if (clienteFarmacia.get(i).getCPF().equals(CPF)){
+                                return i;
+                        }
+                }
+                return -1;
+        }
         public static String formatarNumeroComDuasCasasDecimais(double numero) {
                 DecimalFormat formato = new DecimalFormat("0.00");
                 return formato.format(numero);
         }
 
         public static void main(String[] args) {
+
+                //Criando a variavel que vai armazenar o valor 
+                double valorTotalDesconhecidos = 0;
 
                 // Criando a flag para validacao de casos de mudanca de atendimento
                 int flag = 0;
@@ -265,21 +300,6 @@ public class main {
 
                         // Condicao de Parada para fim de expediente + Incremento de Salario por vendas
                         // + Print dos Relatórios
-                        if (contadorCliente == 2) {
-                                JOptionPane.showMessageDialog(null, "Fim de expediente !!");
-                                for (int i = 0; i < farmaciaFuncionarios.size(); i++) {
-                                        if (farmaciaFuncionarios.get(i).equals("Vendedor")) {
-                                                ((Vendedor) farmaciaFuncionarios.get(i)).calcularComissaoVendas(
-                                                                ((Vendedor) farmaciaFuncionarios.get(i)).getVendas());
-                                        }
-
-                                        else if (farmaciaFuncionarios.get(i).equals("Farmaceutico")) {
-                                                ((Vendedor) farmaciaFuncionarios.get(i)).calcularComissaoVendas(
-                                                                ((Vendedor) farmaciaFuncionarios.get(i)).getVendas());
-                                        }
-                                }
-                                break;
-                        }
 
                         // Atualizando o flag para 0 novamente, pois receberemos um novo cliente;
                         flag = 0;
@@ -381,16 +401,21 @@ public class main {
                                         clienteNovo.setCPF(cpfCliente);
                                         clienteNovo.setNome(nomeCliente);
                                         clienteNovo.setTelefone(telCliente);
-                                        clienteNovo.setAtendidoPor(atendente);
                                         clienteFarmacia.add(clienteNovo);
-
                                 }
 
                         } else if (selecionarOpcao.equals("Comprar")) {
 
                                 // Selecionado em "Comprar"
+                                String cpf = JOptionPane.showInputDialog("Passe o seu CPF:");
                                 while (true) {
+
                                         // Mostrando as opções Remédio e não remédio
+                                        if (Buscar(clienteFarmacia, cpf) == -1){
+                                                clienteNovo.setCPF(cpf);
+                                                clienteNovo.setNome("Desconhecido");
+                                                clienteFarmacia.add(clienteNovo);
+                                        }
                                         String[] opcaoCompra = { "Remédios", "Outros" };
                                         String compraSelecionada = (String) JOptionPane.showInputDialog(
                                                         null,
@@ -400,15 +425,14 @@ public class main {
                                                         null,
                                                         opcaoCompra,
                                                         opcaoCompra[0]);
+                                
 
-                                        if (compraSelecionada.equals("Remédios")) {
-
-                                                atendente = farmaciaFuncionarios.get(
-                                                                random.nextInt(3));
-                                                JOptionPane.showMessageDialog(null,
+                                        atendente = farmaciaFuncionarios.get(random.nextInt(3)); 
+                                        JOptionPane.showMessageDialog(null,
                                                                 "Atendimento com:\n\n Nome: " + atendente.getNome()
                                                                                 + "\n Cargo: "
-                                                                                + atendente.getTipoFuncionario());
+                                                                                + atendente.getTipoFuncionario());                      
+                                        if (compraSelecionada.equals("Remédios")) {
 
                                                 ArrayList<Produtos> listaRemedios = new ArrayList<Produtos>();
                                                 int countRemedios = 0;
@@ -435,6 +459,7 @@ public class main {
                                                                 null,
                                                                 nomesRemedios,
                                                                 nomesRemedios[0]);
+                                                                
 
                                                 if (compraRemedio != "") {
                                                         produtoCliente = buscandoRemedio(listaRemedios,
@@ -460,10 +485,9 @@ public class main {
                                                                                 .equals("Vendedor")) {
                                                                         auxAtendente = atendente;
                                                                         atendente = farmaciaFuncionarios.get(1);
-                                                                        clienteNovo.setAtendidoPor(atendente);
-                                                                        clienteFarmacia.set(contadorCliente,
-                                                                                        clienteNovo);
-                                                                        JOptionPane.showConfirmDialog(null,
+                                                                        clienteFarmacia.get(Buscar(clienteFarmacia, cpf)).setAtendidoPor(atendente);
+
+                                                                        JOptionPane.showMessageDialog(null,
                                                                                         "Vamos te encaminhar para a farmacêutica\npara realizar a aplicação do injetável\n\nFarmacêutica: "
                                                                                                         + atendente.getNome());
                                                                         contaFarmaceutico++;
@@ -471,6 +495,8 @@ public class main {
                                                                 }
                                                         } else if (flag == 0) {
                                                                 contaCompras++;
+                                                        } else if(flag == 1){
+                                                                contaFarmaceutico++;
                                                         }
 
                                                 }
@@ -488,9 +514,9 @@ public class main {
                                                                 JOptionPane.YES_NO_OPTION);
                                                 if (respostaClienteProduto == JOptionPane.YES_OPTION) {
 
-                                                        clienteNovo.setCompras(produtoCliente);
-                                                        double valorTotal = calculandoTotalCarrinho(clienteNovo);
-                                                        String comprasAtualCliente = comprasAtualCliente(clienteNovo);
+                                                        clienteFarmacia.get(Buscar(clienteFarmacia, cpf)).setCompras(produtoCliente);
+                                                        double valorTotal = calculandoTotalCarrinho(clienteFarmacia.get(Buscar(clienteFarmacia, cpf)));
+                                                        String comprasAtualCliente = comprasAtualCliente(clienteFarmacia.get(Buscar(clienteFarmacia, cpf)));
                                                         JOptionPane.showMessageDialog(null,
                                                                         "** Seu carrinho **\nValor Total: "
                                                                                         + formatarNumeroComDuasCasasDecimais(
@@ -553,9 +579,9 @@ public class main {
                                                                 JOptionPane.YES_NO_OPTION);
                                                 if (respostaClienteProduto == JOptionPane.YES_OPTION) {
 
-                                                        clienteNovo.setCompras(produtoCliente);
-                                                        double valorTotal = calculandoTotalCarrinho(clienteNovo);
-                                                        String comprasAtualCliente = comprasAtualCliente(clienteNovo);
+                                                        clienteFarmacia.get(Buscar(clienteFarmacia, cpf)).setCompras(produtoCliente);
+                                                        double valorTotal = calculandoTotalCarrinho(clienteFarmacia.get(Buscar(clienteFarmacia, cpf)));
+                                                        String comprasAtualCliente = comprasAtualCliente(clienteFarmacia.get(Buscar(clienteFarmacia, cpf)));
                                                         JOptionPane.showMessageDialog(null,
                                                                         "** Seu carrinho **\nValor Total: "
                                                                                         + formatarNumeroComDuasCasasDecimais(
@@ -573,10 +599,12 @@ public class main {
                                         if (resposta != JOptionPane.YES_OPTION) {
 
                                                 if (clienteNovo.getCompras() != null) {
-
-                                                        String comprasAtualCliente = comprasAtualCliente(clienteNovo);
-                                                        String cpf = JOptionPane.showInputDialog(
-                                                                        "Antes de ir para o carrinho\npasse o seu cpf:");
+                                                        String comprasAtualCliente = "";
+                                                        if (Buscar(clienteFarmacia, cpf) != -1){
+                                                                comprasAtualCliente = comprasAtualCliente(clienteFarmacia.get(Buscar(clienteFarmacia, cpf)));
+                                                        } else{
+                                                                comprasAtualCliente = comprasAtualCliente(clienteNovo);
+                                                        }
                                                         int respostaFecharCarrinho = JOptionPane.showConfirmDialog(null,
                                                                         "** No seu carrinho tem: **\n\n"
                                                                                         + comprasAtualCliente
@@ -585,8 +613,7 @@ public class main {
                                                                         JOptionPane.YES_NO_OPTION);
 
                                                         if (respostaFecharCarrinho == JOptionPane.YES_OPTION) {
-                                                                double valorTotal = calculandoTotalCarrinho(
-                                                                                clienteNovo);
+                                                                double valorTotal = calculandoTotalCarrinho(clienteFarmacia.get(Buscar(clienteFarmacia, cpf)));
                                                                 if (verificandoCliente(clienteFarmacia, cpf)) {
                                                                         JOptionPane.showMessageDialog(null,
                                                                                         "Você tem Cadastro!!\n\nValor: R$"
@@ -595,12 +622,15 @@ public class main {
                                                                                                         + "\nValor 10% OFF: R$"
                                                                                                         + formatarNumeroComDuasCasasDecimais(
                                                                                                                         valorTotal * 0.9));
+                                                                        clienteFarmacia.get(Buscar(clienteFarmacia, cpf)).setValorTotalCompra(valorTotal*0.9);;
                                                                 } else {
                                                                         JOptionPane.showMessageDialog(null,
                                                                                         "Você não tem Cadastro!!\n\nValor: R$"
                                                                                                         + formatarNumeroComDuasCasasDecimais(
                                                                                                                         valorTotal));
+                                                                        valorTotalDesconhecidos += valorTotal;
                                                                 }
+                                                                clienteFarmacia.get(Buscar(clienteFarmacia, cpf)).setAtendidoPor(atendente);
 
                                                                 if (auxAtendente == null) {
                                                                         if (atendente.getTipoFuncionario()
@@ -616,14 +646,14 @@ public class main {
                                                                         }
                                                                         calculaSalarioFuncionario(atendente,
                                                                                         farmaciaFuncionarios,
-                                                                                        clienteNovo, flag);
+                                                                                        clienteFarmacia.get(Buscar(clienteFarmacia, cpf)), flag);
 
                                                                 } else {
                                                                         if (auxAtendente.getTipoFuncionario()
                                                                                         .equals("Vendedor")) {
                                                                                 calculaSalarioFuncionario(auxAtendente,
                                                                                                 farmaciaFuncionarios,
-                                                                                                clienteNovo, flag);
+                                                                                                clienteFarmacia.get(Buscar(clienteFarmacia, cpf)), flag);
                                                                                 inserirVendas(atendente,
                                                                                                 farmaciaFuncionarios,
                                                                                                 contaCompras);
@@ -632,7 +662,7 @@ public class main {
                                                                                         .equals("Farmacêutico")) {
                                                                                 calculaSalarioFuncionario(atendente,
                                                                                                 farmaciaFuncionarios,
-                                                                                                clienteNovo, flag);
+                                                                                                clienteFarmacia.get(Buscar(clienteFarmacia, cpf)), flag);
                                                                                 inserirVendas(atendente,
                                                                                                 farmaciaFuncionarios,
                                                                                                 contaFarmaceutico);
@@ -653,6 +683,20 @@ public class main {
                                 contadorCliente++;
 
                         } else if (selecionarOpcao.equals("Sair")) {
+                                for (int i = 0; i < farmaciaFuncionarios.size(); i++) {
+                                        if (farmaciaFuncionarios.get(i).getTipoFuncionario().equals("Vendedor")) {
+                                                ((Vendedor) farmaciaFuncionarios.get(i)).calcularComissaoVendas(
+                                                                ((Vendedor) farmaciaFuncionarios.get(i)).getVendas());
+                                        }
+
+                                        else if (farmaciaFuncionarios.get(i).getTipoFuncionario().equals("Farmaceutico")) {
+                                                ((Vendedor) farmaciaFuncionarios.get(i)).calcularComissaoVendas(
+                                                                ((Vendedor) farmaciaFuncionarios.get(i)).getVendas());
+                                        }
+                                }
+                                String relatorio = relatorioFinalDia(clienteFarmacia, farmaciaFuncionarios);
+                                relatorio = relatorio + "Valor total de não cadastrados: " + valorTotalDesconhecidos;
+                                JOptionPane.showMessageDialog(null, relatorio);
                                 break;
 
                         }
