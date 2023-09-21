@@ -12,7 +12,7 @@ public class Vendedor extends Funcionario {
     public Vendedor(String NomeFarmacia, String CNPJ, String Endereco, String Telefone, String Site, double SalarioBase,
             String Nome, String CPF, String tipoFuncionario, int certificado) {
         super(NomeFarmacia, CNPJ, Endereco, Telefone, Site, SalarioBase, Nome, CPF, tipoFuncionario, certificado);
-        this.salario = 0;
+        this.salario = SalarioBase;
         this.vendas = 0;
     }
 
@@ -34,7 +34,7 @@ public class Vendedor extends Funcionario {
 
     @Override
     public void calcularSalario(Produtos produto) {
-        setSalario(produto.getPreco() * 0.1);
+        setSalario(this.salario + produto.getPreco() * 0.1);
     }
 
     @Override

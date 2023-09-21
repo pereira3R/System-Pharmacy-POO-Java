@@ -230,12 +230,12 @@ public class main{
                                 Funcionarios.get(i).calcularComissaoVendas(((Vendedor) Funcionarios.get(i)).getVendas());
                                 relatorio = relatorio + "Número de Vendas: " + ((Vendedor) Funcionarios.get(i)).getVendas() + "\n" +
                         "Taxa de Comissão (%): " + "10" + "\n" +
-                        "Salário (R$):" + Funcionarios.get(i).getSalario() + "\n";
+                        "Salário (R$):" + formatarNumeroComDuasCasasDecimais(Funcionarios.get(i).getSalario()) + "\n";
                         } else if (Funcionarios.get(i).getTipoFuncionario().equals("Farmacêutico")){
                                 Funcionarios.get(i).calcularComissaoVendas(((Farmaceutico) Funcionarios.get(i)).getVendas());
                                 relatorio = relatorio + "Número de Vendas: " + ((Farmaceutico) Funcionarios.get(i)).getVendas() + "\n" +
                         "Taxa de Comissão (%): " + "10" + "\n" +
-                        "Salário (R$):" + Funcionarios.get(i).getSalario()  + "\n";
+                        "Salário (R$):" + formatarNumeroComDuasCasasDecimais(Funcionarios.get(i).getSalario())  + "\n";
                         }
                         relatorio = relatorio + "\n";
                 }
@@ -243,7 +243,7 @@ public class main{
                 for (Cliente C: clienteFarmacia){
                         ArrayList<Produtos> todasCompras = C.getCompras();
                         if (C.getNome() != "Desconhecido"){
-                                relatorio = relatorio + "Nome: " + C.getNome() + "\n" + "CPF: " + C.getCPF() + "\n" + "Quantidade de compras: " + todasCompras.size() + "\n" + "Valor total de compras: " + formatarNumeroComDuasCasasDecimais(C.getValorTotalCompra()) + "\n\n";
+                                relatorio = relatorio + "Nome: " + C.getNome() + "\n" + "CPF: " + C.getCPF() + "\n" + "Quantidade de compras: " + todasCompras.size() + "\n" + "Valor total de compras (R$): " + formatarNumeroComDuasCasasDecimais(C.getValorTotalCompra()) + "\n\n";
                         }
                 }
                 return relatorio;
@@ -408,6 +408,11 @@ public class main{
 
                                 // Selecionado em "Comprar"
                                 String cpf = JOptionPane.showInputDialog("Passe o seu CPF:");
+                                atendente = farmaciaFuncionarios.get(random.nextInt(3)); 
+                                JOptionPane.showMessageDialog(null,
+                                                                "Atendimento com:\n\n Nome: " + atendente.getNome()
+                                                                                + "\n Cargo: "
+                                                                                + atendente.getTipoFuncionario());   
                                 while (true) {
 
                                         // Mostrando as opções Remédio e não remédio
@@ -425,13 +430,7 @@ public class main{
                                                         null,
                                                         opcaoCompra,
                                                         opcaoCompra[0]);
-                                
-
-                                        atendente = farmaciaFuncionarios.get(random.nextInt(3)); 
-                                        JOptionPane.showMessageDialog(null,
-                                                                "Atendimento com:\n\n Nome: " + atendente.getNome()
-                                                                                + "\n Cargo: "
-                                                                                + atendente.getTipoFuncionario());                      
+                                                   
                                         if (compraSelecionada.equals("Remédios")) {
 
                                                 ArrayList<Produtos> listaRemedios = new ArrayList<Produtos>();
@@ -490,13 +489,14 @@ public class main{
                                                                         JOptionPane.showMessageDialog(null,
                                                                                         "Vamos te encaminhar para a farmacêutica\npara realizar a aplicação do injetável\n\nFarmacêutica: "
                                                                                                         + atendente.getNome());
-                                                                        contaFarmaceutico++;
                                                                         flag = 1;
                                                                 }
-                                                        } else if (flag == 0) {
-                                                                contaCompras++;
-                                                        } else if(flag == 1){
+                                                        }
+
+                                                        if(atendente.getNome().equals("Letízia Manuella Serqueira Eugênio")){
                                                                 contaFarmaceutico++;
+                                                        } else{
+                                                                contaCompras++;
                                                         }
 
                                                 }
@@ -526,9 +526,9 @@ public class main{
 
                                         } else if (compraSelecionada.equals("Outros")) {
 
-                                                if (flag == 1) {
+                                                if(atendente.getNome().equals("Letízia Manuella Serqueira Eugênio")){
                                                         contaFarmaceutico++;
-                                                } else {
+                                                } else{
                                                         contaCompras++;
                                                 }
 
