@@ -787,20 +787,9 @@ public class main {
                                                                                                         contaFarmaceutico);
                                                                 }
 
-                                                        } else {
-                                                                // Caso ele não quiser fechar o carrinho, vamos abrir
-                                                                // isso
-                                                                int respostaCliente = JOptionPane.showConfirmDialog(
-                                                                                null,
-                                                                                "** Quer continuar ou sair ? **",
-                                                                                "Escolha uma opção: ",
-                                                                                JOptionPane.YES_NO_OPTION);
-                                                                if (respostaCliente != JOptionPane.YES_OPTION) {
-                                                                        break;
-                                                                }
-
                                                         }
                                                 }
+                                                break;
                                         }
                                 }
 
