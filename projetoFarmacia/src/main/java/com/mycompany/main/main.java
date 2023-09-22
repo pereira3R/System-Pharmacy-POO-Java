@@ -370,14 +370,14 @@ public class main {
                         Cliente clienteNovo = new Cliente("", "", "");
 
                         JOptionPane.showMessageDialog(null,
-                                        "** Informações sobre a Farmácia LAV **\n\n Nome: " + NomeFarmacia
+                                        "** Farmácia LAV **\n\n Nome: " + NomeFarmacia
                                                         + "\n CNPJ: "
                                                         + CNPJ + "\n Telefone: " + Telefone + "\n Endereço: "
                                                         + Endereco
                                                         + "\n Site: " + Site + "\n\n [ FARMÁCIA ABERTA ]");
 
                         JOptionPane.showMessageDialog(null,
-                                        "[AVISO] Para garantir desconto de 10% realize o seu cadastro");
+                                        "[AVISO] Para garantir desconto de 10%, realize o seu cadastro.");
                         Object[] opcao = { "Cadastrar", "Comprar", "Sair" };
 
                         // Mostrando o *Menu LAV*, onde o cliente-usuário decide o que fazer (comprar,
@@ -715,10 +715,10 @@ public class main {
                                                                         // mostrar essa tela
 
                                                                         JOptionPane.showMessageDialog(null,
-                                                                                        "Você tem Cadastro!!\n\nValor: R$"
+                                                                                        "Você tem Cadastro.\n\nValor Total: R$"
                                                                                                         + formatarNumeroComDuasCasasDecimais(
                                                                                                                         valorTotal)
-                                                                                                        + "\nValor 10% OFF: R$"
+                                                                                                        + "\nCom desconto de 10%: R$"
                                                                                                         + formatarNumeroComDuasCasasDecimais(
                                                                                                                         valorTotal * 0.9));
                                                                         clienteFarmacia.get(
@@ -731,7 +731,7 @@ public class main {
                                                                         // Caso o usuário-cliente não tenha cadastro,
                                                                         // vamos mostrar essa tela
                                                                         JOptionPane.showMessageDialog(null,
-                                                                                        "Você não tem Cadastro!!\n\nValor: R$"
+                                                                                        "Você não tem Cadastro.\n\nValor Total: R$"
                                                                                                         + formatarNumeroComDuasCasasDecimais(
                                                                                                                         valorTotal));
                                                                         valorTotalDesconhecidos += valorTotal;
