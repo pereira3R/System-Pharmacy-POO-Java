@@ -1,10 +1,9 @@
 package com.mycompany.service;
 
 //Importando  a interface: painelControle + classe mãe: Produtos 
-import com.mycompany.controler.painelControle;
 import com.mycompany.products.Produtos;
 
-public abstract class Funcionario extends Farmacia implements painelControle {
+public abstract class Funcionario extends Farmacia {
 
     private String Nome;
     private String CPF;
@@ -62,7 +61,13 @@ public abstract class Funcionario extends Farmacia implements painelControle {
         return this.certificado;
     }
 
-    public abstract void calcularSalario(Produtos input);
+    public void lucroBruto(double input) {
+        super.setLucroBruto(input);
+    }
 
-    public abstract void calcularComissaoVendas(int input);
+    public abstract double getLucroEmpresa();
+
+    public abstract void calcularSalarioPorProduto(Produtos input);
+
+    public abstract void calcularComissaoMeta(int input);
 }

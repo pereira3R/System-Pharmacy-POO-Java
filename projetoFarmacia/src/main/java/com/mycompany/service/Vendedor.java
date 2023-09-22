@@ -5,19 +5,19 @@ import com.mycompany.products.Produtos;
 
 public class Vendedor extends Funcionario {
 
-    private int vendas;
-    private double salario;
+    private int vendas = 0;
+    private double salario = getSalarioBase();
+    private double lucroEmpresa = 0;
     protected int nivelAcesso = 1;
 
     public Vendedor(String NomeFarmacia, String CNPJ, String Endereco, String Telefone, String Site, double SalarioBase,
             String Nome, String CPF, String tipoFuncionario, int certificado) {
         super(NomeFarmacia, CNPJ, Endereco, Telefone, Site, SalarioBase, Nome, CPF, tipoFuncionario, certificado);
-        this.salario = SalarioBase;
-        this.vendas = 0;
     }
 
     public void setVendas(int input) {
         this.vendas += input;
+        calcularComissaoMeta(this.vendas);
     }
 
     public int getVendas() {
@@ -32,13 +32,28 @@ public class Vendedor extends Funcionario {
         return this.salario;
     }
 
-    @Override
-    public void calcularSalario(Produtos produto) {
-        setSalario(this.salario + produto.getPreco() * 0.1);
+    public void setLucroEmpresa(double lucro) {
+        this.lucroEmpresa += lucro;
     }
 
     @Override
-    public void calcularComissaoVendas(int vendas) {
+    public double getLucroEmpresa() {
+        return this.lucroEmpresa;
+    }
+
+    @Override
+    public void lucroBruto(Produtos produto) {
+        this.setLucroEmpresa(produto.getPreco());
+        super.setLucroBruto(produto.getPreco());
+    }
+
+    @Override
+    public void calcularSalarioPorProduto(Produtos produto) {
+        setSalario(produto.getPreco() * 0.1);
+    }
+
+    @Override
+    public void calcularComissaoMeta(int vendas) {
         if (vendas > 6) {
             setSalario(getSalarioBase() * 0.1);
         }

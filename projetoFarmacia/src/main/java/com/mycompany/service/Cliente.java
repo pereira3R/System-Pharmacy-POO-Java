@@ -11,7 +11,7 @@ public class Cliente {
     private double valorTotalCompra = 0;
     ArrayList<Produtos> compras = new ArrayList<Produtos>();
     private Funcionario atendidoPor;
-    private int Contador = 0;
+    private int contaCompras = 0;
 
     public Cliente(String nome, String cpf, String telefone) {
         this.nome = nome;
@@ -36,14 +36,6 @@ public class Cliente {
         return this.cpf;
     }
 
-    public int getContador(){
-        return this.Contador;
-    }
-
-    public void setContador(){
-        this.Contador += 1;
-    }
-
     public void setTelefone(String telefone) {
         // Adicione validações de telefone aqui, se necessário
         this.telefone = telefone;
@@ -61,6 +53,10 @@ public class Cliente {
         return valorTotalCompra;
     }
 
+    public void limpaCompras(ArrayList<Produtos> limpeza) {
+        this.compras = limpeza;
+    }
+
     public void setCompras(Produtos compraCliente) {
         this.compras.add(compraCliente);
     }
@@ -76,5 +72,13 @@ public class Cliente {
 
     public Funcionario getAtendidoPor() {
         return this.atendidoPor;
+    }
+
+    public void setContaCompras(int input) {
+        this.contaCompras = input;
+    }
+
+    public int getContaCompras() {
+        return this.contaCompras;
     }
 }
