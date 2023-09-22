@@ -265,8 +265,6 @@ public class main {
                                                 + formatarNumeroComDuasCasasDecimais(Funcionarios.get(i).getSalario())
                                                 + "\n";
 
-                                lucro += ((Vendedor) Funcionarios.get(i)).getLucroEmpresa();
-
                         } else if (Funcionarios.get(i).getTipoFuncionario().equals("Farmacêutico")) {
                                 relatorio = relatorio + "Número de Vendas: "
                                                 + ((Farmaceutico) Funcionarios.get(i)).getVendas() + "\n" +
@@ -276,7 +274,6 @@ public class main {
                                                 + formatarNumeroComDuasCasasDecimais(Funcionarios.get(i).getSalario())
                                                 + "\n";
 
-                                lucro += ((Farmaceutico) Funcionarios.get(i)).getLucroEmpresa();
                         }
 
                         relatorio = relatorio + "\n";
@@ -299,9 +296,6 @@ public class main {
                 relatorio = relatorio + "Valor total de não cadastrados: "
                                 + formatarNumeroComDuasCasasDecimais(valorDesconhecidos);
 
-                //////////////////////////// Lucro Total Farmácia LAV //////////////////////////
-                relatorio += "\n\nLucro Bruto Farmácia LAV:\n\nValor Total: R$ "
-                                + formatarNumeroComDuasCasasDecimais(lucro) + "\n";
                 return relatorio;
         }
 
