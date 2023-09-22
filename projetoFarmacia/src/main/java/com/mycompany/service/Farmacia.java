@@ -4,13 +4,13 @@ import com.mycompany.controler.painelControle;
 
 public abstract class Farmacia implements painelControle {
 
-    private String Name;
-    private String CNPJ;
-    private String Endereco;
-    private String Telefone;
-    private String Site;
-    private double SalarioBase;
-    private double lucroBruto = 0;
+    protected String Name;
+    protected String CNPJ;
+    protected String Endereco;
+    protected String Telefone;
+    protected String Site;
+    protected double SalarioBase;
+    protected double lucroBruto = 0;
 
     public Farmacia(String Name, String CNPJ, String Endereco, String Telefone, String Site, double SalarioBase) {
         this.Name = Name;

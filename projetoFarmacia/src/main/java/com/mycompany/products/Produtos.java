@@ -2,10 +2,11 @@
 package com.mycompany.products;
 
 public abstract class Produtos {
-    private String Nome;
-    private double Preco;
-    private String Tipo;
-    private String Marca;
+
+    protected String Nome;
+    protected double Preco;
+    protected String Tipo;
+    protected String Marca;
 
     public Produtos(String Nome, double Preco, String Tipo, String Marca) {
         this.Nome = Nome;

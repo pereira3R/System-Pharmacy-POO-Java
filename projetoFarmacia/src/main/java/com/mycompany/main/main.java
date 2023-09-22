@@ -16,7 +16,6 @@ import javax.swing.JOptionPane;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Random;
-import java.lang.Math;
 
 public class main {
 
@@ -29,7 +28,7 @@ public class main {
                 funcionariosFarmacia.add(funcionarioAnthony);
                 Funcionario funcionarioLetizia = new Farmaceutico("LAV", "48. 048. 138/0001-79",
                                 "Boa Esperança, Rua 8, N. 254", "(69) 98417-7172", "www.farmaciaLav.com.br",
-                                2500,
+                                SalarioBase * 2,
                                 "Letízia Manuella Serqueira Eugênio", "012.237.441-02", "Farmacêutico", 1);
                 funcionariosFarmacia.add(funcionarioLetizia);
                 Funcionario funcionarioVinicius = new Vendedor("LAV", "48. 048. 138/0001-79",
@@ -226,6 +225,7 @@ public class main {
                 }
         }
 
+        // Inserindo o número de vendas
         public static void inserirVendas(Funcionario atendente, ArrayList<Funcionario> farmaciaFuncionarios,
                         int vendas) {
                 int i;
@@ -241,7 +241,7 @@ public class main {
                 }
         }
 
-        // Arrumar Relatório
+        // Funcao para retornar relatório
         public static String relatorioFinalDia(ArrayList<Cliente> clienteFarmacia,
                         ArrayList<Funcionario> Funcionarios, double valorDesconhecidos) {
 
@@ -319,37 +319,21 @@ public class main {
                 return formato.format(numero);
         }
 
-        public static ArrayList<Cliente> limpandoListaDeCompra(ArrayList<Cliente> clienteFarmacia, int posicaoCliente) {
-                // Limpando
-                Cliente clienteAtualizado = new Cliente(clienteFarmacia.get(posicaoCliente).getNome(),
-                                clienteFarmacia.get(posicaoCliente).getCPF(),
-                                clienteFarmacia.get(posicaoCliente).getTelefone());
-
-                clienteFarmacia.set(posicaoCliente, clienteAtualizado);
-                return clienteFarmacia;
-        }
-
         public static void main(String[] args) {
 
                 // Criando a variavel que vai armazenar o valor
                 double valorTotalDesconhecidos = 0;
 
-                // Criando a flag para validacao de casos de mudanca de atendimento
+                // Criando a flag para validacao de casos de aplicação de injetáveis
                 int flag = 0;
-
-                // Paraa contar o número de clientes
-                int contadorCliente = 0;
 
                 // Lista para incluir Todos os produtos
                 ArrayList<Produtos> produtosFarmacia = new ArrayList<Produtos>();
-
-                ArrayList<Produtos> teste = new ArrayList<Produtos>();
 
                 // Lista para incluir todos os clientes atendidos na farmácia
                 ArrayList<Cliente> clienteFarmacia = new ArrayList<Cliente>();
 
                 // Coletando informações sobre a Farmacia
-
                 String NomeFarmacia = "LAV";
                 String CNPJ = "48. 048. 138/0001-79";
                 String Telefone = "(66) 99233-7652";
@@ -368,8 +352,6 @@ public class main {
                 int contaCompras = 0;
                 int contaFarmaceutico = 0;
 
-                // Apresentando os dados da Farmácia
-
                 while (true) {
 
                         // Contando compras
@@ -379,8 +361,7 @@ public class main {
                         flag = 0;
 
                         // Instanciano uma var random, pois vamos preciÇsar para randomizar o
-                        // atendimento
-                        // do cliente, de acordo com os funcionários fixos
+                        // atendimento do cliente, de acordo com os funcionários fixos
                         Random random = new Random();
                         Funcionario auxAtendente = null;
                         Funcionario atendente = null;
@@ -399,15 +380,16 @@ public class main {
                                         "[AVISO] Para garantir desconto de 10% realize o seu cadastro");
                         Object[] opcao = { "Cadastrar", "Comprar", "Sair" };
 
+                        // Mostrando o *Menu LAV*, onde o cliente-usuário decide o que fazer (comprar,
+                        // cadastrar, sair)
                         Object selecionarOpcao = JOptionPane.showInputDialog(
                                         null,
                                         "** Menu LAV **",
                                         "Opção",
                                         JOptionPane.INFORMATION_MESSAGE,
                                         null,
-                                        opcao, // Você pode passar o array de itens aqui, mas não é usado diretamente
-                                        null // Valor padrão selecionado
-                        );
+                                        opcao,
+                                        null);
 
                         // Apresentando as Informções que os Clientes devem inserir
                         if (selecionarOpcao.equals("Cadastrar")) {
@@ -421,6 +403,8 @@ public class main {
                                 if (verificandoCliente(clienteFarmacia, cpfCliente)) {
                                         JOptionPane.showMessageDialog(null, "Bem-vindo novamente !!");
                                 } else {
+
+                                        // Caso o cliente não esteja cadastrado...
                                         String nomeCliente = JOptionPane.showInputDialog("Digite o seu Nome: ");
                                         String telCliente = JOptionPane.showInputDialog("Digite o seu Telefone: ");
 
@@ -434,7 +418,7 @@ public class main {
                                         if (resposta == JOptionPane.YES_OPTION) {
                                                 Object[] opcaoCliente = { "CPF", "Nome", "Telefone", "Tudo" };
 
-                                                // Perguntando se o Cliente deseja alterar algo
+                                                // Perguntando se o cliente-usuário deseja alterar algo
                                                 Object selecionaOpcaoCliente = JOptionPane.showInputDialog(
                                                                 null,
                                                                 "** Alteração de Dados **",
@@ -445,6 +429,9 @@ public class main {
                                                                 null
 
                                                 );
+
+                                                // Todas as opções de alteração de Dados
+
                                                 if (selecionaOpcaoCliente.equals("CPF")) {
                                                         cpfCliente = JOptionPane.showInputDialog("Digite o seu CPF: ");
 
@@ -476,11 +463,13 @@ public class main {
                                         clienteFarmacia.add(clienteNovo);
                                 }
 
+                                /////////// Caso o usuário clique em "Comprar" vai entrar aqui ///////////
+
                         } else if (selecionarOpcao.equals("Comprar")) {
 
                                 contaComprasCliente++;
 
-                                // Selecionado em "Comprar"
+                                // Pedindo CPF do cliente-usuário, para verificar se já tem cadastro ou não
                                 String cpf = JOptionPane.showInputDialog("Passe o seu CPF:");
                                 if (!verificandoCliente(clienteFarmacia, cpf)) {
                                         contaCompras = 0;
@@ -492,6 +481,8 @@ public class main {
                                                         .getContaCompras();
                                 }
 
+                                // Mostrando que o atendimento foi direcionado a um dos funcionários da farmácia
+                                // LAV
                                 atendente = farmaciaFuncionarios.get(random.nextInt(3));
                                 JOptionPane.showMessageDialog(null,
                                                 "Atendimento com:\n\n Nome: " + atendente.getNome()
@@ -516,6 +507,7 @@ public class main {
                                                         opcaoCompra,
                                                         opcaoCompra[0]);
 
+                                        /////////// Caso o usuário clique em Remédios ///////////
                                         if (compraSelecionada.equals("Remédios")) {
 
                                                 ArrayList<Produtos> listaRemedios = new ArrayList<Produtos>();
@@ -611,6 +603,7 @@ public class main {
                                                                                         + "\n\n" + comprasAtualCliente);
                                                 }
 
+                                                /////////// Caso o usuário selecione Outros vai entrar aqui ///////////
                                         } else if (compraSelecionada.equals("Outros")) {
 
                                                 if (atendente.getNome().equals("Letízia Manuella Serqueira Eugênio")) {
@@ -681,6 +674,8 @@ public class main {
 
                                         }
 
+                                        // Perguntando ao cliente-usuário se deseja continuar comprando
+
                                         int resposta = JOptionPane.showConfirmDialog(null,
                                                         "Deseja continuar comprando ?",
                                                         "Confirmação",
@@ -697,6 +692,10 @@ public class main {
                                                         } else {
                                                                 comprasAtualCliente = comprasAtualCliente(clienteNovo);
                                                         }
+
+                                                        // Mostrando tudo que há no carrinho do usuário-cliente até o
+                                                        // momento
+
                                                         int respostaFecharCarrinho = JOptionPane.showConfirmDialog(null,
                                                                         "** No seu carrinho tem: **\n\n"
                                                                                         + comprasAtualCliente
@@ -704,11 +703,17 @@ public class main {
                                                                         "Confirmação",
                                                                         JOptionPane.YES_NO_OPTION);
 
+                                                        // Se o cliente-usuário clicar em sim...
                                                         if (respostaFecharCarrinho == JOptionPane.YES_OPTION) {
                                                                 double valorTotal = calculandoTotalCarrinho(
                                                                                 clienteFarmacia.get(Buscar(
                                                                                                 clienteFarmacia, cpf)));
+
                                                                 if (verificandoCliente(clienteFarmacia, cpf)) {
+
+                                                                        // Caso o usuário-cliente tenha cadastro, vamos
+                                                                        // mostrar essa tela
+
                                                                         JOptionPane.showMessageDialog(null,
                                                                                         "Você tem Cadastro!!\n\nValor: R$"
                                                                                                         + formatarNumeroComDuasCasasDecimais(
@@ -722,6 +727,9 @@ public class main {
                                                                                                         * 0.9);
                                                                         ;
                                                                 } else {
+
+                                                                        // Caso o usuário-cliente não tenha cadastro,
+                                                                        // vamos mostrar essa tela
                                                                         JOptionPane.showMessageDialog(null,
                                                                                         "Você não tem Cadastro!!\n\nValor: R$"
                                                                                                         + formatarNumeroComDuasCasasDecimais(
@@ -780,21 +788,25 @@ public class main {
                                                                 }
 
                                                         } else {
-                                                                JOptionPane.showMessageDialog(null,
-                                                                                "** Carrinho Fechado **");
-                                                        }
+                                                                // Caso ele não quiser fechar o carrinho, vamos abrir
+                                                                // isso
+                                                                int respostaCliente = JOptionPane.showConfirmDialog(
+                                                                                null,
+                                                                                "** Quer continuar ou sair ? **",
+                                                                                "Escolha uma opção: ",
+                                                                                JOptionPane.YES_NO_OPTION);
+                                                                if (respostaCliente != JOptionPane.YES_OPTION) {
+                                                                        break;
+                                                                }
 
+                                                        }
                                                 }
-                                                break;
                                         }
                                 }
-                                // Contando os clientes ao longo do dia
-                                contadorCliente++;
 
                         } else if (selecionarOpcao.equals("Sair")) {
 
-                                // relatorio cliente
-                                // relatorio funcionario
+                                // relatorio Farmacia [relatório cliente + relatório funcionário + lucroBruto]
 
                                 String relatorio = relatorioFinalDia(clienteFarmacia, farmaciaFuncionarios,
                                                 valorTotalDesconhecidos);
