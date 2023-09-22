@@ -7,5 +7,4 @@ public interface painelControle {
 
    public int getNivelAcesso(int input);
 
-   public void lucroBruto(Produtos input);
 }

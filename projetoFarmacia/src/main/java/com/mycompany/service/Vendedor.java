@@ -36,20 +36,14 @@ public class Vendedor extends Funcionario {
         this.lucroEmpresa += lucro;
     }
 
-    @Override
     public double getLucroEmpresa() {
         return this.lucroEmpresa;
     }
 
     @Override
-    public void lucroBruto(Produtos produto) {
-        this.setLucroEmpresa(produto.getPreco());
-        super.setLucroBruto(produto.getPreco());
-    }
-
-    @Override
     public void calcularSalarioPorProduto(Produtos produto) {
         setSalario(produto.getPreco() * 0.1);
+        setLucroEmpresa(produto.getPreco());
     }
 
     @Override
@@ -61,7 +55,6 @@ public class Vendedor extends Funcionario {
 
     @Override
     public int getNivelAcesso(int input) {
-
         return this.nivelAcesso;
     }
 }

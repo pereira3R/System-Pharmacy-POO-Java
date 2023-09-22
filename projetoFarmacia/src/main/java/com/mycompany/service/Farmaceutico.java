@@ -36,7 +36,6 @@ public class Farmaceutico extends Funcionario {
         this.lucroEmpresa += lucro;
     }
 
-    @Override
     public double getLucroEmpresa() {
         return this.lucroEmpresa;
     }
@@ -44,7 +43,7 @@ public class Farmaceutico extends Funcionario {
     @Override
     public void calcularSalarioPorProduto(Produtos produto) {
         setSalario(produto.getPreco() * 0.1);
-        this.lucroBruto(produto);
+        this.setLucroBruto(produto.getPreco());
     }
 
     @Override
@@ -52,12 +51,6 @@ public class Farmaceutico extends Funcionario {
         if (vendas > 6) {
             setSalario(getSalarioBase() * 0.1);
         }
-    }
-
-    @Override
-    public void lucroBruto(Produtos produto) {
-        this.setLucroEmpresa(produto.getPreco());
-        super.setLucroBruto(produto.getPreco());
     }
 
     @Override

@@ -259,6 +259,8 @@ public class main {
                                                 + formatarNumeroComDuasCasasDecimais(Funcionarios.get(i).getSalario())
                                                 + "\n";
 
+                                lucro += ((Vendedor) Funcionarios.get(i)).getLucroEmpresa();
+
                         } else if (Funcionarios.get(i).getTipoFuncionario().equals("Farmacêutico")) {
                                 relatorio = relatorio + "Número de Vendas: "
                                                 + ((Farmaceutico) Funcionarios.get(i)).getVendas() + "\n" +
@@ -267,9 +269,9 @@ public class main {
                                                 "Salário (R$): "
                                                 + formatarNumeroComDuasCasasDecimais(Funcionarios.get(i).getSalario())
                                                 + "\n";
-                        }
 
-                        lucro += Funcionarios.get(i).getLucroEmpresa();
+                                lucro += ((Farmaceutico) Funcionarios.get(i)).getLucroEmpresa();
+                        }
 
                         relatorio = relatorio + "\n";
                 }
@@ -359,15 +361,15 @@ public class main {
                 // Contando compras
                 int contaComprasCliente = 0;
 
+                // Armazenar a quantidade de compras efetuadas pelo cliente
+                int contaCompras = 0;
+                int contaFarmaceutico = 0;
+
                 // Apresentando os dados da Farmácia
                 while (true) {
 
                         // Atualizando o flag para 0 novamente, pois receberemos um novo cliente;
                         flag = 0;
-
-                        // Armazenar a quantidade de compras efetuadas pelo cliente
-                        int contaCompras = 0;
-                        int contaFarmaceutico = 0;
 
                         // Instanciano uma var random, pois vamos preciÇsar para randomizar o
                         // atendimento
@@ -469,13 +471,14 @@ public class main {
 
                         } else if (selecionarOpcao.equals("Comprar")) {
 
+                                contaComprasCliente++;
+
                                 // Selecionado em "Comprar"
                                 String cpf = JOptionPane.showInputDialog("Passe o seu CPF:");
                                 if (!verificandoCliente(clienteFarmacia, cpf)) {
-                                        contaComprasCliente = 0;
+                                        contaCompras = 0;
+                                        contaFarmaceutico = 0;
                                 }
-
-                                contaComprasCliente++;
 
                                 atendente = farmaciaFuncionarios.get(random.nextInt(3));
                                 JOptionPane.showMessageDialog(null,
