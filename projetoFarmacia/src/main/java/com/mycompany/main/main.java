@@ -158,14 +158,11 @@ public class main {
         public static String comprasAtualCliente(Cliente cliente) {
                 ArrayList<Produtos> produtosCliente = cliente.getCompras();
                 String listaStringProdutos = "";
-                if (cliente.getContaCompras() == 0) {
-                        for (int i = cliente.getContaCompras(); i < produtosCliente.size(); i++) {
-                                listaStringProdutos += "-> " + produtosCliente.get(i).getNome() + "\n";
-                        }
-                } else {
-                        for (int i = cliente.getContaCompras() + 1; i < produtosCliente.size(); i++) {
-                                listaStringProdutos += "-> " + produtosCliente.get(i).getNome() + "\n";
-                        }
+                JOptionPane.showMessageDialog(null, "Compras: " + cliente.getContaCompras());
+                JOptionPane.showMessageDialog(null, "qtda Produtos: " + produtosCliente.size());
+
+                for (int i = cliente.getContaCompras(); i < produtosCliente.size(); i++) {
+                        listaStringProdutos += "-> " + produtosCliente.get(i).getNome() + "\n";
                 }
                 return listaStringProdutos;
         }
@@ -175,15 +172,11 @@ public class main {
         public static double calculandoTotalCarrinho(Cliente cliente) {
                 ArrayList<Produtos> produtosCliente = cliente.getCompras();
                 double valorTotal = 0;
-                if (cliente.getContaCompras() == 0) {
-                        for (int i = cliente.getContaCompras(); i < produtosCliente.size(); i++) {
-                                valorTotal += produtosCliente.get(i).getPreco();
-                        }
-                } else {
-                        for (int i = cliente.getContaCompras() + 1; i < produtosCliente.size(); i++) {
-                                valorTotal += produtosCliente.get(i).getPreco();
-                        }
+
+                for (int i = cliente.getContaCompras(); i < produtosCliente.size(); i++) {
+                        valorTotal += produtosCliente.get(i).getPreco();
                 }
+
                 return valorTotal;
         }
 
@@ -367,14 +360,11 @@ public class main {
                 // Cadastrando Todos os Produtos - 10 Remédios & 10 N. Remédios
                 produtosFarmacia = cadastrandoProdutos(produtosFarmacia);
 
-                // Armazenar a quantidade de compras efetuadas pelo cliente
-                int contaCompras = 0;
-                int contaFarmaceutico = 0;
-
                 while (true) {
 
-                        // Contando compras
-                        int contaComprasCliente = 0;
+                        // Armazenar a quantidade de compras efetuadas pelo cliente
+                        int comprasVendedor = 0;
+                        int comprasFarmaceutico = 0;
 
                         // Atualizando o flag para 0 novamente, pois receberemos um novo cliente;
                         flag = 0;
@@ -486,20 +476,6 @@ public class main {
 
                         } else if (selecionarOpcao.equals("Comprar")) {
 
-                                contaComprasCliente++;
-
-                                // Pedindo CPF do cliente-usuário, para verificar se já tem cadastro ou não
-                                String cpf = JOptionPane.showInputDialog("Passe o seu CPF:");
-                                if (!verificandoCliente(clienteFarmacia, cpf)) {
-                                        contaCompras = 0;
-                                        contaFarmaceutico = 0;
-                                } else {
-                                        contaCompras = clienteFarmacia.get(Buscar(clienteFarmacia, cpf))
-                                                        .getContaCompras();
-                                        contaFarmaceutico = clienteFarmacia.get(Buscar(clienteFarmacia, cpf))
-                                                        .getContaCompras();
-                                }
-
                                 // Mostrando que o atendimento foi direcionado a um dos funcionários da farmácia
                                 // LAV
                                 atendente = farmaciaFuncionarios.get(random.nextInt(3));
@@ -507,6 +483,14 @@ public class main {
                                                 "Atendimento com:\n\n Nome: " + atendente.getNome()
                                                                 + "\n Cargo: "
                                                                 + atendente.getTipoFuncionario());
+
+                                // Pedindo CPF do cliente-usuário, para verificar se já tem cadastro ou não
+                                String cpf = JOptionPane.showInputDialog("Passe o seu CPF:");
+                                if (!verificandoCliente(clienteFarmacia, cpf)) {
+                                        comprasVendedor = 0;
+                                        comprasFarmaceutico = 0;
+                                }
+
                                 while (true) {
 
                                         // Mostrando as opções Remédio e não remédio
@@ -589,9 +573,9 @@ public class main {
 
                                                         if (atendente.getNome()
                                                                         .equals("Letízia Manuella Serqueira Eugênio")) {
-                                                                contaFarmaceutico++;
+                                                                comprasFarmaceutico++;
                                                         } else {
-                                                                contaCompras++;
+                                                                comprasVendedor++;
                                                         }
 
                                                 }
@@ -626,9 +610,9 @@ public class main {
                                         } else if (compraSelecionada.equals("Outros")) {
 
                                                 if (atendente.getNome().equals("Letízia Manuella Serqueira Eugênio")) {
-                                                        contaFarmaceutico++;
+                                                        comprasFarmaceutico++;
                                                 } else {
-                                                        contaCompras++;
+                                                        comprasVendedor++;
                                                 }
 
                                                 ArrayList<Produtos> listaNRemedios = new ArrayList<Produtos>();
@@ -764,11 +748,11 @@ public class main {
 
                                                                 if ((flag == 1) && (atendente
                                                                                 .getTipoFuncionario() != "Farmacêutico")) {
-                                                                        contaFarmaceutico++;
-                                                                        contaCompras--;
+                                                                        comprasFarmaceutico++;
+                                                                        comprasVendedor--;
                                                                         inserirVendas(auxAtendente,
                                                                                         farmaciaFuncionarios,
-                                                                                        contaFarmaceutico);
+                                                                                        comprasFarmaceutico);
 
                                                                         calculaSalarioFuncionario(auxAtendente,
                                                                                         farmaciaFuncionarios,
@@ -781,12 +765,12 @@ public class main {
                                                                                 .equals("Vendedor")) {
                                                                         inserirVendas(atendente,
                                                                                         farmaciaFuncionarios,
-                                                                                        contaCompras);
+                                                                                        comprasVendedor);
                                                                 } else if (atendente.getTipoFuncionario()
                                                                                 .equals("Farmacêutico")) {
                                                                         inserirVendas(atendente,
                                                                                         farmaciaFuncionarios,
-                                                                                        contaFarmaceutico);
+                                                                                        comprasFarmaceutico);
                                                                 }
                                                                 calculaSalarioFuncionario(atendente,
                                                                                 farmaciaFuncionarios,
@@ -798,12 +782,12 @@ public class main {
                                                                         clienteFarmacia.get(
                                                                                         Buscar(clienteFarmacia, cpf))
                                                                                         .setContaCompras(
-                                                                                                        contaComprasCliente);
+                                                                                                        comprasVendedor);
                                                                 } else {
                                                                         clienteFarmacia.get(
                                                                                         Buscar(clienteFarmacia, cpf))
                                                                                         .setContaCompras(
-                                                                                                        contaFarmaceutico);
+                                                                                                        comprasFarmaceutico);
                                                                 }
 
                                                         }

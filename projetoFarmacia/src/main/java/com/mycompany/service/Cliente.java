@@ -75,7 +75,7 @@ public class Cliente {
     }
 
     public void setContaCompras(int input) {
-        this.contaCompras = input;
+        this.contaCompras += input;
     }
 
     public int getContaCompras() {

@@ -2,17 +2,17 @@ Relatório de Funcionários:
 
 Nome do funcionário: Anthony Ricardo Rodrigues Rezende
 Cargo: Vendedor
-Número de Vendas: 0
+Número de Vendas: 1
 Taxa de Comissão (%) por Produto: 10
 Taxa de Comissão por meta (%) sob Salário Base: 10
-Salário (R$): 1300.00
+Salário (R$): 1304.99
 
 Nome do funcionário: Letízia Manuella Serqueira Eugênio
 Cargo: Farmacêutico
-Número de Vendas: 2
+Número de Vendas: 1
 Taxa de Comissão (%) por Produto: 10
 Taxa de Comissão por meta (%) sob Salário Base: 10
-Salário (R$): 2609.98
+Salário (R$): 2601.80
 
 Nome do funcionário: Vinicius Padilha Vieira
 Cargo: Vendedor
@@ -24,4 +24,4 @@ Salário (R$): 1300.00
 
 Relatório de Clientes:
 
-Valor total de não cadastrados: 99.80
+Valor total de não cadastrados: 67.89
