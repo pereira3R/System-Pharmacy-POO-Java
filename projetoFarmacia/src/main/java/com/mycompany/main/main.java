@@ -202,18 +202,13 @@ public class main {
                 }
 
                 if (flag == 0) {
-                        if (cliente.getContaCompras() == 0) {
-                                for (int j = 0; j < todosProdutos.size(); j++) {
-                                        farmaciaFuncionarios.get(i).calcularSalarioPorProduto(todosProdutos.get(j));
-                                }
-                        } else {
-                                for (int j = cliente.getContaCompras(); j < todosProdutos.size(); j++) {
-                                        farmaciaFuncionarios.get(i).calcularSalarioPorProduto(todosProdutos.get(j));
-                                }
+                        for (int j = cliente.getContaCompras(); j < todosProdutos.size(); j++) {
+                                farmaciaFuncionarios.get(i).calcularSalarioPorProduto(todosProdutos.get(j));
                         }
+
                 } else {
                         if (funcionario.getTipoFuncionario().equals("Farmacêutico")) {
-                                for (int j = 0; j < todosProdutos.size(); j++) {
+                                for (int j = cliente.getContaCompras(); j < todosProdutos.size(); j++) {
                                         if (todosProdutos.get(j).getTipo().equals("Remédio")) {
                                                 if (((Remedio) todosProdutos.get(j)).getTipoRemedio()
                                                                 .equals("Injetável")) {

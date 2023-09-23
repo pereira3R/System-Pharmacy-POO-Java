@@ -9,19 +9,19 @@ Salário (R$): 1300.00
 
 Nome do funcionário: Letízia Manuella Serqueira Eugênio
 Cargo: Farmacêutico
-Número de Vendas: 1
+Número de Vendas: 2
 Taxa de Comissão (%) por Produto: 10
 Taxa de Comissão por meta (%) sob Salário Base: 10
-Salário (R$): 2601.80
+Salário (R$): 2609.98
 
 Nome do funcionário: Vinicius Padilha Vieira
 Cargo: Vendedor
-Número de Vendas: 1
+Número de Vendas: 0
 Taxa de Comissão (%) por Produto: 10
 Taxa de Comissão por meta (%) sob Salário Base: 10
-Salário (R$): 1304.99
+Salário (R$): 1300.00
 
 
 Relatório de Clientes:
 
-Valor total de não cadastrados: 67.89
+Valor total de não cadastrados: 99.80
