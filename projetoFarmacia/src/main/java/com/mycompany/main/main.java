@@ -7,12 +7,17 @@ import com.mycompany.service.Vendedor;
 import com.mycompany.service.Farmaceutico;
 import com.mycompany.service.Cliente;
 import com.mycompany.products.NRemedio;
+
 //Importando classes products 
 import com.mycompany.products.Produtos;
 import com.mycompany.products.Remedio;
 
+//Importando bibliotecas úteis
 import javax.swing.JOptionPane;
 
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Random;
@@ -202,23 +207,36 @@ public class main {
                                         farmaciaFuncionarios.get(i).calcularSalarioPorProduto(todosProdutos.get(j));
                                 }
                         } else {
-                                for (int j = cliente.getContaCompras() + 1; j < todosProdutos.size(); j++) {
+                                for (int j = cliente.getContaCompras(); j < todosProdutos.size(); j++) {
                                         farmaciaFuncionarios.get(i).calcularSalarioPorProduto(todosProdutos.get(j));
                                 }
                         }
                 } else {
                         if (funcionario.getTipoFuncionario().equals("Farmacêutico")) {
                                 for (int j = 0; j < todosProdutos.size(); j++) {
-                                        if (((Remedio) todosProdutos.get(j)).getTipoRemedio().equals("Injetável")) {
-                                                farmaciaFuncionarios.get(1)
-                                                                .calcularSalarioPorProduto(todosProdutos.get(j));
+                                        if (todosProdutos.get(j).getTipo().equals("Remédio")) {
+                                                if (((Remedio) todosProdutos.get(j)).getTipoRemedio()
+                                                                .equals("Injetável")) {
+                                                        farmaciaFuncionarios.get(1)
+                                                                        .calcularSalarioPorProduto(
+                                                                                        todosProdutos.get(j));
+                                                }
                                         }
+
                                 }
                         } else {
-                                for (int j = 0; j < todosProdutos.size(); j++) {
-                                        if (((Remedio) todosProdutos.get(j)).getTipoRemedio() != "Injetável") {
+                                for (int j = cliente.getContaCompras(); j < todosProdutos.size(); j++) {
+                                        if (todosProdutos.get(j).getTipo().equals("Remédio")) {
+                                                if (((Remedio) todosProdutos.get(j)).getTipoRemedio() != "Injetável") {
+                                                        farmaciaFuncionarios.get(i)
+                                                                        .calcularSalarioPorProduto(
+                                                                                        todosProdutos.get(j));
+                                                }
+                                        } else if ((todosProdutos.get(j).getTipo().equals("Outros"))) {
                                                 farmaciaFuncionarios.get(i)
-                                                                .calcularSalarioPorProduto(todosProdutos.get(j));
+                                                                .calcularSalarioPorProduto(
+                                                                                todosProdutos.get(j));
+
                                         }
                                 }
                         }
@@ -297,6 +315,18 @@ public class main {
                                 + formatarNumeroComDuasCasasDecimais(valorDesconhecidos);
 
                 return relatorio;
+        }
+
+        public static void escrevendoArquivo(String relatorio) {
+                try {
+                        BufferedWriter writer = new BufferedWriter(new FileWriter(
+                                        "projetoFarmacia/src/main/java/com/mycompany/arquivo/relatorio.txt"));
+                        writer.write(relatorio);
+                        writer.close();
+                        System.out.println("String exportada com sucesso para o arquivo.");
+                } catch (IOException e) {
+                        e.printStackTrace();
+                }
         }
 
         public static int Buscar(ArrayList<Cliente> clienteFarmacia, String CPF) {
@@ -793,6 +823,11 @@ public class main {
 
                                 String relatorio = relatorioFinalDia(clienteFarmacia, farmaciaFuncionarios,
                                                 valorTotalDesconhecidos);
+
+                                // Adicionando relatório no arquivo
+                                escrevendoArquivo(relatorio);
+
+                                // Imprimindo o relatório com JOptionPane
                                 JOptionPane.showMessageDialog(null, relatorio);
                                 break;
 
