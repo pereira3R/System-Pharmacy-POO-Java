@@ -62,6 +62,10 @@ public abstract class Funcionario extends Farmacia {
         return this.certificado;
     }
 
+    public void calculandoLucroFarmacia(double valor) {
+        super.setLucroBruto(valor);
+    }
+
     public abstract void calcularSalarioPorProduto(Produtos input);
 
     public abstract void calcularComissaoMeta(int input);

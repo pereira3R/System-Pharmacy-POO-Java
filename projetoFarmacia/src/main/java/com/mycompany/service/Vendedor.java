@@ -43,7 +43,7 @@ public class Vendedor extends Funcionario {
     @Override
     public void calcularSalarioPorProduto(Produtos produto) {
         setSalario(produto.getPreco() * 0.1);
-        setLucroEmpresa(produto.getPreco());
+        lucroBruto(produto.getPreco());
     }
 
     @Override
@@ -55,6 +55,11 @@ public class Vendedor extends Funcionario {
 
     @Override
     public void classificandoAcesso() {
-        this.nivelAcesso = 1;
+        this.nivelAcesso = 0;
+    }
+
+    @Override
+    public void lucroBruto(double valor) {
+        calculandoLucroFarmacia(valor);
     }
 }

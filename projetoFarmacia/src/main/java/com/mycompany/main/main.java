@@ -251,7 +251,7 @@ public class main {
                 //////////////////////////// Relatório Funcionários //////////////
 
                 String relatorio = "Relatório de Funcionários:\n\n";
-
+                double lucroBruto = 0;
                 for (int i = 0; i < Funcionarios.size(); i++) {
 
                         relatorio = relatorio + "Nome do funcionário: " + Funcionarios.get(i).getNome() + "\n" +
@@ -265,7 +265,6 @@ public class main {
                                                 "Salário (R$): "
                                                 + formatarNumeroComDuasCasasDecimais(Funcionarios.get(i).getSalario())
                                                 + "\n";
-
                         } else if (Funcionarios.get(i).getTipoFuncionario().equals("Farmacêutico")) {
                                 relatorio = relatorio + "Número de Vendas: "
                                                 + ((Farmaceutico) Funcionarios.get(i)).getVendas() + "\n" +
@@ -276,6 +275,9 @@ public class main {
                                                 + "\n";
 
                         }
+
+                        // Calculando o lucroBruto
+                        lucroBruto += Funcionarios.get(i).getLucroBruto();
 
                         relatorio = relatorio + "\n";
                 }
@@ -296,7 +298,7 @@ public class main {
 
                 relatorio = relatorio + "Valor total de não cadastrados: "
                                 + formatarNumeroComDuasCasasDecimais(valorDesconhecidos);
-
+                relatorio += "\n\n** Lucro Bruto Farmácia LAV **\n\nValor Total: " + lucroBruto;
                 return relatorio;
         }
 
@@ -552,10 +554,13 @@ public class main {
                                                                 }
                                                         }
 
+                                                        // Usando o atributo nível de acesso que vem do implements
+                                                        // painel de controle
+                                                        // para classificar se o atendente tem acesso para aplicar
+                                                        // injetáveis ou não
                                                         if (((Remedio) produtoCliente).getTipoRemedio()
                                                                         .equals("Injetável")) {
-                                                                if (atendente.getTipoFuncionario()
-                                                                                .equals("Vendedor")) {
+                                                                if (atendente.nivelAcesso == 0) {
                                                                         auxAtendente = farmaciaFuncionarios.get(1);
 
                                                                         JOptionPane.showMessageDialog(null,

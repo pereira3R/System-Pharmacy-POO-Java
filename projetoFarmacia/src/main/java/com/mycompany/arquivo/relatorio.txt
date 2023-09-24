@@ -25,3 +25,7 @@ Salário (R$): 1300.00
 Relatório de Clientes:
 
 Valor total de não cadastrados: 67.89
+
+** Lucro Bruto Farmácia ** LAV
+
+Valor Total: 67.89
