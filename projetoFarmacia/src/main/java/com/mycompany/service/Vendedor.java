@@ -8,11 +8,11 @@ public class Vendedor extends Funcionario {
     private int vendas = 0;
     private double salario = getSalarioBase();
     private double lucroEmpresa = 0;
-    protected int nivelAcesso = 1;
 
     public Vendedor(String NomeFarmacia, String CNPJ, String Endereco, String Telefone, String Site, double SalarioBase,
             String Nome, String CPF, String tipoFuncionario, int certificado) {
         super(NomeFarmacia, CNPJ, Endereco, Telefone, Site, SalarioBase, Nome, CPF, tipoFuncionario, certificado);
+        classificandoAcesso();
     }
 
     public void setVendas(int input) {
@@ -54,7 +54,7 @@ public class Vendedor extends Funcionario {
     }
 
     @Override
-    public int getNivelAcesso(int input) {
-        return this.nivelAcesso;
+    public void classificandoAcesso() {
+        this.nivelAcesso = 1;
     }
 }

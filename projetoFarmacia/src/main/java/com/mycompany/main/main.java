@@ -93,7 +93,7 @@ public class main {
                 todosProdutos.add(addProduto);
 
                 // Todos os produtos da Farmácia que se classificam como N. Remédios
-                addProduto = new Remedio("“Benzetacil”", 17.99, "Remédio", "Schering-Plough", true, "Injetável", 4,
+                addProduto = new Remedio("Benzetacil", 17.99, "Remédio", "Schering-Plough", true, "Injetável", 4,
                                 "Schering-Plough",
                                 "Antibióticos");
                 todosProdutos.add(addProduto);
@@ -158,9 +158,6 @@ public class main {
         public static String comprasAtualCliente(Cliente cliente) {
                 ArrayList<Produtos> produtosCliente = cliente.getCompras();
                 String listaStringProdutos = "";
-                JOptionPane.showMessageDialog(null, "Compras: " + cliente.getContaCompras());
-                JOptionPane.showMessageDialog(null, "qtda Produtos: " + produtosCliente.size());
-
                 for (int i = cliente.getContaCompras(); i < produtosCliente.size(); i++) {
                         listaStringProdutos += "-> " + produtosCliente.get(i).getNome() + "\n";
                 }
@@ -250,8 +247,6 @@ public class main {
         // Funcao para retornar relatório
         public static String relatorioFinalDia(ArrayList<Cliente> clienteFarmacia,
                         ArrayList<Funcionario> Funcionarios, double valorDesconhecidos) {
-
-                double lucro = 0;
 
                 //////////////////////////// Relatório Funcionários //////////////
 

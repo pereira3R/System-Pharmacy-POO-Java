@@ -8,11 +8,11 @@ public class Farmaceutico extends Funcionario {
     private double salario = getSalarioBase();
     private int vendas = 0;
     private double lucroEmpresa = 0;
-    protected int nivelAcesso = 2;
 
     public Farmaceutico(String NomeFarmacia, String CNPJ, String Endereco, String Telefone, String Site,
             double SalarioBase, String Nome, String CPF, String tipoFuncionario, int certificado) {
         super(NomeFarmacia, CNPJ, Endereco, Telefone, Site, SalarioBase, Nome, CPF, tipoFuncionario, certificado);
+        classificandoAcesso();
     }
 
     public void setSalario(double input) {
@@ -54,8 +54,8 @@ public class Farmaceutico extends Funcionario {
     }
 
     @Override
-    public int getNivelAcesso(int input) {
-        return this.nivelAcesso;
+    public void classificandoAcesso() {
+        this.nivelAcesso = 2;
     }
 
 }
