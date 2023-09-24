@@ -742,7 +742,7 @@ public class main {
                                                                         // mostrar essa tela
 
                                                                         JOptionPane.showMessageDialog(null,
-                                                                                        "Você tem Cadastro.\n\nValor Total: R$"
+                                                                                        "[Pagamento] - Você tem Cadastro.\n\nValor Total: R$"
                                                                                                         + formatarNumeroComDuasCasasDecimais(
                                                                                                                         valorTotal)
                                                                                                         + "\nCom desconto de 10%: R$"
@@ -758,7 +758,7 @@ public class main {
                                                                         // Caso o usuário-cliente não tenha cadastro,
                                                                         // vamos mostrar essa tela
                                                                         JOptionPane.showMessageDialog(null,
-                                                                                        "Você não tem Cadastro.\n\nValor Total: R$"
+                                                                                        "[Pagamento] - Você não tem Cadastro.\n\nValor Total: R$"
                                                                                                         + formatarNumeroComDuasCasasDecimais(
                                                                                                                         valorTotal));
                                                                         valorTotalDesconhecidos += valorTotal;
