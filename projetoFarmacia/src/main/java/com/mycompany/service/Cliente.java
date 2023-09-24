@@ -53,10 +53,6 @@ public class Cliente {
         return valorTotalCompra;
     }
 
-    public void limpaCompras(ArrayList<Produtos> limpeza) {
-        this.compras = limpeza;
-    }
-
     public void setCompras(Produtos compraCliente) {
         this.compras.add(compraCliente);
     }
