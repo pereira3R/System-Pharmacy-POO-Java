@@ -9,10 +9,10 @@ Salário (R$): 1300.00
 
 Nome do funcionário: Letízia Manuella Serqueira Eugênio
 Cargo: Farmacêutico
-Número de Vendas: 2
+Número de Vendas: 1
 Taxa de Comissão (%) por Produto: 10
 Taxa de Comissão por meta (%) sob Salário Base: 10
-Salário (R$): 2603.60
+Salário (R$): 2604.99
 
 Nome do funcionário: Vinicius Padilha Vieira
 Cargo: Vendedor
@@ -24,13 +24,8 @@ Salário (R$): 1300.00
 
 Relatório de Clientes:
 
-Nome: 123
-CPF: 123
-Quantidade de compras: 1
-Valor total de compras (R$): 16.19
-
-Valor total de não cadastrados: 17.99
+Valor total de não cadastrados: 49.90
 
 ** Lucro Bruto Farmácia LAV **
 
-Valor Total: 35.98
+Valor Total: 49.90

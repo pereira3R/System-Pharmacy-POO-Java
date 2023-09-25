@@ -251,7 +251,7 @@ public class main {
 
                 //////////////////////////// Relatório Funcionários //////////////
 
-                String relatorio = "Relatório de Funcionários:\n\n";
+                String relatorio = "** Relatório de Funcionários **\n\n";
                 double lucroBruto = 0;
                 for (int i = 0; i < Funcionarios.size(); i++) {
 
@@ -285,7 +285,7 @@ public class main {
 
                 //////////////////////////// Relatório clientes ////////////////////////////////
 
-                relatorio = relatorio + "\nRelatório de Clientes:\n\n";
+                relatorio = relatorio + "\n** Relatório de Clientes **\n\n";
 
                 for (Cliente C : clienteFarmacia) {
                         ArrayList<Produtos> todasCompras = C.getCompras();
@@ -299,7 +299,8 @@ public class main {
 
                 relatorio = relatorio + "Valor total de não cadastrados: "
                                 + formatarNumeroComDuasCasasDecimais(valorDesconhecidos);
-                relatorio += "\n\n** Lucro Bruto Farmácia LAV **\n\nValor Total: " + lucroBruto;
+                relatorio += "\n\n** Lucro Bruto Farmácia LAV **\n\nValor Total: "
+                                + formatarNumeroComDuasCasasDecimais(lucroBruto);
                 return relatorio;
         }
 
@@ -484,9 +485,12 @@ public class main {
                                         }
                                 }
 
+                                selecionarOpcao = "Comprar";
+
                                 /////////// Caso o usuário clique em "Comprar" vai entrar aqui ///////////
 
-                        } else if (selecionarOpcao.equals("Comprar")) {
+                        }
+                        if (selecionarOpcao.equals("Comprar")) {
 
                                 // Mostrando que o atendimento foi direcionado a um dos funcionários da farmácia
                                 // LAV
