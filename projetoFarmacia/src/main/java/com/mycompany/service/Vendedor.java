@@ -43,7 +43,7 @@ public class Vendedor extends Funcionario {
     @Override
     public void calcularSalarioPorProduto(Produtos produto) {
         setSalario(produto.getPreco() * 0.1);
-        lucroBruto(produto.getPreco());
+        lucroBruto(produto.getPreco() * 0.1);
     }
 
     @Override
