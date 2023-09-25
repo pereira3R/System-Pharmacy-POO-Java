@@ -49,7 +49,7 @@ public class main {
 
                 for (int i = 0; i < clienteFarmacia.size(); i++) {
                         String cpfBuscado = clienteFarmacia.get(i).getCPF();
-                        if (cpfBuscado.equals(CPF) && (clienteFarmacia.get(i).getNome() != "Desconhecido")) {
+                        if (cpfBuscado.equals(CPF)) {
                                 return true;
                         }
                 }
@@ -93,6 +93,7 @@ public class main {
                 todosProdutos.add(addProduto);
 
                 // Todos os produtos da Farmácia que se classificam como N. Remédios
+
                 addProduto = new Remedio("Benzetacil", 17.99, "Remédio", "Schering-Plough", true, "Injetável", 4,
                                 "Schering-Plough",
                                 "Antibióticos");
@@ -411,7 +412,8 @@ public class main {
                                 String cpfCliente = JOptionPane.showInputDialog("Digite o seu CPF: ");
 
                                 // Verificando se o cpf do cliente atual já foi cadastrado
-                                if (verificandoCliente(clienteFarmacia, cpfCliente)) {
+                                if (verificandoCliente(clienteFarmacia, cpfCliente) && clienteFarmacia
+                                                .get(Buscar(clienteFarmacia, cpfCliente)).getNome() != "Desconhecido") {
                                         JOptionPane.showMessageDialog(null, "Bem-vindo novamente !!");
                                 } else {
 
@@ -471,7 +473,15 @@ public class main {
                                         clienteNovo.setCPF(cpfCliente);
                                         clienteNovo.setNome(nomeCliente);
                                         clienteNovo.setTelefone(telCliente);
-                                        clienteFarmacia.add(clienteNovo);
+
+                                        // Verificando se o CPF já foi cadastrado
+                                        if (verificandoCliente(clienteFarmacia, cpfCliente)) {
+                                                int posCliente = Buscar(clienteFarmacia, cpfCliente);
+                                                clienteFarmacia.set(posCliente, clienteNovo);
+                                        } else {
+                                                clienteFarmacia.add(clienteNovo);
+
+                                        }
                                 }
 
                                 /////////// Caso o usuário clique em "Comprar" vai entrar aqui ///////////
@@ -736,7 +746,10 @@ public class main {
                                                                                 clienteFarmacia.get(Buscar(
                                                                                                 clienteFarmacia, cpf)));
 
-                                                                if (verificandoCliente(clienteFarmacia, cpf)) {
+                                                                if (verificandoCliente(clienteFarmacia, cpf)
+                                                                                && clienteFarmacia.get(Buscar(
+                                                                                                clienteFarmacia, cpf))
+                                                                                                .getNome() != "Desconhecido") {
 
                                                                         // Caso o usuário-cliente tenha cadastro, vamos
                                                                         // mostrar essa tela
