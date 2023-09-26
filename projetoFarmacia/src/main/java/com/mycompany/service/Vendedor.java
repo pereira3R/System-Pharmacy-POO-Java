@@ -7,7 +7,6 @@ public class Vendedor extends Funcionario {
 
     private int vendas = 0;
     private double salario = getSalarioBase();
-    private double lucroEmpresa = 0;
 
     public Vendedor(String NomeFarmacia, String CNPJ, String Endereco, String Telefone, String Site, double SalarioBase,
             String Nome, String CPF, String tipoFuncionario, int certificado) {
@@ -30,14 +29,6 @@ public class Vendedor extends Funcionario {
 
     public double getSalario() {
         return this.salario;
-    }
-
-    public void setLucroEmpresa(double lucro) {
-        this.lucroEmpresa += lucro;
-    }
-
-    public double getLucroEmpresa() {
-        return this.lucroEmpresa;
     }
 
     @Override
