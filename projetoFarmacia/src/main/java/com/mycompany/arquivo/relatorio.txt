@@ -2,17 +2,17 @@
 
 Nome do funcionário: Anthony Ricardo Rodrigues Rezende
 Cargo: Vendedor
-Número de Vendas: 2
+Número de Vendas: 0
 Taxa de Comissão (%) por Produto: 10
 Taxa de Comissão por meta (%) sob Salário Base: 10
-Salário (R$): 1305.62
+Salário (R$): 1300.00
 
 Nome do funcionário: Letízia Manuella Serqueira Eugênio
 Cargo: Farmacêutico
-Número de Vendas: 1
+Número de Vendas: 0
 Taxa de Comissão (%) por Produto: 10
 Taxa de Comissão por meta (%) sob Salário Base: 10
-Salário (R$): 2601.80
+Salário (R$): 2600.00
 
 Nome do funcionário: Vinicius Padilha Vieira
 Cargo: Vendedor
@@ -24,13 +24,8 @@ Salário (R$): 1300.00
 
 ** Relatório de Clientes **
 
-Nome: Anthony
-CPF: 1234
-Quantidade de compras: 3
-Valor total de compras (R$): 66.76
-
 Valor total de não cadastrados: 0.00
 
 ** Lucro Bruto Farmácia LAV **
 
-Valor Total: 7.42
+Valor Total: 0.00

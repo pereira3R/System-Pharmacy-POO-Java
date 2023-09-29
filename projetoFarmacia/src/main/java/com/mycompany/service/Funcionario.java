@@ -9,6 +9,7 @@ public abstract class Funcionario extends Farmacia {
     protected String CPF;
     protected String tipoFuncionario;
     protected double salario;
+    protected int vendas = 0;
     protected int certificado = 0;
     public int nivelAcesso;
 
@@ -64,6 +65,14 @@ public abstract class Funcionario extends Farmacia {
 
     public void calculandoLucroFarmacia(double valor) {
         super.setLucroBruto(valor);
+    }
+
+    public void setVendas(int inputVendas) {
+        this.vendas += inputVendas;
+    }
+
+    public int getVendas() {
+        return this.vendas;
     }
 
     public abstract void calcularSalarioPorProduto(Produtos input);

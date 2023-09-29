@@ -244,6 +244,23 @@ public class main {
                 }
         }
 
+        public static void alterarCarrinho(String NomeProduto, ArrayList<Produtos> produtosCliente) {
+
+                for (int i = 0; i < produtosCliente.size(); i++) {
+                        if (produtosCliente.get(i).getTipo().equals("Remédio")) {
+                                if (((Remedio) produtosCliente.get(i)).getNome().equals(NomeProduto)) {
+                                        produtosCliente.remove(i);
+                                        break;
+                                }
+                        } else {
+                                if (((NRemedio) produtosCliente.get(i)).getNome().equals(NomeProduto)) {
+                                        produtosCliente.remove(i);
+                                        break;
+                                }
+                        }
+                }
+        }
+
         // Funcao para retornar relatório do tipo String já adequadamente formatado
         public static String relatorioFinalDia(ArrayList<Cliente> clienteFarmacia,
                         ArrayList<Funcionario> Funcionarios, double valorDesconhecidos) {
@@ -365,6 +382,9 @@ public class main {
 
                 while (true) {
 
+                        // Armazennando a flag para permitir continuidade do carrinho
+                        int respostaFecharCarrinhoCliente = 0;
+
                         // Armazenar a quantidade de compras efetuadas pelo cliente
                         int comprasVendedor = 0;
                         int comprasFarmaceutico = 0;
@@ -390,7 +410,7 @@ public class main {
 
                         JOptionPane.showMessageDialog(null,
                                         "[AVISO] Para garantir desconto de 10%, realize o seu cadastro.");
-                        Object[] opcao = { "Cadastrar", "Comprar", "Sair" };
+                        Object[] opcao = { "Cadastrar", "Comprar", "Gerar Relatório" };
 
                         // Mostrando o *Menu LAV*, onde o cliente-usuário decide o que fazer (comprar,
                         // cadastrar, sair)
@@ -743,8 +763,70 @@ public class main {
                                                                         "Confirmação",
                                                                         JOptionPane.YES_NO_OPTION);
 
+                                                        if (respostaFecharCarrinho != JOptionPane.YES_OPTION) {
+                                                                respostaFecharCarrinhoCliente = 0;
+                                                        } else {
+                                                                respostaFecharCarrinhoCliente = 1;
+                                                        }
+
                                                         // Se o cliente-usuário clicar em sim...
                                                         if (respostaFecharCarrinho == JOptionPane.YES_OPTION) {
+
+                                                                int editarCarrinho = JOptionPane
+                                                                                .showConfirmDialog(null,
+                                                                                                "Antes de fechar, deseja editar o carrinho ?",
+                                                                                                "Confirmação",
+                                                                                                JOptionPane.YES_NO_OPTION);
+
+                                                                while (true) {
+                                                                        if (editarCarrinho == JOptionPane.YES_OPTION) {
+                                                                                int tamanhoCarrinho = clienteNovo
+                                                                                                .getCompras()
+                                                                                                .size();
+
+                                                                                String[] nomesProdutosCarrinho = new String[tamanhoCarrinho];
+                                                                                for (int i = 0; i < tamanhoCarrinho; i++) {
+
+                                                                                        Produtos produtoAtual = clienteNovo
+                                                                                                        .getCompras()
+                                                                                                        .get(i);
+
+                                                                                        nomesProdutosCarrinho[i] = produtoAtual
+                                                                                                        .getNome();
+                                                                                }
+
+                                                                                // Mostrando a interface com os produtos
+                                                                                // do tipo
+                                                                                // "Outros"
+                                                                                String selecionaProdutoCarrinho = (String) JOptionPane
+                                                                                                .showInputDialog(
+                                                                                                                null,
+                                                                                                                "Escolha uma opção:",
+                                                                                                                "Menu de Alteração de Carrinho",
+                                                                                                                JOptionPane.QUESTION_MESSAGE,
+                                                                                                                null,
+                                                                                                                nomesProdutosCarrinho,
+                                                                                                                nomesProdutosCarrinho[0]);
+                                                                                if (selecionaProdutoCarrinho != "") {
+                                                                                        alterarCarrinho(selecionaProdutoCarrinho,
+                                                                                                        clienteNovo.getCompras());
+                                                                                }
+                                                                                atendente.setVendas(
+                                                                                                atendente.getVendas()
+                                                                                                                - 1);
+                                                                                int continuarEditando = JOptionPane
+                                                                                                .showConfirmDialog(null,
+                                                                                                                "Deseja continuar alterando ?",
+                                                                                                                "Confirmação",
+                                                                                                                JOptionPane.YES_NO_OPTION);
+                                                                                if (continuarEditando != JOptionPane.YES_OPTION) {
+                                                                                        break;
+                                                                                }
+                                                                        } else {
+                                                                                break;
+                                                                        }
+                                                                }
+
                                                                 double valorTotal = calculandoTotalCarrinho(
                                                                                 clienteFarmacia.get(Buscar(
                                                                                                 clienteFarmacia, cpf)));
@@ -848,11 +930,13 @@ public class main {
 
                                                         }
                                                 }
-                                                break;
+                                                if (respostaFecharCarrinhoCliente == 1) {
+                                                        break;
+                                                }
                                         }
                                 }
 
-                        } else if (selecionarOpcao.equals("Sair")) {
+                        } else if (selecionarOpcao.equals("Gerar Relatório")) {
 
                                 // relatorio Farmacia [relatório cliente + relatório funcionário + lucroBruto]
 

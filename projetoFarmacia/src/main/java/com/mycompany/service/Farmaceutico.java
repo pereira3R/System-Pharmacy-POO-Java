@@ -25,6 +25,7 @@ public class Farmaceutico extends Funcionario {
     public void setVendas(int input) {
         this.vendas += input;
         calcularComissaoMeta(this.vendas);
+        super.setVendas(input);
     }
 
     public int getVendas() {
