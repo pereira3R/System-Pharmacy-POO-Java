@@ -14,7 +14,6 @@ import com.mycompany.products.Remedio;
 
 //Importando bibliotecas úteis
 import javax.swing.JOptionPane;
-
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
