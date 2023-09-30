@@ -261,9 +261,28 @@ public class main {
                 }
         }
 
+        // Criando o relatório de recibo por cliente, no qual está persistindo no
+        // arquivo relatorioClienteRecibo.txt
+        public static String relatorioPorCliente(Cliente cliente, ArrayList<Produtos> produtosCliente) {
+                String relatorioCliente = "Cliente \nCPF: " + cliente.getCPF() + "\n\n** Produtos Comprados **\n\n";
+                for (int i = 0; i < produtosCliente.size(); i++) {
+                        relatorioCliente += "Nome: " + produtosCliente.get(i).getNome() + "\nTipo: "
+                                        + produtosCliente.get(i).getTipo() +
+                                        "\nMarca: " + produtosCliente.get(i).getMarca() + "\nPreço: "
+                                        + produtosCliente.get(i).getPreco() + "\n\n";
+                }
+
+                relatorioCliente += "Valor Total da Compra: " + cliente.getValorTotalCompra()
+                                + "\n\nObrigado pela Preferência\nVolte sempre, atenciosamente Farmácia LAV";
+
+                return relatorioCliente;
+        }
+
         // Funcao para retornar relatório do tipo String já adequadamente formatado
-        public static String relatorioFinalDia(ArrayList<Cliente> clienteFarmacia,
-                        ArrayList<Funcionario> Funcionarios, double valorDesconhecidos) {
+        public static String relatorioFinalDiaFarmacia(ArrayList<Cliente> clienteFarmacia,
+                        ArrayList<Funcionario> Funcionarios) {
+
+                double valorTotalDesconhecidos = 0;
 
                 //////////////////////////// Relatório Funcionários //////////////
 
@@ -310,11 +329,13 @@ public class main {
                                                 + "Quantidade de compras: " + todasCompras.size() + "\n"
                                                 + "Valor total de compras (R$): "
                                                 + formatarNumeroComDuasCasasDecimais(C.getValorTotalCompra()) + "\n\n";
+                        } else {
+                                valorTotalDesconhecidos += C.getValorTotalCompra();
                         }
                 }
 
                 relatorio = relatorio + "Valor total de não cadastrados: "
-                                + formatarNumeroComDuasCasasDecimais(valorDesconhecidos);
+                                + formatarNumeroComDuasCasasDecimais(valorTotalDesconhecidos);
                 relatorio += "\n\n** Lucro Bruto Farmácia LAV **\n\nValor Total: "
                                 + formatarNumeroComDuasCasasDecimais(lucroBruto);
                 return relatorio;
@@ -322,13 +343,25 @@ public class main {
 
         // Função para persistir as informações do relatorio em um arquivo ->
         // "relatorio.txt"
-        public static void escrevendoArquivo(String relatorio) {
+        public static void escrevendoArquivoFarmacia(String relatorioFarmacia) {
                 try {
                         BufferedWriter writer = new BufferedWriter(new FileWriter(
-                                        "projetoFarmacia/src/main/java/com/mycompany/arquivo/relatorio.txt"));
-                        writer.write(relatorio);
+                                        "projetoFarmacia/src/main/java/com/mycompany/arquivo/relatorioFarmacia.txt"));
+                        writer.write(relatorioFarmacia);
                         writer.close();
-                        System.out.println("String exportada com sucesso para o arquivo.");
+                        System.out.println("String relatorioFarmacia exportada com sucesso para o arquivo.");
+                } catch (IOException e) {
+                        e.printStackTrace();
+                }
+        }
+
+        public static void escrevendoReciboCliente(String relatorioClienteRecibo) {
+                try {
+                        BufferedWriter writer = new BufferedWriter(new FileWriter(
+                                        "projetoFarmacia/src/main/java/com/mycompany/arquivo/relatorioClienteRecibo.txt"));
+                        writer.write(relatorioClienteRecibo);
+                        writer.close();
+                        System.out.println("String relatorioClienteRecibo exportada com sucesso para o arquivo.");
                 } catch (IOException e) {
                         e.printStackTrace();
                 }
@@ -351,10 +384,566 @@ public class main {
                 return formato.format(numero);
         }
 
-        public static void main(String[] args) {
+        public static Object cadastrando(Cliente clienteNovo, ArrayList<Cliente> clienteFarmacia,
+                        Object selecionarOpcao) {
+                // Cadastrando os Clientes
+                JOptionPane.showMessageDialog(null,
+                                "** Bem-Vindo ** \n\n Precisamos de algumas Informações \n\n CPF:\n Nome:\n Telefone:");
+                String cpfCliente = JOptionPane.showInputDialog("Digite o seu CPF: ");
 
-                // Criando a variavel que vai armazenar o valor
-                double valorTotalDesconhecidos = 0;
+                // Verificando se o cpf do cliente atual já foi cadastrado
+                if (verificandoCliente(clienteFarmacia, cpfCliente) && clienteFarmacia
+                                .get(Buscar(clienteFarmacia, cpfCliente)).getNome() != "Desconhecido") {
+                        JOptionPane.showMessageDialog(null, "Bem-vindo novamente !!");
+                } else {
+
+                        // Caso o cliente não esteja cadastrado...
+                        String nomeCliente = JOptionPane.showInputDialog("Digite o seu Nome: ");
+                        String telCliente = JOptionPane.showInputDialog("Digite o seu Telefone: ");
+
+                        JOptionPane.showMessageDialog(null,
+                                        "** Informações Passadas **\n\nCPF: " + cpfCliente + "\nNome: "
+                                                        + nomeCliente + "\nTelefone: " + telCliente);
+
+                        int resposta = JOptionPane.showConfirmDialog(null,
+                                        "Você deseja alterar os dados ?",
+                                        "Confirmação", JOptionPane.YES_NO_OPTION);
+                        if (resposta == JOptionPane.YES_OPTION) {
+                                Object[] opcaoCliente = { "CPF", "Nome", "Telefone", "Tudo" };
+
+                                // Perguntando se o cliente-usuário deseja alterar algo
+                                Object selecionaOpcaoCliente = JOptionPane.showInputDialog(
+                                                null,
+                                                "** Alteração de Dados **",
+                                                "Opção",
+                                                JOptionPane.INFORMATION_MESSAGE,
+                                                null,
+                                                opcaoCliente,
+                                                null
+
+                                );
+
+                                // Todas as opções de alteração de Dados
+
+                                if (selecionaOpcaoCliente.equals("CPF")) {
+                                        cpfCliente = JOptionPane.showInputDialog("Digite o seu CPF: ");
+
+                                } else if (selecionaOpcaoCliente.equals("Nome")) {
+                                        nomeCliente = JOptionPane
+                                                        .showInputDialog("Digite o seu Nome: ");
+
+                                } else if (selecionaOpcaoCliente.equals("Telefone")) {
+                                        telCliente = JOptionPane
+                                                        .showInputDialog("Digite o seu Telefone: ");
+
+                                } else if (selecionaOpcaoCliente.equals("Tudo")) {
+
+                                        cpfCliente = JOptionPane.showInputDialog("Digite o seu CPF: ");
+
+                                        nomeCliente = JOptionPane
+                                                        .showInputDialog("Digite o seu Nome: ");
+                                        telCliente = JOptionPane
+                                                        .showInputDialog("Digite o seu Telefone: ");
+
+                                }
+
+                        }
+
+                        // Inserindo todos as informações na classe cliente instanciado como clienteNovo
+                        clienteNovo.setCPF(cpfCliente);
+                        clienteNovo.setNome(nomeCliente);
+                        clienteNovo.setTelefone(telCliente);
+
+                        // Verificando se o CPF já foi cadastrado
+                        if (verificandoCliente(clienteFarmacia, cpfCliente)) {
+                                int posCliente = Buscar(clienteFarmacia, cpfCliente);
+                                clienteFarmacia.set(posCliente, clienteNovo);
+                        } else {
+                                clienteFarmacia.add(clienteNovo);
+
+                        }
+                }
+
+                return selecionarOpcao = "Comprar";
+
+                /////////// Caso o usuário clique em "Comprar" vai entrar aqui ///////////
+        }
+
+        public static void comprando(Funcionario atendente, Funcionario auxAtendente,
+                        ArrayList<Funcionario> farmaciaFuncionarios,
+                        ArrayList<Cliente> clienteFarmacia, int comprasVendedor, int comprasFarmaceutico,
+                        Cliente clienteNovo, ArrayList<Produtos> produtosFarmacia, int respostaFecharCarrinhoCliente,
+                        int flag, Random random) {
+
+                // Mostrando que o atendimento foi direcionado a um dos funcionários da farmácia
+                // LAV
+                atendente = farmaciaFuncionarios.get(random.nextInt(3));
+                JOptionPane.showMessageDialog(null,
+                                "Atendimento com:\n\n Nome: " + atendente.getNome()
+                                                + "\n Cargo: "
+                                                + atendente.getTipoFuncionario());
+
+                // Pedindo CPF do cliente-usuário, para verificar se já tem cadastro ou não
+                String cpf = JOptionPane.showInputDialog("Passe o seu CPF:");
+                if (!verificandoCliente(clienteFarmacia, cpf)) {
+                        comprasVendedor = 0;
+                        comprasFarmaceutico = 0;
+                }
+
+                while (true) {
+
+                        boolean receitaCliente = true;
+
+                        // Mostrando as opções Remédio e não remédio
+                        if (Buscar(clienteFarmacia, cpf) == -1) {
+                                clienteNovo.setCPF(cpf);
+                                clienteNovo.setNome("Desconhecido");
+                                clienteFarmacia.add(clienteNovo);
+                        }
+
+                        String[] opcaoCompra = { "Remédios", "Outros" };
+                        String compraSelecionada = (String) JOptionPane.showInputDialog(
+                                        null,
+                                        "Escolha uma opção:",
+                                        "Menu Compras - LAV",
+                                        JOptionPane.QUESTION_MESSAGE,
+                                        null,
+                                        opcaoCompra,
+                                        opcaoCompra[0]);
+
+                        /////////// Caso o usuário clique em Remédios ///////////
+                        if (compraSelecionada.equals("Remédios")) {
+
+                                ArrayList<Produtos> listaRemedios = new ArrayList<Produtos>();
+                                int countRemedios = 0;
+
+                                // Coletando Produtos do Tipo Remédio
+
+                                for (int i = 0; i < produtosFarmacia.size(); i++) {
+                                        if (produtosFarmacia.get(i).getTipo().equals("Remédio")) {
+                                                listaRemedios.add(((Remedio) produtosFarmacia.get(i)));
+                                                countRemedios++;
+                                        }
+                                }
+
+                                Object[] nomesRemedios = new Object[countRemedios];
+
+                                for (int i = 0; i < countRemedios; i++) {
+                                        nomesRemedios[i] = ((Remedio) listaRemedios.get(i))
+                                                        .getNomeRemedio();
+                                }
+
+                                Produtos produtoCliente = null;
+
+                                // Interface para selecionar o produtos, dentro do estoque da Farmácia
+                                // LAV
+                                String compraRemedio = (String) JOptionPane.showInputDialog(
+                                                null,
+                                                "Escolha uma opção:",
+                                                "Menu Compras - LAV",
+                                                JOptionPane.QUESTION_MESSAGE,
+                                                null,
+                                                nomesRemedios,
+                                                nomesRemedios[0]);
+
+                                // Caso algum produto, seja selecionado seguimos...
+                                if (compraRemedio != "") {
+                                        produtoCliente = buscandoRemedio(listaRemedios,
+                                                        (String) compraRemedio);
+                                        boolean receita = ((Remedio) produtoCliente)
+                                                        .getReceitaRemedio();
+                                        if (receita) {
+
+                                                int resposta = JOptionPane.showConfirmDialog(null,
+                                                                "Você possui Receita ?",
+                                                                "Confirmação",
+                                                                JOptionPane.YES_NO_OPTION);
+                                                if (resposta != JOptionPane.YES_OPTION) {
+                                                        JOptionPane.showMessageDialog(null,
+                                                                        "Para comprar esse remédio,\n você precisa de receita");
+                                                        receitaCliente = false;
+
+                                                }
+                                        }
+
+                                        if (receitaCliente) {
+                                                // Usando o atributo nível de acesso que vem do implements
+                                                // painel de controle
+                                                // para classificar se o atendente tem acesso para aplicar
+                                                // injetáveis ou não
+                                                if (((Remedio) produtoCliente).getTipoRemedio()
+                                                                .equals("Injetável")) {
+                                                        if (atendente.nivelAcesso == 0) {
+                                                                auxAtendente = farmaciaFuncionarios.get(1);
+
+                                                                JOptionPane.showMessageDialog(null,
+                                                                                "Vamos te encaminhar para a farmacêutica\npara realizar a aplicação do injetável\n\nFarmacêutica: "
+                                                                                                + auxAtendente.getNome());
+
+                                                                flag = 1;
+                                                        }
+                                                }
+
+                                                if (atendente.getNome()
+                                                                .equals("Letízia Manuella Serqueira Eugênio")) {
+                                                        comprasFarmaceutico++;
+                                                } else {
+                                                        comprasVendedor++;
+                                                }
+                                        }
+
+                                }
+
+                                if (receitaCliente) {
+                                        // Interface, perguntando ao usuário cliente se ele desej a adicionar ao
+                                        // carrinho ou não
+                                        int respostaClienteProduto = JOptionPane.showConfirmDialog(null,
+                                                        "Deseja colocar no carrinho ?\n\nNome: "
+                                                                        + produtoCliente.getNome() +
+                                                                        "\nMarca: "
+                                                                        + produtoCliente.getMarca()
+                                                                        + "\nPreço: "
+                                                                        + produtoCliente.getPreco()
+                                                                        + "\n",
+
+                                                        "Sobre o Produto",
+                                                        JOptionPane.YES_NO_OPTION);
+
+                                        // Caso deseje adicionar, prosseguimos por aqui
+                                        if (respostaClienteProduto == JOptionPane.YES_OPTION) {
+
+                                                clienteFarmacia.get(Buscar(clienteFarmacia, cpf))
+                                                                .setCompras(produtoCliente);
+                                                double valorTotal = calculandoTotalCarrinho(clienteFarmacia
+                                                                .get(Buscar(clienteFarmacia, cpf)));
+                                                String comprasAtualCliente = comprasAtualCliente(clienteFarmacia
+                                                                .get(Buscar(clienteFarmacia, cpf)));
+                                                JOptionPane.showMessageDialog(null,
+                                                                "** Seu carrinho **\nValor Total: "
+                                                                                + formatarNumeroComDuasCasasDecimais(
+                                                                                                valorTotal)
+                                                                                + "\n\n" + comprasAtualCliente);
+                                        }
+                                }
+                                /////////// Caso o usuário selecione Outros vai entrar aqui ///////////
+                        } else if (compraSelecionada.equals("Outros")) {
+
+                                if (atendente.getNome().equals("Letízia Manuella Serqueira Eugênio")) {
+                                        comprasFarmaceutico++;
+                                } else {
+                                        comprasVendedor++;
+                                }
+
+                                // Coletando os produtos do tipo "Outros" em um arrayList
+                                ArrayList<Produtos> listaNRemedios = new ArrayList<Produtos>();
+                                int countNRemedios = 0;
+                                for (int i = 0; i < produtosFarmacia.size(); i++) {
+                                        if (produtosFarmacia.get(i).getTipo().equals("Outros")) {
+                                                listaNRemedios.add(
+                                                                ((NRemedio) produtosFarmacia.get(i)));
+                                                countNRemedios++;
+                                        }
+                                }
+
+                                // Preparando o object, no qual a interface vai precisar para mostrar o
+                                // leque de
+                                // produtos do tipo "Outros"
+
+                                Object[] nomesNRemedios = new Object[countNRemedios];
+                                for (int i = 0; i < countNRemedios; i++) {
+                                        nomesNRemedios[i] = ((NRemedio) listaNRemedios.get(i))
+                                                        .getNomeProduto();
+                                }
+
+                                Produtos produtoCliente = null;
+
+                                // Mostrando a interface com os produtos do tipo "Outros"
+                                String compraNRemedio = (String) JOptionPane.showInputDialog(
+                                                null,
+                                                "Escolha uma opção:",
+                                                "Menu Compras - LAV",
+                                                JOptionPane.QUESTION_MESSAGE,
+                                                null,
+                                                nomesNRemedios,
+                                                nomesNRemedios[0]);
+
+                                // Caso algum produto seja selecionado, prosseguimos...
+                                if (compraNRemedio != "") {
+
+                                        produtoCliente = buscandoNRemedio(listaNRemedios,
+                                                        (String) compraNRemedio);
+
+                                }
+
+                                // Mostrando as caracteríticas do produto do tipo "Outros" que foi
+                                // selecionado + perguntando se deseja adicioná-lo no carrinho
+                                int respostaClienteProduto = JOptionPane.showConfirmDialog(null,
+                                                "Deseja colocar no carrinho ?\n\nNome: "
+                                                                + produtoCliente.getNome() +
+                                                                "\nMarca: "
+                                                                + produtoCliente.getMarca()
+                                                                + "\nPreço: "
+                                                                + produtoCliente.getPreco()
+                                                                + "\n",
+
+                                                "Sobre o Produto",
+                                                JOptionPane.YES_NO_OPTION);
+
+                                // Caso o usuário-cliente desejar, prosseguimos
+                                if (respostaClienteProduto == JOptionPane.YES_OPTION) {
+
+                                        clienteFarmacia.get(Buscar(clienteFarmacia, cpf))
+                                                        .setCompras(produtoCliente);
+                                        double valorTotal = calculandoTotalCarrinho(clienteFarmacia
+                                                        .get(Buscar(clienteFarmacia, cpf)));
+                                        String comprasAtualCliente = comprasAtualCliente(clienteFarmacia
+                                                        .get(Buscar(clienteFarmacia, cpf)));
+                                        JOptionPane.showMessageDialog(null,
+                                                        "** Seu carrinho **\nValor Total: "
+                                                                        + formatarNumeroComDuasCasasDecimais(
+                                                                                        valorTotal)
+                                                                        + "\n\n" + comprasAtualCliente);
+                                }
+
+                        }
+
+                        // Perguntando ao cliente-usuário se deseja continuar comprando
+
+                        int resposta = JOptionPane.showConfirmDialog(null,
+                                        "Deseja continuar comprando ?",
+                                        "Confirmação",
+                                        JOptionPane.YES_NO_OPTION);
+
+                        // Caso sim, prosseguimos
+                        if (resposta != JOptionPane.YES_OPTION) {
+
+                                if (clienteNovo.getCompras() != null) {
+                                        String comprasAtualCliente = "";
+                                        if (Buscar(clienteFarmacia, cpf) != -1) {
+                                                comprasAtualCliente = comprasAtualCliente(
+                                                                clienteFarmacia.get(Buscar(
+                                                                                clienteFarmacia, cpf)));
+                                        } else {
+                                                comprasAtualCliente = comprasAtualCliente(clienteNovo);
+                                        }
+
+                                        // Mostrando tudo que há no carrinho do usuário-cliente até o
+                                        // momento
+
+                                        int respostaFecharCarrinho = JOptionPane.showConfirmDialog(null,
+                                                        "** No seu carrinho tem: **\n\n"
+                                                                        + comprasAtualCliente
+                                                                        + "\n\n Deseja fechar o carrinho ?",
+                                                        "Confirmação",
+                                                        JOptionPane.YES_NO_OPTION);
+
+                                        if (respostaFecharCarrinho != JOptionPane.YES_OPTION) {
+                                                respostaFecharCarrinhoCliente = 0;
+                                        } else {
+                                                respostaFecharCarrinhoCliente = 1;
+                                        }
+
+                                        // Se o cliente-usuário clicar em sim...
+                                        if (respostaFecharCarrinho == JOptionPane.YES_OPTION) {
+
+                                                // Analisando se u usuário-cliente quer alterar o
+                                                // carrinho ?
+                                                int editarCarrinho = JOptionPane
+                                                                .showConfirmDialog(null,
+                                                                                "Antes de fechar, deseja editar o carrinho ?",
+                                                                                "Confirmação",
+                                                                                JOptionPane.YES_NO_OPTION);
+
+                                                while (true) {
+                                                        if (editarCarrinho == JOptionPane.YES_OPTION) {
+                                                                int tamanhoCarrinho = clienteNovo
+                                                                                .getCompras()
+                                                                                .size();
+
+                                                                String[] nomesProdutosCarrinho = new String[tamanhoCarrinho];
+                                                                for (int i = 0; i < tamanhoCarrinho; i++) {
+
+                                                                        Produtos produtoAtual = clienteNovo
+                                                                                        .getCompras()
+                                                                                        .get(i);
+
+                                                                        nomesProdutosCarrinho[i] = produtoAtual
+                                                                                        .getNome();
+                                                                }
+
+                                                                // Mostrando a interface com os produtos
+                                                                // do tipo
+                                                                // "Outros"
+                                                                String selecionaProdutoCarrinho = (String) JOptionPane
+                                                                                .showInputDialog(
+                                                                                                null,
+                                                                                                "Escolha uma opção:",
+                                                                                                "Menu de Alteração de Carrinho",
+                                                                                                JOptionPane.QUESTION_MESSAGE,
+                                                                                                null,
+                                                                                                nomesProdutosCarrinho,
+                                                                                                nomesProdutosCarrinho[0]);
+                                                                if (selecionaProdutoCarrinho != "") {
+                                                                        alterarCarrinho(selecionaProdutoCarrinho,
+                                                                                        clienteNovo.getCompras());
+                                                                }
+                                                                // Retirando uma venda do funcionário
+                                                                // que atendeu o cliente
+                                                                if (auxAtendente != null) {
+                                                                        if (selecionaProdutoCarrinho
+                                                                                        .equals("Benzetacil")) {
+                                                                                auxAtendente.setVendas(
+                                                                                                auxAtendente.getVendas()
+                                                                                                                - 1);
+                                                                        } else {
+                                                                                atendente.setVendas(
+                                                                                                atendente.getVendas()
+                                                                                                                - 1);
+                                                                        }
+                                                                } else {
+                                                                        atendente.setVendas(
+                                                                                        atendente.getVendas()
+                                                                                                        - 1);
+                                                                }
+
+                                                                // Perguntando ao cliente-usuário se ele
+                                                                // deseja continuar a alteração
+
+                                                                int continuarEditando = JOptionPane
+                                                                                .showConfirmDialog(null,
+                                                                                                "Deseja continuar alterando ?",
+                                                                                                "Confirmação",
+                                                                                                JOptionPane.YES_NO_OPTION);
+
+                                                                if (continuarEditando != JOptionPane.YES_OPTION) {
+                                                                        break;
+                                                                }
+                                                        } else {
+                                                                break;
+                                                        }
+                                                }
+
+                                                double valorTotal = calculandoTotalCarrinho(
+                                                                clienteFarmacia.get(Buscar(
+                                                                                clienteFarmacia, cpf)));
+
+                                                if (verificandoCliente(clienteFarmacia, cpf)
+                                                                && clienteFarmacia.get(Buscar(
+                                                                                clienteFarmacia, cpf))
+                                                                                .getNome() != "Desconhecido") {
+
+                                                        // Caso o usuário-cliente tenha cadastro, vamos
+                                                        // mostrar essa tela
+
+                                                        JOptionPane.showMessageDialog(null,
+                                                                        "[Pagamento] - Você tem Cadastro.\n\nValor Total: R$"
+                                                                                        + formatarNumeroComDuasCasasDecimais(
+                                                                                                        valorTotal)
+                                                                                        + "\nCom desconto de 10%: R$"
+                                                                                        + formatarNumeroComDuasCasasDecimais(
+                                                                                                        valorTotal * 0.9));
+                                                        clienteFarmacia.get(
+                                                                        Buscar(clienteFarmacia, cpf))
+                                                                        .setValorTotalCompra(valorTotal
+                                                                                        * 0.9);
+                                                        ;
+                                                } else {
+
+                                                        // Caso o usuário-cliente não tenha cadastro,
+                                                        // vamos mostrar essa tela
+                                                        JOptionPane.showMessageDialog(null,
+                                                                        "[Pagamento] - Você não tem Cadastro.\n\nValor Total: R$"
+                                                                                        + formatarNumeroComDuasCasasDecimais(
+                                                                                                        valorTotal));
+                                                        clienteFarmacia.get(
+                                                                        Buscar(clienteFarmacia, cpf))
+                                                                        .setValorTotalCompra(
+                                                                                        valorTotal);
+
+                                                }
+
+                                                if (clienteNovo.getCompras().size() > 0
+                                                                && clienteNovo.getValorTotalCompra() > 0) {
+                                                        // Mostrando o recibo de compra e pagamento do cliente, de
+                                                        // acordo com o
+                                                        // seu carrinho
+                                                        String relatorioCliente = relatorioPorCliente(clienteNovo,
+                                                                        clienteNovo.getCompras());
+                                                        JOptionPane.showMessageDialog(null, relatorioCliente);
+
+                                                        escrevendoReciboCliente(relatorioCliente);
+
+                                                        // Caso o atendimento de um vendedor precisou passar
+                                                        // alguma aplicação para
+                                                        // a farmacêutica Letizia flag será 1, logo prosseguimos
+                                                        // por aqui... e isso mudará o funcionamento da Função
+                                                        // calculaSalarioFuncionario
+
+                                                        // Inserindo vendas + calculando salário
+
+                                                        if ((flag == 1) && (atendente
+                                                                        .getTipoFuncionario() != "Farmacêutico")) {
+                                                                comprasFarmaceutico++;
+                                                                comprasVendedor--;
+                                                                inserirVendas(auxAtendente,
+                                                                                farmaciaFuncionarios,
+                                                                                comprasFarmaceutico);
+
+                                                                calculaSalarioFuncionario(auxAtendente,
+                                                                                farmaciaFuncionarios,
+                                                                                clienteFarmacia.get(
+                                                                                                Buscar(clienteFarmacia,
+                                                                                                                cpf)),
+                                                                                flag);
+                                                        }
+
+                                                        // Inserindo vendas + calculando salário
+
+                                                        if (atendente.getTipoFuncionario()
+                                                                        .equals("Vendedor")) {
+                                                                inserirVendas(atendente,
+                                                                                farmaciaFuncionarios,
+                                                                                comprasVendedor);
+                                                        } else if (atendente.getTipoFuncionario()
+                                                                        .equals("Farmacêutico")) {
+                                                                inserirVendas(atendente,
+                                                                                farmaciaFuncionarios,
+                                                                                comprasFarmaceutico);
+                                                        }
+                                                        calculaSalarioFuncionario(atendente,
+                                                                        farmaciaFuncionarios,
+                                                                        clienteFarmacia.get(Buscar(
+                                                                                        clienteFarmacia,
+                                                                                        cpf)),
+                                                                        flag);
+
+                                                        // Abaixo estamos "setando" o número de compras
+                                                        // realizadas com os funcionários, seja do
+                                                        // tipo vendedor ou do tipo farmacêutico
+
+                                                        if (atendente.getTipoFuncionario().equals("Vendedor")) {
+                                                                clienteFarmacia.get(
+                                                                                Buscar(clienteFarmacia, cpf))
+                                                                                .setContaCompras(
+                                                                                                comprasVendedor);
+                                                        } else {
+                                                                clienteFarmacia.get(
+                                                                                Buscar(clienteFarmacia, cpf))
+                                                                                .setContaCompras(
+                                                                                                comprasFarmaceutico);
+                                                        }
+                                                }
+
+                                        }
+                                }
+                                if (respostaFecharCarrinhoCliente == 1) {
+                                        break;
+                                }
+                        }
+                }
+        }
+
+        public static void main(String[] args) {
 
                 // Criando a flag para validacao de casos de aplicação de injetáveis
                 int flag = 0;
@@ -410,7 +999,7 @@ public class main {
 
                         JOptionPane.showMessageDialog(null,
                                         "[AVISO] Para garantir desconto de 10%, realize o seu cadastro.");
-                        Object[] opcao = { "Cadastrar", "Comprar", "Gerar Relatório" };
+                        Object[] opcao = { "Cadastrar", "Comprar", "Sair" };
 
                         // Mostrando o *Menu LAV*, onde o cliente-usuário decide o que fazer (comprar,
                         // cadastrar, sair)
@@ -426,529 +1015,32 @@ public class main {
                         // Apresentando as Informções que os Clientes devem inserir
                         if (selecionarOpcao.equals("Cadastrar")) {
 
-                                // Cadastrando os Clientes
-                                JOptionPane.showMessageDialog(null,
-                                                "** Bem-Vindo ** \n\n Precisamos de algumas Informações \n\n CPF:\n Nome:\n Telefone:");
-                                String cpfCliente = JOptionPane.showInputDialog("Digite o seu CPF: ");
-
-                                // Verificando se o cpf do cliente atual já foi cadastrado
-                                if (verificandoCliente(clienteFarmacia, cpfCliente) && clienteFarmacia
-                                                .get(Buscar(clienteFarmacia, cpfCliente)).getNome() != "Desconhecido") {
-                                        JOptionPane.showMessageDialog(null, "Bem-vindo novamente !!");
-                                } else {
-
-                                        // Caso o cliente não esteja cadastrado...
-                                        String nomeCliente = JOptionPane.showInputDialog("Digite o seu Nome: ");
-                                        String telCliente = JOptionPane.showInputDialog("Digite o seu Telefone: ");
-
-                                        JOptionPane.showMessageDialog(null,
-                                                        "** Informações Passadas **\n\nCPF: " + cpfCliente + "\nNome: "
-                                                                        + nomeCliente + "\nTelefone: " + telCliente);
-
-                                        int resposta = JOptionPane.showConfirmDialog(null,
-                                                        "Você deseja alterar os dados ?",
-                                                        "Confirmação", JOptionPane.YES_NO_OPTION);
-                                        if (resposta == JOptionPane.YES_OPTION) {
-                                                Object[] opcaoCliente = { "CPF", "Nome", "Telefone", "Tudo" };
-
-                                                // Perguntando se o cliente-usuário deseja alterar algo
-                                                Object selecionaOpcaoCliente = JOptionPane.showInputDialog(
-                                                                null,
-                                                                "** Alteração de Dados **",
-                                                                "Opção",
-                                                                JOptionPane.INFORMATION_MESSAGE,
-                                                                null,
-                                                                opcaoCliente,
-                                                                null
-
-                                                );
-
-                                                // Todas as opções de alteração de Dados
-
-                                                if (selecionaOpcaoCliente.equals("CPF")) {
-                                                        cpfCliente = JOptionPane.showInputDialog("Digite o seu CPF: ");
-
-                                                } else if (selecionaOpcaoCliente.equals("Nome")) {
-                                                        nomeCliente = JOptionPane
-                                                                        .showInputDialog("Digite o seu Nome: ");
-
-                                                } else if (selecionaOpcaoCliente.equals("Telefone")) {
-                                                        telCliente = JOptionPane
-                                                                        .showInputDialog("Digite o seu Telefone: ");
-
-                                                } else if (selecionaOpcaoCliente.equals("Tudo")) {
-
-                                                        cpfCliente = JOptionPane.showInputDialog("Digite o seu CPF: ");
-
-                                                        nomeCliente = JOptionPane
-                                                                        .showInputDialog("Digite o seu Nome: ");
-                                                        telCliente = JOptionPane
-                                                                        .showInputDialog("Digite o seu Telefone: ");
-
-                                                }
-
-                                        }
-
-                                        // Inserindo todos as informações na classe cliente instanciado como clienteNovo
-                                        clienteNovo.setCPF(cpfCliente);
-                                        clienteNovo.setNome(nomeCliente);
-                                        clienteNovo.setTelefone(telCliente);
-
-                                        // Verificando se o CPF já foi cadastrado
-                                        if (verificandoCliente(clienteFarmacia, cpfCliente)) {
-                                                int posCliente = Buscar(clienteFarmacia, cpfCliente);
-                                                clienteFarmacia.set(posCliente, clienteNovo);
-                                        } else {
-                                                clienteFarmacia.add(clienteNovo);
-
-                                        }
-                                }
-
-                                selecionarOpcao = "Comprar";
-
-                                /////////// Caso o usuário clique em "Comprar" vai entrar aqui ///////////
-
+                                // retorno porque ao cadastrar quero encaminha o usuário-cliente para as
+                                // compras, logo
+                                // devo alterar a variavell selecionarOpcao
+                                selecionarOpcao = cadastrando(clienteNovo, clienteFarmacia, selecionarOpcao);
                         }
                         if (selecionarOpcao.equals("Comprar")) {
 
-                                // Mostrando que o atendimento foi direcionado a um dos funcionários da farmácia
-                                // LAV
-                                atendente = farmaciaFuncionarios.get(random.nextInt(3));
-                                JOptionPane.showMessageDialog(null,
-                                                "Atendimento com:\n\n Nome: " + atendente.getNome()
-                                                                + "\n Cargo: "
-                                                                + atendente.getTipoFuncionario());
-
-                                // Pedindo CPF do cliente-usuário, para verificar se já tem cadastro ou não
-                                String cpf = JOptionPane.showInputDialog("Passe o seu CPF:");
-                                if (!verificandoCliente(clienteFarmacia, cpf)) {
-                                        comprasVendedor = 0;
-                                        comprasFarmaceutico = 0;
-                                }
-
-                                while (true) {
-
-                                        // Mostrando as opções Remédio e não remédio
-                                        if (Buscar(clienteFarmacia, cpf) == -1) {
-                                                clienteNovo.setCPF(cpf);
-                                                clienteNovo.setNome("Desconhecido");
-                                                clienteFarmacia.add(clienteNovo);
-                                        }
-
-                                        String[] opcaoCompra = { "Remédios", "Outros" };
-                                        String compraSelecionada = (String) JOptionPane.showInputDialog(
-                                                        null,
-                                                        "Escolha uma opção:",
-                                                        "Menu Compras - LAV",
-                                                        JOptionPane.QUESTION_MESSAGE,
-                                                        null,
-                                                        opcaoCompra,
-                                                        opcaoCompra[0]);
-
-                                        /////////// Caso o usuário clique em Remédios ///////////
-                                        if (compraSelecionada.equals("Remédios")) {
-
-                                                ArrayList<Produtos> listaRemedios = new ArrayList<Produtos>();
-                                                int countRemedios = 0;
-                                                for (int i = 0; i < produtosFarmacia.size(); i++) {
-                                                        if (produtosFarmacia.get(i).getTipo().equals("Remédio")) {
-                                                                listaRemedios.add(((Remedio) produtosFarmacia.get(i)));
-                                                                countRemedios++;
-                                                        }
-                                                }
-
-                                                Object[] nomesRemedios = new Object[countRemedios];
-
-                                                for (int i = 0; i < countRemedios; i++) {
-                                                        nomesRemedios[i] = ((Remedio) listaRemedios.get(i))
-                                                                        .getNomeRemedio();
-                                                }
-
-                                                Produtos produtoCliente = null;
-
-                                                // Interface para selecionar o produtos, dentro do estoque da Farmácia
-                                                // LAV
-                                                String compraRemedio = (String) JOptionPane.showInputDialog(
-                                                                null,
-                                                                "Escolha uma opção:",
-                                                                "Menu Compras - LAV",
-                                                                JOptionPane.QUESTION_MESSAGE,
-                                                                null,
-                                                                nomesRemedios,
-                                                                nomesRemedios[0]);
-
-                                                // Caso algum produto, seja selecionado seguimos...
-                                                if (compraRemedio != "") {
-                                                        produtoCliente = buscandoRemedio(listaRemedios,
-                                                                        (String) compraRemedio);
-                                                        boolean receita = ((Remedio) produtoCliente)
-                                                                        .getReceitaRemedio();
-                                                        if (receita) {
-
-                                                                int resposta = JOptionPane.showConfirmDialog(null,
-                                                                                "Você possui Receita ?",
-                                                                                "Confirmação",
-                                                                                JOptionPane.YES_NO_OPTION);
-                                                                if (resposta != JOptionPane.YES_OPTION) {
-                                                                        JOptionPane.showMessageDialog(null,
-                                                                                        "Para comprar esse remédio,\n você precisa de receita");
-                                                                        break;
-                                                                }
-                                                        }
-
-                                                        // Usando o atributo nível de acesso que vem do implements
-                                                        // painel de controle
-                                                        // para classificar se o atendente tem acesso para aplicar
-                                                        // injetáveis ou não
-                                                        if (((Remedio) produtoCliente).getTipoRemedio()
-                                                                        .equals("Injetável")) {
-                                                                if (atendente.nivelAcesso == 0) {
-                                                                        auxAtendente = farmaciaFuncionarios.get(1);
-
-                                                                        JOptionPane.showMessageDialog(null,
-                                                                                        "Vamos te encaminhar para a farmacêutica\npara realizar a aplicação do injetável\n\nFarmacêutica: "
-                                                                                                        + auxAtendente.getNome());
-
-                                                                        flag = 1;
-                                                                }
-                                                        }
-
-                                                        if (atendente.getNome()
-                                                                        .equals("Letízia Manuella Serqueira Eugênio")) {
-                                                                comprasFarmaceutico++;
-                                                        } else {
-                                                                comprasVendedor++;
-                                                        }
-
-                                                }
-                                                // Interface, perguntando ao usuário cliente se ele desej a adicionar ao
-                                                // carrinho ou não
-                                                int respostaClienteProduto = JOptionPane.showConfirmDialog(null,
-                                                                "Deseja colocar no carrinho ?\n\nNome: "
-                                                                                + produtoCliente.getNome() +
-                                                                                "\nMarca: "
-                                                                                + produtoCliente.getMarca()
-                                                                                + "\nPreço: "
-                                                                                + produtoCliente.getPreco()
-                                                                                + "\n",
-
-                                                                "Sobre o Produto",
-                                                                JOptionPane.YES_NO_OPTION);
-
-                                                // Caso deseje adicionar, prosseguimos por aqui
-                                                if (respostaClienteProduto == JOptionPane.YES_OPTION) {
-
-                                                        clienteFarmacia.get(Buscar(clienteFarmacia, cpf))
-                                                                        .setCompras(produtoCliente);
-                                                        double valorTotal = calculandoTotalCarrinho(clienteFarmacia
-                                                                        .get(Buscar(clienteFarmacia, cpf)));
-                                                        String comprasAtualCliente = comprasAtualCliente(clienteFarmacia
-                                                                        .get(Buscar(clienteFarmacia, cpf)));
-                                                        JOptionPane.showMessageDialog(null,
-                                                                        "** Seu carrinho **\nValor Total: "
-                                                                                        + formatarNumeroComDuasCasasDecimais(
-                                                                                                        valorTotal)
-                                                                                        + "\n\n" + comprasAtualCliente);
-                                                }
-
-                                                /////////// Caso o usuário selecione Outros vai entrar aqui ///////////
-                                        } else if (compraSelecionada.equals("Outros")) {
-
-                                                if (atendente.getNome().equals("Letízia Manuella Serqueira Eugênio")) {
-                                                        comprasFarmaceutico++;
-                                                } else {
-                                                        comprasVendedor++;
-                                                }
-
-                                                // Coletando os produtos do tipo "Outros" em um arrayList
-                                                ArrayList<Produtos> listaNRemedios = new ArrayList<Produtos>();
-                                                int countNRemedios = 0;
-                                                for (int i = 0; i < produtosFarmacia.size(); i++) {
-                                                        if (produtosFarmacia.get(i).getTipo().equals("Outros")) {
-                                                                listaNRemedios.add(
-                                                                                ((NRemedio) produtosFarmacia.get(i)));
-                                                                countNRemedios++;
-                                                        }
-                                                }
-
-                                                // Preparando o object, no qual a interface vai precisar para mostrar o
-                                                // leque de
-                                                // produtos do tipo "Outros"
-
-                                                Object[] nomesNRemedios = new Object[countNRemedios];
-                                                for (int i = 0; i < countNRemedios; i++) {
-                                                        nomesNRemedios[i] = ((NRemedio) listaNRemedios.get(i))
-                                                                        .getNomeProduto();
-                                                }
-
-                                                Produtos produtoCliente = null;
-
-                                                // Mostrando a interface com os produtos do tipo "Outros"
-                                                String compraNRemedio = (String) JOptionPane.showInputDialog(
-                                                                null,
-                                                                "Escolha uma opção:",
-                                                                "Menu Compras - LAV",
-                                                                JOptionPane.QUESTION_MESSAGE,
-                                                                null,
-                                                                nomesNRemedios,
-                                                                nomesNRemedios[0]);
-
-                                                // Caso algum produto seja selecionado, prosseguimos...
-                                                if (compraNRemedio != "") {
-
-                                                        produtoCliente = buscandoNRemedio(listaNRemedios,
-                                                                        (String) compraNRemedio);
-
-                                                }
-
-                                                // Mostrando as caracteríticas do produto do tipo "Outros" que foi
-                                                // selecionado + perguntando se deseja adicioná-lo no carrinho
-                                                int respostaClienteProduto = JOptionPane.showConfirmDialog(null,
-                                                                "Deseja colocar no carrinho ?\n\nNome: "
-                                                                                + produtoCliente.getNome() +
-                                                                                "\nMarca: "
-                                                                                + produtoCliente.getMarca()
-                                                                                + "\nPreço: "
-                                                                                + produtoCliente.getPreco()
-                                                                                + "\n",
-
-                                                                "Sobre o Produto",
-                                                                JOptionPane.YES_NO_OPTION);
-
-                                                // Caso o usuário-cliente desejar, prosseguimos
-                                                if (respostaClienteProduto == JOptionPane.YES_OPTION) {
-
-                                                        clienteFarmacia.get(Buscar(clienteFarmacia, cpf))
-                                                                        .setCompras(produtoCliente);
-                                                        double valorTotal = calculandoTotalCarrinho(clienteFarmacia
-                                                                        .get(Buscar(clienteFarmacia, cpf)));
-                                                        String comprasAtualCliente = comprasAtualCliente(clienteFarmacia
-                                                                        .get(Buscar(clienteFarmacia, cpf)));
-                                                        JOptionPane.showMessageDialog(null,
-                                                                        "** Seu carrinho **\nValor Total: "
-                                                                                        + formatarNumeroComDuasCasasDecimais(
-                                                                                                        valorTotal)
-                                                                                        + "\n\n" + comprasAtualCliente);
-                                                }
-
-                                        }
-
-                                        // Perguntando ao cliente-usuário se deseja continuar comprando
-
-                                        int resposta = JOptionPane.showConfirmDialog(null,
-                                                        "Deseja continuar comprando ?",
-                                                        "Confirmação",
-                                                        JOptionPane.YES_NO_OPTION);
-
-                                        // Caso sim, prosseguimos
-                                        if (resposta != JOptionPane.YES_OPTION) {
-
-                                                if (clienteNovo.getCompras() != null) {
-                                                        String comprasAtualCliente = "";
-                                                        if (Buscar(clienteFarmacia, cpf) != -1) {
-                                                                comprasAtualCliente = comprasAtualCliente(
-                                                                                clienteFarmacia.get(Buscar(
-                                                                                                clienteFarmacia, cpf)));
-                                                        } else {
-                                                                comprasAtualCliente = comprasAtualCliente(clienteNovo);
-                                                        }
-
-                                                        // Mostrando tudo que há no carrinho do usuário-cliente até o
-                                                        // momento
-
-                                                        int respostaFecharCarrinho = JOptionPane.showConfirmDialog(null,
-                                                                        "** No seu carrinho tem: **\n\n"
-                                                                                        + comprasAtualCliente
-                                                                                        + "\n\n Deseja fechar o carrinho ?",
-                                                                        "Confirmação",
-                                                                        JOptionPane.YES_NO_OPTION);
-
-                                                        if (respostaFecharCarrinho != JOptionPane.YES_OPTION) {
-                                                                respostaFecharCarrinhoCliente = 0;
-                                                        } else {
-                                                                respostaFecharCarrinhoCliente = 1;
-                                                        }
-
-                                                        // Se o cliente-usuário clicar em sim...
-                                                        if (respostaFecharCarrinho == JOptionPane.YES_OPTION) {
-
-                                                                int editarCarrinho = JOptionPane
-                                                                                .showConfirmDialog(null,
-                                                                                                "Antes de fechar, deseja editar o carrinho ?",
-                                                                                                "Confirmação",
-                                                                                                JOptionPane.YES_NO_OPTION);
-
-                                                                while (true) {
-                                                                        if (editarCarrinho == JOptionPane.YES_OPTION) {
-                                                                                int tamanhoCarrinho = clienteNovo
-                                                                                                .getCompras()
-                                                                                                .size();
-
-                                                                                String[] nomesProdutosCarrinho = new String[tamanhoCarrinho];
-                                                                                for (int i = 0; i < tamanhoCarrinho; i++) {
-
-                                                                                        Produtos produtoAtual = clienteNovo
-                                                                                                        .getCompras()
-                                                                                                        .get(i);
-
-                                                                                        nomesProdutosCarrinho[i] = produtoAtual
-                                                                                                        .getNome();
-                                                                                }
-
-                                                                                // Mostrando a interface com os produtos
-                                                                                // do tipo
-                                                                                // "Outros"
-                                                                                String selecionaProdutoCarrinho = (String) JOptionPane
-                                                                                                .showInputDialog(
-                                                                                                                null,
-                                                                                                                "Escolha uma opção:",
-                                                                                                                "Menu de Alteração de Carrinho",
-                                                                                                                JOptionPane.QUESTION_MESSAGE,
-                                                                                                                null,
-                                                                                                                nomesProdutosCarrinho,
-                                                                                                                nomesProdutosCarrinho[0]);
-                                                                                if (selecionaProdutoCarrinho != "") {
-                                                                                        alterarCarrinho(selecionaProdutoCarrinho,
-                                                                                                        clienteNovo.getCompras());
-                                                                                }
-                                                                                atendente.setVendas(
-                                                                                                atendente.getVendas()
-                                                                                                                - 1);
-                                                                                int continuarEditando = JOptionPane
-                                                                                                .showConfirmDialog(null,
-                                                                                                                "Deseja continuar alterando ?",
-                                                                                                                "Confirmação",
-                                                                                                                JOptionPane.YES_NO_OPTION);
-                                                                                if (continuarEditando != JOptionPane.YES_OPTION) {
-                                                                                        break;
-                                                                                }
-                                                                        } else {
-                                                                                break;
-                                                                        }
-                                                                }
-
-                                                                double valorTotal = calculandoTotalCarrinho(
-                                                                                clienteFarmacia.get(Buscar(
-                                                                                                clienteFarmacia, cpf)));
-
-                                                                if (verificandoCliente(clienteFarmacia, cpf)
-                                                                                && clienteFarmacia.get(Buscar(
-                                                                                                clienteFarmacia, cpf))
-                                                                                                .getNome() != "Desconhecido") {
-
-                                                                        // Caso o usuário-cliente tenha cadastro, vamos
-                                                                        // mostrar essa tela
-
-                                                                        JOptionPane.showMessageDialog(null,
-                                                                                        "[Pagamento] - Você tem Cadastro.\n\nValor Total: R$"
-                                                                                                        + formatarNumeroComDuasCasasDecimais(
-                                                                                                                        valorTotal)
-                                                                                                        + "\nCom desconto de 10%: R$"
-                                                                                                        + formatarNumeroComDuasCasasDecimais(
-                                                                                                                        valorTotal * 0.9));
-                                                                        clienteFarmacia.get(
-                                                                                        Buscar(clienteFarmacia, cpf))
-                                                                                        .setValorTotalCompra(valorTotal
-                                                                                                        * 0.9);
-                                                                        ;
-                                                                } else {
-
-                                                                        // Caso o usuário-cliente não tenha cadastro,
-                                                                        // vamos mostrar essa tela
-                                                                        JOptionPane.showMessageDialog(null,
-                                                                                        "[Pagamento] - Você não tem Cadastro.\n\nValor Total: R$"
-                                                                                                        + formatarNumeroComDuasCasasDecimais(
-                                                                                                                        valorTotal));
-                                                                        valorTotalDesconhecidos += valorTotal;
-
-                                                                        clienteFarmacia.get(
-                                                                                        Buscar(clienteFarmacia, cpf))
-                                                                                        .setValorTotalCompra(
-                                                                                                        valorTotal);
-
-                                                                }
-
-                                                                // Caso o atendimento de um vendedor precisou passar
-                                                                // alguma aplicação para
-                                                                // a farmacêutica Letizia flag será 1, logo prosseguimos
-                                                                // por aqui... e isso mudará o funcionamento da Função
-                                                                // calculaSalarioFuncionario
-
-                                                                // Inserindo vendas + calculando salário
-
-                                                                if ((flag == 1) && (atendente
-                                                                                .getTipoFuncionario() != "Farmacêutico")) {
-                                                                        comprasFarmaceutico++;
-                                                                        comprasVendedor--;
-                                                                        inserirVendas(auxAtendente,
-                                                                                        farmaciaFuncionarios,
-                                                                                        comprasFarmaceutico);
-
-                                                                        calculaSalarioFuncionario(auxAtendente,
-                                                                                        farmaciaFuncionarios,
-                                                                                        clienteFarmacia.get(
-                                                                                                        Buscar(clienteFarmacia,
-                                                                                                                        cpf)),
-                                                                                        flag);
-                                                                }
-
-                                                                // Inserindo vendas + calculando salário
-
-                                                                if (atendente.getTipoFuncionario()
-                                                                                .equals("Vendedor")) {
-                                                                        inserirVendas(atendente,
-                                                                                        farmaciaFuncionarios,
-                                                                                        comprasVendedor);
-                                                                } else if (atendente.getTipoFuncionario()
-                                                                                .equals("Farmacêutico")) {
-                                                                        inserirVendas(atendente,
-                                                                                        farmaciaFuncionarios,
-                                                                                        comprasFarmaceutico);
-                                                                }
-                                                                calculaSalarioFuncionario(atendente,
-                                                                                farmaciaFuncionarios,
-                                                                                clienteFarmacia.get(Buscar(
-                                                                                                clienteFarmacia,
-                                                                                                cpf)),
-                                                                                flag);
-
-                                                                // Abaixo estamos "setando" o número de compras
-                                                                // realizadas com os funcionários, seja do
-                                                                // tipo vendedor ou do tipo farmacêutico
-
-                                                                if (atendente.getTipoFuncionario().equals("Vendedor")) {
-                                                                        clienteFarmacia.get(
-                                                                                        Buscar(clienteFarmacia, cpf))
-                                                                                        .setContaCompras(
-                                                                                                        comprasVendedor);
-                                                                } else {
-                                                                        clienteFarmacia.get(
-                                                                                        Buscar(clienteFarmacia, cpf))
-                                                                                        .setContaCompras(
-                                                                                                        comprasFarmaceutico);
-                                                                }
-
-                                                        }
-                                                }
-                                                if (respostaFecharCarrinhoCliente == 1) {
-                                                        break;
-                                                }
-                                        }
-                                }
-
-                        } else if (selecionarOpcao.equals("Gerar Relatório")) {
+                                comprando(atendente, auxAtendente, farmaciaFuncionarios,
+                                                clienteFarmacia,
+                                                comprasVendedor, comprasFarmaceutico, clienteNovo, produtosFarmacia,
+                                                respostaFecharCarrinhoCliente, flag, random);
+
+                        } else if (selecionarOpcao.equals("Sair")) {
 
                                 // relatorio Farmacia [relatório cliente + relatório funcionário + lucroBruto]
 
-                                String relatorio = relatorioFinalDia(clienteFarmacia, farmaciaFuncionarios,
-                                                valorTotalDesconhecidos);
+                                String relatorioFarmacia = relatorioFinalDiaFarmacia(clienteFarmacia,
+                                                farmaciaFuncionarios);
 
                                 // Adicionando relatório no arquivo, a informação vai persistir em
-                                // "relatorio.txt"
-                                escrevendoArquivo(relatorio);
+                                // "relatorio.txt", caso haja algo escrito ele limpa o arquivo e escreve
+                                // novamente
+                                escrevendoArquivoFarmacia(relatorioFarmacia);
 
-                                // Imprimindo o relatório com JOptionPane
-                                JOptionPane.showMessageDialog(null, relatorio);
+                                // Toto o relatório geral da Farmácia LAV foi encaminhado para o arquivo
+                                // relatorioFarmacia
 
                                 // O break abaixo é usado para parar o programa totalmente;
                                 break;
