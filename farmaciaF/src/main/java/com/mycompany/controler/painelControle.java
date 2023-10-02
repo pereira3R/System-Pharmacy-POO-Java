@@ -4,7 +4,6 @@ package com.mycompany.controler;
 public interface painelControle {
 
    public void classificandoAcesso();
-
    public void lucroBruto(double input);
 
 }

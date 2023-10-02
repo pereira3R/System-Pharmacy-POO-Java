@@ -1,4 +1,3 @@
-
 package com.mycompany.main;
 
 //Importando classes services
@@ -7,8 +6,6 @@ import com.mycompany.service.Vendedor;
 import com.mycompany.service.Farmaceutico;
 import com.mycompany.service.Cliente;
 import com.mycompany.products.NRemedio;
-
-//Importando classes products 
 import com.mycompany.products.Produtos;
 import com.mycompany.products.Remedio;
 
@@ -272,7 +269,8 @@ public class main {
                                         + produtosCliente.get(i).getPreco() + "\n\n";
                 }
 
-                relatorioCliente += "Valor Total da Compra: " + cliente.getValorTotalCompra()
+                relatorioCliente += "Valor Total da Compra: "
+                                + formatarNumeroComDuasCasasDecimais(cliente.getValorTotalCompra())
                                 + "\n\nObrigado pela Preferência\nVolte sempre, atenciosamente Farmácia LAV";
 
                 return relatorioCliente;
@@ -777,7 +775,7 @@ public class main {
                                                                 String selecionaProdutoCarrinho = (String) JOptionPane
                                                                                 .showInputDialog(
                                                                                                 null,
-                                                                                                "Escolha uma opção:",
+                                                                                                "Escolha um produto para retirar:",
                                                                                                 "Menu de Alteração de Carrinho",
                                                                                                 JOptionPane.QUESTION_MESSAGE,
                                                                                                 null,

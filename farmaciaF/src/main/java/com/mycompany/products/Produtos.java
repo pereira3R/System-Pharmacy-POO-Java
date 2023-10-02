@@ -1,4 +1,3 @@
-
 package com.mycompany.products;
 
 public abstract class Produtos {
