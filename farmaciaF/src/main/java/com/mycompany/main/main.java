@@ -344,19 +344,21 @@ public class main {
         public static void escrevendoArquivoFarmacia(String relatorioFarmacia) {
                 try {
                         BufferedWriter writer = new BufferedWriter(new FileWriter(
-                                        "projetoFarmacia/src/main/java/com/mycompany/arquivo/relatorioFarmacia.txt"));
+                                        "farmaciaF/src/main/java/com/mycompany/arquivo/relatorioFarmacia.txt"));
                         writer.write(relatorioFarmacia);
                         writer.close();
                         System.out.println("String relatorioFarmacia exportada com sucesso para o arquivo.");
                 } catch (IOException e) {
                         e.printStackTrace();
                 }
+
         }
 
         public static void escrevendoReciboCliente(String relatorioClienteRecibo) {
                 try {
                         BufferedWriter writer = new BufferedWriter(new FileWriter(
-                                        "projetoFarmacia/src/main/java/com/mycompany/arquivo/relatorioClienteRecibo.txt"));
+                                        "farmaciaF/src/main/java/com/mycompany/arquivo/relatorioClienteRecibo.txt",
+                                        true));
                         writer.write(relatorioClienteRecibo);
                         writer.close();
                         System.out.println("String relatorioClienteRecibo exportada com sucesso para o arquivo.");

@@ -1,0 +1,14 @@
+Cliente 
+CPF: 123
+
+** Produtos Comprados **
+
+Nome: Benzetacil
+Tipo: Remédio
+Marca: Schering-Plough
+Preço: 17.99
+
+Valor Total da Compra: 17.99
+
+Obrigado pela Preferência
+Volte sempre, atenciosamente Farmácia LAV
