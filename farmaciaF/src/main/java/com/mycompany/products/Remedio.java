@@ -3,6 +3,7 @@ package com.mycompany.products;
 
 public class Remedio extends Produtos {
 
+    // Construindo todas as características da Classe Remedio
     private String nomeRemedio;
     private boolean ReceitaRemedio;
     private String TipoRemedio;

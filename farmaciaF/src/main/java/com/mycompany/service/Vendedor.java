@@ -1,6 +1,7 @@
 
 package com.mycompany.service;
 
+// Importando a classe Produtos que será referenciada como parâmetro na sobrescrita do método calcularSalarioPorProduto
 import com.mycompany.products.Produtos;
 
 public class Vendedor extends Funcionario {

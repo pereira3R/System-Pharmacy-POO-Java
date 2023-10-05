@@ -1,10 +1,13 @@
 package com.mycompany.service;
 
+//Importamos a classe Produtos para construirmos um ArrayList do tipo Produtos, no qual servirá como carrinho do Cliente
+//Importamos a classe ArrayList para criar o carrinho dito, anteriormente, usando esse Collection que é ideal para o caso.
 import java.util.ArrayList;
 import com.mycompany.products.Produtos;
 
 public class Cliente {
 
+    // Criando todas as características da classe Cliente
     private String nome;
     private String cpf;
     private String telefone;

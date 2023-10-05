@@ -3,6 +3,7 @@ package com.mycompany.products;
 public class NRemedio extends Produtos {
 
     // Criando todas as características da classe NRemedio
+    // Aplicando o Encapsulamento getters e setters
     private String nomeProduto;
     private String FabricanteProduto;
     private String SecaoProduto;

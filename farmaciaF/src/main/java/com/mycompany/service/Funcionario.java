@@ -11,6 +11,12 @@ public abstract class Funcionario extends Farmacia {
     protected double salario;
     protected int vendas = 0;
     protected int certificado = 0;
+
+    // Nivel de Acesso deve ser public, uma vez que este atributo permitirá com que
+    // as classes filhas de funcionários, possam
+    // modificar o nível de acesso diretamente sobrescrevendo o implements da
+    // interface "painelControle", sem que haja a
+    // necessidade de acessar o atributo com getters e setters.
     public int nivelAcesso;
 
     public Funcionario(String NomeFarmacia, String CNPJ, String Endereco, String Telefone, String Site,
