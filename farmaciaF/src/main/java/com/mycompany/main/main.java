@@ -11,7 +11,10 @@ import com.mycompany.products.Remedio;
 
 //Importando bibliotecas úteis
 import javax.swing.JOptionPane;
+
+import java.io.BufferedReader;
 import java.io.BufferedWriter;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.text.DecimalFormat;
@@ -344,7 +347,7 @@ public class main {
         public static void escrevendoArquivoFarmacia(String relatorioFarmacia) {
                 try {
                         BufferedWriter writer = new BufferedWriter(new FileWriter(
-                                        "farmaciaF/src/main/java/com/mycompany/arquivo/relatorioFarmacia.txt"));
+                                        "farmaciaF/src/main/java/com/mycompany/file/relatorioFarmacia.txt"));
                         writer.write(relatorioFarmacia);
                         writer.close();
                         System.out.println("String relatorioFarmacia exportada com sucesso para o arquivo.");
@@ -357,11 +360,54 @@ public class main {
         public static void escrevendoReciboCliente(String relatorioClienteRecibo) {
                 try {
                         BufferedWriter writer = new BufferedWriter(new FileWriter(
-                                        "farmaciaF/src/main/java/com/mycompany/arquivo/relatorioClienteRecibo.txt",
+                                        "farmaciaF/src/main/java/com/mycompany/file/relatorioReciboCliente.txt",
                                         true));
                         writer.write(relatorioClienteRecibo);
                         writer.close();
                         System.out.println("String relatorioClienteRecibo exportada com sucesso para o arquivo.");
+                } catch (IOException e) {
+                        e.printStackTrace();
+                }
+        }
+
+        public static String lerArquivo(String diretorioArquivo) {
+
+                try {
+                        // Cria um objeto FileReader para ler o arquivo
+                        FileReader arquivo = new FileReader(diretorioArquivo);
+
+                        // Cria um objeto BufferedReader para ler linhas do arquivo
+                        BufferedReader leitor = new BufferedReader(arquivo);
+
+                        String linha;
+                        String relatorio = "";
+
+                        // Lê cada linha do arquivo até o final
+                        while ((linha = leitor.readLine()) != null) {
+                                // Faça algo com a linha lida, por exemplo, imprima-a
+                                relatorio += linha + "\n";
+                        }
+
+                        // Fecha o arquivo após a leitura
+                        leitor.close();
+                        return relatorio;
+
+                } catch (IOException e) {
+                        // Trate exceções de E/S, como arquivo não encontrado
+                        e.printStackTrace();
+                        return "Erro de Leitura";
+                }
+        }
+
+        public static void apagarArquivo(String diretorioArquivo) {
+                try {
+                        // Abre o arquivo no modo de escrita, o que substituirá o conteúdo existente
+                        FileWriter escritor = new FileWriter(diretorioArquivo, false);
+
+                        // Fecha o arquivo imediatamente para garantir que o conteúdo seja apagado
+                        escritor.close();
+
+                        System.out.println("Conteúdo do arquivo foi apagado com sucesso.");
                 } catch (IOException e) {
                         e.printStackTrace();
                 }
@@ -867,9 +913,19 @@ public class main {
                                                         // Mostrando o recibo de compra e pagamento do cliente, de
                                                         // acordo com o
                                                         // seu carrinho
+
+                                                        int desejaRecibo = JOptionPane
+                                                                        .showConfirmDialog(null,
+                                                                                        "Deseja recibo da compra ?",
+                                                                                        "Confirmação",
+                                                                                        JOptionPane.YES_NO_OPTION);
+
                                                         String relatorioCliente = relatorioPorCliente(clienteNovo,
                                                                         clienteNovo.getCompras());
-                                                        JOptionPane.showMessageDialog(null, relatorioCliente);
+
+                                                        if (desejaRecibo == JOptionPane.YES_OPTION) {
+                                                                JOptionPane.showMessageDialog(null, relatorioCliente);
+                                                        }
 
                                                         escrevendoReciboCliente(relatorioCliente);
 
@@ -1041,8 +1097,27 @@ public class main {
 
                                 // Toto o relatório geral da Farmácia LAV foi encaminhado para o arquivo
                                 // relatorioFarmacia
-
                                 // O break abaixo é usado para parar o programa totalmente;
+
+                                String[] decideRelatorio = { "Limpar Relatório Geral", "Ver Relatório Geral" };
+
+                                String opcaoRelatorio = (String) JOptionPane.showInputDialog(
+                                                null,
+                                                "Escolha uma opção:",
+                                                "Menu Compras - LAV",
+                                                JOptionPane.QUESTION_MESSAGE,
+                                                null,
+                                                decideRelatorio,
+                                                decideRelatorio[0]);
+                                if (opcaoRelatorio.equals("Ver Relatório Geral")) {
+                                        String conteudo = "farmaciaF/src/main/java/com/mycompany/file/relatorioFarmacia.txt";
+                                        conteudo = lerArquivo(conteudo);
+                                        JOptionPane.showMessageDialog(null, conteudo);
+                                } else if (opcaoRelatorio.equals("Limpar Relatório Geral")) {
+                                        apagarArquivo("farmaciaF/src/main/java/com/mycompany/file/relatorioFarmacia.txt");
+                                        JOptionPane.showMessageDialog(null, "Arquivo de relatório geral apagado!");
+                                }
+
                                 break;
 
                         }
