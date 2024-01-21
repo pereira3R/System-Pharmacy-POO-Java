@@ -94,6 +94,5 @@ Useful resources that we would like to give credit for.
 
 - IC UFMT [https://www.ic.ufmt.br/](https://www.ic.ufmt.br/)
 - Java POO [https://sites.google.com/ic.ufmt.br/algoritmos-3-co-2023-1/](https://sites.google.com/ic.ufmt.br/algoritmos-3-co-2023-1/)
-- Professor Crenilson - Java Swing [https://www.youtube.com/watch?v=UW-xUpCIBjk&list=PLwH4Cv_WLhLbc4H-aOh3xFywPGxhaso_b](https://www.youtube.com/watch?v=UW-xUpCIBjk&list=PLwH4Cv_WLhLbc4H-aOh3xFywPGxhaso_b)
-
+  
 ##
