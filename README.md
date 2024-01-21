@@ -3,7 +3,32 @@
 Project started at the beginning of 2023, more or less at the end of the semester, done in just 2 weeks.
 
 ## Overview
-The project is nothing more than a system made with Java using Java Swing, JDBC and MySQL to meet the requirements for the second test of Algorithms 3. Design pattern models were used in the project, such as DAO, Abstract Factory and Singlenton.
+### Object-Oriented Programming Project
+
+### System Requirements:
+
+As the first practical activity of the discipline, each group is tasked with creating a system with a command-line interface menu, featuring the following options (additional options are allowed):
+
+- **Register (Create)**
+- **List array data**
+- **List physical file data**
+- **Persist data (save array data to the physical file and clear the array)**
+- **Delete array item (delete by ID)**
+- **Clear physical file**
+
+To perform these operations, you must create the "Data Model" (Model) of the application using the object-oriented programming techniques learned so far. By the model, we refer to classes such as Student, Product, Employee, etc.
+
+### System Guidelines:
+
+- The system must have a theme that is simple yet allows the use of object-oriented programming concepts learned so far.
+- The system must have a minimum of 6 classes created by the group.
+- The system must have at least two method overloads (can be constructors).
+- The system must have at least one superclass that is the parent class of at least two child classes.
+- The system must use different access modifiers: private, public, and protected (package is not required) in contexts that make sense.
+- The system must have at least one encapsulation that makes sense and is not just getters and setters.
+- The system must have at least one abstract class, containing at least one abstract method, implemented by at least two other classes.
+- The implementation of the abstract method/class must generate polymorphism that is useful within the system.
+- The system must have at least one interface implemented by two other classes.
 
 ## Technologies Used
 
