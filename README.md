@@ -36,9 +36,6 @@ The technologies used to develop the project are very simple.
 
 <div style="display: inline_block" align="center"><br>
   <img align="center" alt="Java" height="38" width="100" src="https://img.shields.io/badge/Java-007396?style=for-the-badge&logo=java&logoColor=white">
-  <img align="center" alt="JDBC" height="38" width="100" src="https://img.shields.io/badge/JDBC-007396?style=for-the-badge&logo=java&logoColor=white">
-  <img align="center" alt="MySQL" height="38" width="100" src="https://img.shields.io/badge/MySQL-4479A1?style=for-the-badge&logo=mysql&logoColor=white">
-  <img align="center" alt="Java Swing" height="38" width="100" src="https://img.shields.io/badge/Java%20Swing-007396?style=for-the-badge&logo=java&logoColor=white">
 </div>
 
 <!-- GETTING STARTED -->
