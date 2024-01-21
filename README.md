@@ -1,4 +1,4 @@
-# System Pharmacy 
+# System Pharmacy - Basic OOP
 
 Project started at the beginning of 2023, more or less at the beginning of the first semester, carried out in just 2 weeks. This project was carried out as the delivery of the first evaluation of Algorithms 3 with Professor Jivago.
 
